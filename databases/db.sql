@@ -84,3 +84,140 @@ CREATE TABLE seguridad_social(
     CONSTRAINT fk_seguridad_social_empleado FOREIGN KEY (id_empleado) REFERENCES empleado(id_empleado) ON DELETE CASCADE
 
 )ENGINE=InnoDB;
+
+
+
+CREATE TABLE incapacidades_historial(
+    id_incapacidades_historial INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_incapacidad VARCHAR(50) DEFAULT NULL,
+    subtipo_incapacidad VARCHAR(100) DEFAULT NULL,
+    fecha_inicio_incapacidad DATE DEFAULT NULL,
+    fecha_final_incapacidad DATE DEFAULT NULL,
+    cantidad_dias INT DEFAULT NULL,
+    codigo_enfermedad_general VARCHAR(50) DEFAULT NULL,
+    descripcion_enfermedad_general VARCHAR(200) DEFAULT NULL,
+    prorroga BOOLEAN DEFAULT NULL,
+    id_empleado INT,
+
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_incapacidades_historial_empleado FOREIGN KEY (id_empleado)REFERENCES empleado(id_empleado) ON DELETE CASCADE
+
+)ENGINE=InnoDB;
+
+
+
+CREATE TABLE incapacidades_seguimiento(
+    id_incapacidades_seguimiento INT AUTO_INCREMENT PRIMARY KEY,
+    estado_incapacidad VARCHAR(100) DEFAULT NULL,
+    observaciones VARCHAR(1000) DEFAULT NULL,
+    id_incapacidades_historial INT,
+
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_incapacidades_seguimiento_incapacidades_historial FOREIGN KEY (id_incapacidades_historial)REFERENCES incapacidades_historial(id_incapacidades_historial) ON DELETE CASCADE
+
+)ENGINE=InnoDB;
+
+
+
+CREATE TABLE incapacidades_liquidacion(
+    id_incapacidades_liquidacion INT AUTO_INCREMENT PRIMARY KEY,
+    dias_liquidacion_empleador INT DEFAULT NULL,
+    dias_liquidacion_eps INT DEFAULT NULL,
+    dias_liquidacion_arl INT DEFAULT NULL,
+    dias_liquidacion_fondo_pensiones INT DEFAULT NULL,
+    dias_liquidacion_eps_fondo_pensiones INT DEFAULT NULL,
+    porcentaje_liquidacion_empleador DECIMAL(10,2) DEFAULT NULL,
+    porcentaje_liquidacion_eps DECIMAL(10,2) DEFAULT NULL,
+    porcentaje_liquidacion_arl DECIMAL(10,2) DEFAULT NULL,
+    porcentaje_liquidacion_fondo_pensiones DECIMAL(10,2) DEFAULT NULL,
+    porcentaje_liquidacion_eps_fondo_pensiones DECIMAL(10,2) DEFAULT NULL,
+    liquidacion_empleador BIGINT DEFAULT NULL,
+    liquidacion_eps BIGINT DEFAULT NULL,
+    liquidacion_arl BIGINT DEFAULT NULL,
+    liquidacion_fondo_pensiones BIGINT DEFAULT NULL,
+    liquidacion_eps_fondo_pensiones BIGINT DEFAULT NULL,
+    salario_empleado BIGINT DEFAULT NULL,
+    valor_dia_empleado BIGINT DEFAULT NULL,
+    fecha_contratacion DATE DEFAULT NULL,
+    dias_laborados INT,
+    id_incapacidades_historial INT,
+
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_incapacidades_liquidacion_incapacidades_historial FOREIGN KEY (id_incapacidades_historial)REFERENCES incapacidades_historial(id_incapacidades_historial) ON DELETE CASCADE
+
+
+)ENGINE=InnoDB;
+
+
+
+CREATE TABLE ruta_documentos(
+    id_ruta_documentos INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) DEFAULT NULL,
+    ruta VARCHAR(500) DEFAULT NULL,
+    id_incapacidades_historial INT,
+
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_ruta_documentos_incapacidades_historial FOREIGN KEY (id_incapacidades_historial)REFERENCES incapacidades_historial(id_incapacidades_historial) ON DELETE CASCADE
+
+
+)ENGINE=InnoDB;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
