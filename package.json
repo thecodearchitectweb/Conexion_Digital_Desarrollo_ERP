@@ -2,8 +2,11 @@
   "name": "erp",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "style": "npx tailwindcss -i ./src/public/css/input.css -o ./src/public/css/output.css --watch"
   },
   "keywords": [],
   "author": "",
