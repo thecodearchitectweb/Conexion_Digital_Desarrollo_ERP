@@ -1,6 +1,13 @@
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import express from "express";
+import dotenv from "dotenv";
+import { pool } from './models/db.js'; // Importa la conexión a la base de datos
+
+
+
+// Cargar variables de entorno
+dotenv.config();
 
 
 // Obtener __dirname  obtener el directorio actual del archivo en Node.js
@@ -10,12 +17,16 @@ const __dirname = dirname(__filename);
 
 const app = express()
 
+
+
+
+
 // Archivos estáticos
 app.use(express.static(join(__dirname, "public")));
 console.log("Ruta de archivos estáticos:", join(__dirname, "public"));
 
 
-
+app.set("port", process.env.PORT || 3000);
 app.set("views", join(__dirname, "views"));
 app.set("view engine", "ejs");
 

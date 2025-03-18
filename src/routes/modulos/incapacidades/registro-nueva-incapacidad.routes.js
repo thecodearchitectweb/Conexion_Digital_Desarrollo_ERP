@@ -8,3 +8,4 @@ router.get('/incapacidad/registro/nueva/incapacidad', registroNuevaIncapacidad);
 
 
 export default router;
+
