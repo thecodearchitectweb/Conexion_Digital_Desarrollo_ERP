@@ -52,10 +52,16 @@ CREATE TABLE empleado(
     lider VARCHAR(100)  DEFAULT NULL,
     salario BIGINT DEFAULT NULL,
     valor_dia BIGINT DEFAULT NULL,
+    contacto VARCHAR(50) DEFAULT NULL,
+    area VARCHAR(50) DEFAULT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     
 )ENGINE=InnoDB;
+
+ALTER TABLE empleado ADD COLUMN area VARCHAR(50) DEFAULT NULL;
+
+
 
 
 CREATE TABLE empresas(
@@ -172,15 +178,99 @@ CREATE TABLE ruta_documentos(
 
 
 
+/* Datos de prueba */
+
+INSERT INTO empleado (nombres, apellidos, documento, fecha_contratacion, tipo_contrato, cargo, estado, lider, salario, valor_dia)
+VALUES 
+('Juan', 'Pérez', 1000001, '2022-01-15', 'Indefinido', 'Analista', 'Activo', 'María López', 3000000, 100000),
+('María', 'López', 1000002, '2021-05-20', 'Término Fijo', 'Gerente', 'Activo', NULL, 7000000, 233333),
+('Carlos', 'Gómez', 1000003, '2023-03-10', 'Indefinido', 'Desarrollador', 'Activo', 'María López', 4500000, 150000),
+('Ana', 'Ramírez', 1000004, '2020-09-05', 'Término Fijo', 'Contadora', 'Activo', 'Juan Pérez', 4000000, 133333),
+('Luis', 'Martínez', 1000005, '2019-11-12', 'Indefinido', 'Diseñador', 'Inactivo', 'Carlos Gómez', 3200000, 106667);
+
+
+INSERT INTO empresas (nombre, nit, id_empleado)
+VALUES 
+('Tech Solutions', 900100001, 1),
+('Innova Corp', 900100002, 2),
+('Digital Soft', 900100003, 3),
+('Finance Pro', 900100004, 4),
+('Creative Minds', 900100005, 5);
+
+
+INSERT INTO seguridad_social (eps, arl, fondo_pension, caja_compensacion, id_empleado)
+VALUES 
+('Sura', 'Colpatria', 'Porvenir', 'Compensar', 1),
+('Sanitas', 'Sura', 'Protección', 'Colsubsidio', 2),
+('Nueva EPS', 'Bolívar', 'Colfondos', 'Cafam', 3),
+('Famisanar', 'AXA Colpatria', 'Old Mutual', 'Comfama', 4),
+('Coomeva', 'Liberty', 'Skandia', 'Cajacopi', 5);
+
+
+/* Consulta tabla empleado */
+SELECT * FROM empleado;
+
+
+/* Consulta tabla  empresas*/
+SELECT * FROM empresas;
+
+
+/* Consulta tabla  seguridad social */
+SELECT * FROM seguridad_social;
+
+
+
+/* Consulta completa de tablas empleado, empresas, seguridad_social  */
+SELECT 
+    e.id_empleado,
+    e.nombres,
+    e.apellidos,
+    e.documento,
+    e.contacto,
+    e.area,
+    e.fecha_contratacion,
+    e.tipo_contrato,
+    e.cargo,
+    e.estado,
+    e.lider,
+    e.salario,
+    e.valor_dia,
+    emp.id_empresa,
+    emp.nombre AS empresa_nombre,
+    emp.nit AS empresa_nit,
+    ss.id_seguridad_social,
+    ss.eps,
+    ss.arl,
+    ss.fondo_pension,
+    ss.caja_compensacion
+FROM empleado e
+LEFT JOIN empresas emp ON e.id_empleado = emp.id_empleado
+LEFT JOIN seguridad_social ss ON e.id_empleado = ss.id_empleado;
+
+
+
+/* Consulta vista I, filtro por empleado */
+SELECT
+    e.id_empleado,
+    e.nombres,
+    e.apellidos,
+    e.documento,
+    e.contacto,
+    e.area,
+    e.cargo,
+    e.estado,
+    e.lider,
+    ss.eps
+FROM empleado e
+LEFT JOIN seguridad_social ss ON e.id_empleado = ss.id_empleado;
 
 
 
 
-
-
-
-
-
+SELECT id_empleado, COUNT(*) 
+FROM seguridad_social 
+GROUP BY id_empleado 
+HAVING COUNT(*) > 1;
 
 
 

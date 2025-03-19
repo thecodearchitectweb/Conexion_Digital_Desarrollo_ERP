@@ -16,7 +16,7 @@
     <%- include('../../../partials/header/header.ejs') %>
 </header>
 
-<body class="bg-slate-200 mx-2">
+<body class="bg-slate-200 mx-1">
     <div>
         <div
             class="container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)]  mx-auto px-4 my-10  bg-white p-4 rounded-2xl flex flex-col items-center justify-center w-full max-w-10/12">
@@ -27,8 +27,10 @@
             </div>
 
 
-            <form class="p-4 w-full max-w-3xl mx-auto flex flex-col gap-4">
-                <select id="filtro"
+            <form action="/incapacidad/seleccionar/empleado" method="POST"
+                class="p-4 w-full max-w-3xl mx-auto flex flex-col gap-4">
+
+                <select id="filtro" name="filtro"
                     class="bg-gray-50 border drop-shadow-sm  border-gray-300 text-gray-900 text-sm rounded-lg outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5">
                     <option selected>Seleccione una opción</option>
                     <option value="cedula">CEDULA</option>
@@ -51,6 +53,8 @@
 
         </div>
     </div>
+
+    <% if (Empleados.length > 0) { %>
 
     <div class="  mx-auto px-4 my-10  p-4 rounded-2xl flex flex-col items-center justify-center w-full max-w-10/12">
 
@@ -91,43 +95,53 @@
                         </th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr class="bg-white border-b  border-gray-200 hover:bg-gray-50 ">
-                        <th scope="row" class="px-2  text-center  ">
-                            <a href="">
-                                <i class='bx bxs-edit text-xl p-0 mr-2 text-cyan-800'></i>
-                            </a>
-                        </th>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased ">
-                            Alex Alejandro
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            Oviedo Gonzalez
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            12334978922
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            3187024207
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            Ingenieria
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            Desarrollador
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            Activo
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            Joan Bejarano
-                        </td>
-                        <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
-                            Compensar
-                        </td>
+                    <% if (Empleados.length> 0) { %>
+                        <% for (let i=0; i < Empleados.length; i++) { %>
+
+                            <tr class="bg-white border-b  border-gray-200 hover:bg-gray-50 ">
+                                <th scope="row" class="px-2  text-center  ">
+                                    <a href="<%= Empleados[i].id_empleado %>">
+                                        <i class='bx bxs-edit text-xl p-0 mr-2 text-cyan-800'></i>
+                                    </a>
+                                </th>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased ">
+                                    <%= Empleados[i].nombres %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].apellidos  %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].documento  %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].contacto  %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].area  %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].cargo  %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].estado  %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].lider  %>
+                                </td>
+                                <td class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased">
+                                    <%= Empleados[i].eps  %>
+                                </td>
 
 
-                    </tr>
+                            </tr>
+                        <% } %>
+                    <% } else { %>
+                                <td colspan="10" class="px-4 py-1.5 xs:text-xs sm:text-sm lg:text-sm text-gray-800 antialiased text-center">
+                                    No se encontraron empleados.
+                                </td>
+                            <% } %>
 
                 </tbody>
             </table>
@@ -136,6 +150,13 @@
 
     </div>
 
+    <% } else { %>
+
+        <div class="mx-auto px-4 my-10 p-4 rounded-2xl flex flex-col items-center justify-center w-full max-w-10/12 bg-red-100 border border-red-400 text-red-700">
+            <p class="text-lg font-semibold">No se encontraron empleados.</p>
+        </div>
+    
+    <% } %>
 
 
 

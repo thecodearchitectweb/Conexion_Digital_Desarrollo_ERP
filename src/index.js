@@ -2,6 +2,7 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import express from "express";
 import dotenv from "dotenv";
+import morgan from 'morgan';
 import { pool } from './models/db.js'; // Importa la conexión a la base de datos
 
 
@@ -32,6 +33,8 @@ app.set("view engine", "ejs");
 
 
 // Middlewares generales
+app.use(morgan("dev")); // Registro de solicitudes
+app.use(express.urlencoded({ extended: true })); // Parsear formularios
 app.use(express.json()); // Parsear JSON
 
 

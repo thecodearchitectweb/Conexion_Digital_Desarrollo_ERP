@@ -2,9 +2,11 @@ import { Router } from "express"
 
 const router = Router()
 
-import {seleccionarEmpleado} from '../../../controllers/modulos/incapacidades/seleccionar-empleado.controller.js'
+import { getseleccionarEmpleado, postseleccionarEmpleado} from '../../../controllers/modulos/incapacidades/seleccionar-empleado.controller.js'
 
-router.get('/incapacidad/seleccionar/empleado', seleccionarEmpleado);
+router.get('/incapacidad/seleccionar/empleado', getseleccionarEmpleado);
+
+router.post('/incapacidad/seleccionar/empleado', postseleccionarEmpleado);
 
 
 export default router;
