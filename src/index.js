@@ -54,6 +54,7 @@ app.use(tablaIncapacidades)
 
 
 
-app.listen(4000, () => {
-    console.log("Servidor corriendo en http://localhost:4000");
-  });
+// Iniciar el servidor
+app.listen(app.get("port"), '0.0.0.0', () => {
+  console.log(`Server listening on port ${app.get("port")}`);
+});
