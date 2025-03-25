@@ -8,33 +8,473 @@
 </head>
 
 <header>
-    <%- include('../../../partials/navbars/modulos/incapacidades/navbar_principal.ejs') %> <%-
-            include('../../../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %> <%-
-                include('../../../partials/header/header.ejs') %>
+    <%- include('../../../partials/navbars/modulos/incapacidades/navbar_principal.ejs') %> 
+    <%-include('../../../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
+    <%-include('../../../partials/header/header.ejs') %>
 </header>
 
 <body class="bg-slate-200 px-0 mx-0">
 
-    <div
-        class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto mt-8 px-2 my-4 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full ">
-        <div class="w-7xl mx-auto text-center border-b-1 border-gray-300 pb-2 mb-4 mt-4 drop-shadow-md"></div>
 
+    <!-- DATOS DEL EMPLEADO -->
+    <div class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto mt-8 px-2 my-4 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full">
+        <div class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 mb-4 mt-4 drop-shadow-md"></div>
 
         <%-include('../../../partials/datos_empleado/datos_empleado.ejs') %>
 
+            <div class="w-7xl mx-auto text-center border-b-2 border-lime-600 pb-2 mt-6 mb-6 drop-shadow-2xl"></div>
 
-        <div class="w-7xl mx-auto text-center border-b-1 border-gray-300 pb-2 mt-6 mb-6 drop-shadow-2xl"></div>
+            <!-- Contenedor 2, Seleccionar el tipo de incapacidad -->
+            <div class="relative mx-auto px-2 my-2 bg-white p-4 flex flex-col w-full">
+                <div class="w-7xl mx-auto text-center border-b-1 border-lime-600 pb-2 mb-10 mt-10 drop-shadow-md">
+                    <h2 class="text-md font-bold">Ingreso Nueva Incapacidad</h2>
+                </div>
+
+                <div class="w-7xl mx-auto">
+                    <div
+                        class="w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-x-3 p-0">
+                        
+
+                        <!-- Tipo de incapacidad -->
+                        <div class="max-w-md w-full mx-auto">
+                            <label for="tipo_incapacidad"
+                                class="block mb-2 text-sm font-medium text-gray-900">Seleccione el tipo de incapacidad</label>
+                            <select id="tipo_incapacidad"
+                                class="w-full p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg border-b-lime-600 focus:ring-lime-500 focus:lime-blue-500 drop-shadow-md">
+                                <option selected>Seleccione el tipo de incapacidad</option>
+                                <option value="EPS">EPS</option>
+                                <option value="ARL">ARL</option>
+                            </select>
+                        </div>
 
 
-    </div>
 
+                        <!-- Enfermedad General (Oculto por defecto) -->
+                        <div id="enfermedad_general_container" class="max-w-xl w-full mx-auto hidden">
+                            <label for="enfermedad_general"
+                                class="block mb-2 text-sm font-medium text-gray-900">Enfermedad General</label>
+                            <select id="enfermedad_general"
+                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg border-b-lime-600 focus:ring-lime-500 focus:lime-blue-500 p-2 drop-shadow-md">
+                                <option selected>Seleccione la Enfermedad General</option>
+                                <option value="ORIGEN COMUN">Origen Común</option>
+                                <option value="ACCIDENTE DE TRANSITO">
+                                    Accidente de tránsito
+                                </option>
+                                <option value="LICENCIA DE PATERNIDAD">
+                                    Licencia de Paternidad
+                                </option>
+                                <option value="LICENCIA DE MATERNIDAD">
+                                    Licencia de Maternidad
+                                </option>
+                            </select>
+                        </div>
 
-            <!-- Contenedor 2, incapacidad -->
-            <div class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto px-2 my-2 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full">
-                <h6 class="text-left self-start">fsdfsdfsdf</h6>
+                        <!-- Accidente de Trabajo (Oculto por defecto) -->
+                        <div id="accidente_transito_container" class="max-w-xl w-full mx-auto hidden">
+                            <label for="accidente_transito"
+                                class="block mb-2 text-sm font-medium text-gray-900">Accidente de Trabajo</label>
+                            <select id="accidente_transito"
+                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg border-b-lime-600 focus:ring-lime-500 focus:lime-blue-500 p-2 drop-shadow-md">
+                                <option selected>Seleccione el Accidente de Trabajo</option>
+                                <option value="ORIGEN COMUN">Origen común</option>
+                                <option value="ACCIDENTE DE TRANSITO">
+                                    Accidente de tránsito
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
+            
+            
+            <div class="w-7xl mx-auto text-center border-b-1 border-lime-600 pb-2 mb-4 mt-6 drop-shadow-md"></div>
+
+            <!-- Contenedor 3,  Ingresar los datos de la incapacidad-->
+            <div class="relative mx-auto px-2 my-2 bg-white p-4 flex flex-col w-full" id="">
+                <div class="w-11/12 mx-auto p-4">
+                    <div id="form_ingreso_nueva_incapacidad"
+                        class="w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-x-3 gap-y-6 p-0">
+                        <!-- Tipo de incapacidad -->
+
+                        <div>
+                            <label for="arl-date"
+                                class="block mb-1.5 text-sm font-medium text-slate-900 text-left">Inicio
+                                Incapacidad</label>
+                            <div class="relative mb-2">
+                                <!-- Ícono -->
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-6 h-6 text-lime-600" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                </div>
+                                <!-- Input con funcionalidad de fecha -->
+                                <input datepicker datepicker-format="dd/mm/yyyy" id="arl-date_1" type="text"
+                                    class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block min-w-full max-w-[115%] ps-10 p-2 capitalize shadow-md"
+                                    placeholder="DD/MM/AAAA" required />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="arl-date"
+                                class="block mb-1.5 text-sm font-medium text-slate-900 text-left">Finalizacion
+                                Incapacidad</label>
+                            <div class="relative mb-2">
+                                <!-- Ícono -->
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-6 h-6 text-lime-600" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                </div>
+                                <!-- Input con funcionalidad de fecha -->
+                                <input datepicker datepicker-format="dd/mm/yyyy" id="arl-date_2" type="text"
+                                    class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block min-w-full max-w-[115%] ps-10 p-2 capitalize shadow-md"
+                                    placeholder="DD/MM/AAAA" required />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="input-group-1"
+                                class="block mb-1.5 text-sm font-medium text-slate-900 text-left">Cantidad de
+                                días</label>
+                            <div class="relative mb-2">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-6 h-6 text-lime-600" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                </div>
+                                <input type="number" id="input-group-1"
+                                    class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block min-w-full max-w-[115%] ps-10 p-2 capitalize shadow-md"
+                                    placeholder="" disabled />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="input-group-1"
+                                class="block mb-1.5 text-sm font-medium text-slate-900 text-left">Enfermedad
+                                General</label>
+                            <div class="relative mb-2">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-6 h-6 text-lime-600" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                </div>
+                                <input type="text" id="input-group-1" list="codigo_CIE_10"
+                                    class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block min-w-full max-w-[115%] ps-10 p-2 capitalize shadow-md"
+                                    placeholder="" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="input-group-1"
+                                class="block mb-1.5 text-sm font-medium text-slate-900 text-left">Descripcion
+                                Enfermedad</label>
+                            <div class="relative mb-2">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-6 h-6 text-lime-600" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                </div>
+                                <input type="text" id="input-group-1"
+                                    class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block min-w-full max-w-[115%] ps-10 p-2 capitalize shadow-md"
+                                    placeholder="" disabled />
+                            </div>
+                        </div>
+
+                        <!--                         <div>
+                            <label for="input-group-1"
+                                class="block mb-1.5 text-sm font-medium text-slate-900 text-left">Estado de la Incapacidad</label>
+                            <div class="relative mb-2">
+                                <div
+                                    class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-6 h-6 text-lime-600" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path
+                                            d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                </div>
+                                <input type="text" id="input-group-1"
+                                    class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block min-w-full max-w-[115%] ps-10 p-2 capitalize shadow-md"
+                                    placeholder="" />
+                            </div>
+                        </div> -->
+
+                        <div class="max-w-md w-full mx-auto">
+                            <label for="tipo_incapacidad" class="block mb-2 text-sm font-medium text-gray-900">Estado de
+                                la Incapacidad</label>
+                            <select id="tipo_incapacidad"
+                                class="w-full p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg border-b-lime-600 focus:ring-lime-500 focus:lime-blue-500 drop-shadow-md">
+                                <option selected>Seleccione el tipo de incapacidad</option>
+                                <option value="EPS">Contabilizados</option>
+                                <option value="ARL">Pagados</option>
+                                <option value="ARL">Entregado</option>
+                                <option value="ARL">Pre-liquidacion</option>
+                                <option value="ARL">Negada</option>
+                                <option value="ARL">Radicada</option>
+                                <option value="ARL">Devolucion</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="input-group-1"
+                                class="block mb-1.5 text-sm font-medium text-slate-900 text-left">ARL</label>
+                            <div class="relative mb-2">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-6 h-6 text-lime-600" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                </div>
+                                <input type="text" id="input-group-1" list="crud_marcaciones"
+                                    class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block min-w-full max-w-[115%] ps-10 p-2 capitalize shadow-md"
+                                    placeholder="" />
+                            </div>
+                        </div>
+
+                        <!-- 
+                        <div>
+                            <label for="marcacion" class="block mb-2 text-sm font-medium text-sky-700 dark:text-white">
+                                MARCACIÓN
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none ">
+    
+                                    <img src="/img/segundo_nivel/hfc/marcacion2.png" class="w-5 h-5" alt="">
+                                </div>
+                                <input type="text" id="input_marcacion" name="input_marcacion" list="crud_marcaciones"
+                                    class="bg-blue-50/30  border-blue-500/80 text-black  rounded-xl sm:text-xs md:text-sm lg:text-base xl:text-base 2xl:text-base focus:ring-cyan-500 focus:border-cyan-500  block w-full ps-12 p-2.0  placeholder:text-sm placeholder:italic placeholder:text-gray-400 placeholder:font-normal shadow-md"
+                                    placeholder="DIS FMM" value="">
+                            </div>
+                        </div> -->
+
+                        <!-- Marcaciones RR -->
+<!--                         <datalist id="crud_marcaciones">
+                            <option value="PMY">Sin datos</option>
+                            <option value="PMY">Llamada caída</option>
+                            <option value="PMY">Transferencia</option>
+                            <option value="SOP-AIP">
+                                Asignacion De Ip Fija (Gratuita Y Con Costo), Falta De Ip En
+                                Chasis, Certificación De Ip
+                            </option>
+                            <option value="SOP-BPD">
+                                Fallas Configuración Equipos Cliente Con Solución
+                            </option>
+                            <option value="SOP-CCO">
+                                Falla Correo, Soporte Configuración Correo
+                            </option>
+                            <option value="SOP-CMI">
+                                Configuraciones Avanzada(Modo Bridge, Nat, Pat)/ Asignar Ip
+                                Publica A Cpe
+                            </option>
+                            <option value="SOP-CVD">
+                                Fallas Claro Video, Soporte Claro Video
+                            </option>
+                            <option value="SOP-DEC">Soporte Tv Basico</option>
+                            <option value="SOP-DSD">Falla Aprovisionamiento Tv</option>
+                            <option value="SOP-DTH">Soporte Tv DTH</option>
+                            <option value="SOP-EDA">Falla Aprovisionamiento Internet</option>
+                            <option value="SOP-EQT">
+                                Falla Con Telefonia Atribuible Al Cliente
+                            </option>
+                            <option value="SOP-FFU">Falla Funcionalidades</option>
+                            <option value="SOP-FMW">
+                                Fallas Equipos Cliente Sin Solución
+                            </option>
+                            <option value="SOP-ICW">Informacion Red Wifi</option>
+                            <option value="SOP-IDI">Falla Cable Configuracion Modem</option>
+                            <option value="SOP-IFT">Informacion Funcionalidades</option>
+                            <option value="SOP-IPS">Informacion Ip Fija</option>
+                            <option value="SOP-OTI">
+                                Sin Soporte Internet / Telefonia O Falla Mas De Un Servicio
+                            </option>
+                            <option value="SOP-OST">Soporte Fallido Tv</option>
+                            <option value="SOP-PBX">Configuración PBX</option>
+                            <option value="SOP-PCI">
+                                Fallas Portal Mi Claro, Fallas Portal Mi Claro (Ingreso Y Dentro
+                                Del Portal)
+                            </option>
+                            <option value="SOP-PCL">
+                                Informacion De Portal Mi Claro (Registro Y Uso Del Mismo)
+                            </option>
+                            <option value="SOP-PIC">...</option>
+                            <option value="SOP-PLT">...</option>
+                            <option value="SOP-EFM">Activación Elegido Móvil</option>
+                            <option value="SOP-RES">Reinicio De Deco</option>
+                            <option value="SOP-SSI">Falla En Wifi</option>
+                            <option value="SOP-STL">Falla Aprovisionamiento LTE</option>
+                            <option value="SOP-TVA">Soporte Tv Análoga</option>
+                            <option value="SOP-UNC">Cambio De Número Telefónico</option>
+                            <option value="SOP-WEP">
+                                Cambio De Parametros Wifi, Solicitado Por El Cliente
+                            </option>
+                            <option value="SOP-WRC">Reinicio De Cable Módem</option>
+                            <option value="SOP-WWT">
+                                Tarjeta De Red Inalámbrica Esta Apagada
+                            </option>
+                            <option value="SAC-IPP">
+                                Información De Producto, Cliente Solicita Información Wifi Mesh
+                            </option>
+                            <option value="TEL-CAF">Bloqueo De Llamadas Con Costo</option>
+                            <option value="SAC-CTR">Envio De Control Remoto</option>
+                            <option value="DIS-FTE">Visita Falla En Telefonía</option>
+                            <option value="DIS-DSS">Visita Falla En Tv</option>
+                            <option value="DIS-FMM">Visita Falla En Internet</option>
+                            <option value="DIS-LNM">
+                                Visita Lentitud E Intermitencia Por Cable
+                            </option>
+                            <option value="DIS-WWF">Visita Falla En Wifi</option>
+                            <option value="DIS-CAM">...</option>
+                            <option value="OPE-PVM">Visita Falla 2Play/3Play</option>
+                            <option value="DIS-FED">Falla Masiva En Matriz</option>
+                            <option value="DIS-FMS">Falla Masiva En Sector</option>
+                            <option value="DIS-TST">Falla Provision Telefonía</option>
+                            <option value="DIS-TST">Falla Provision Lte Y Internet</option>
+                            <option value="DIS-AVF">
+                                Avance De Falla(2Do Nivel O Masiva)
+                            </option>
+                            <option value="OPE-COV">Confirmación De LLS/OT</option>
+                            <option value="OPE-REA">
+                                Reagendamiento O Cancelación LLS/OT
+                            </option>
+                            <option value="OPE-ILL">Incumplimiento De LLS</option>
+                            <option value="OPE-IOT">Incumplimiento De OT</option>
+                            <option value="OPE-IPI">Insatisfacción De La LLS</option>
+                            <option value="OPE-IPM">
+                                Insatisfaccin Con El Mantenimiento
+                            </option>
+                            <option value="SOP-FFH">Falla En Funcionalidades De FTTH</option>
+                            <option value="SOP-SFH">Falla Servicios De FTTH</option>
+                            <option value="SOP-VFH">
+                                Visita Por Fallas De Los Servicios De FTTH
+                            </option>
+                            <option value="SOP-FNT">Fallas No Atribuibles A Claro</option>
+                            <option value="SAC-ITR">
+                                Reconexiones Servicio(Aprovisionamiento) / Información Novedades
+                            </option>
+                            <option value="SAC-CSU">...</option>
+                            <option value="SAC-RAE">...</option>
+                        </datalist> -->
+                        <!-- Fin Marcaciones RR -->
+                    </div>
+                    
+
+
+                    <!-- CARGUE DE DOCUMENTOS PDF -->
+                    
+                    <div class="w-7xl mx-auto text-center border-b-1 border-lime-600 pb-2 mb-8 mt-10 drop-shadow-md">
+                    </div>
+
+                    <div class="w-4xl mx-auto mt-5" id="incapacidad">
+                        <label class="block mb-2 text-sm font-medium text-gray-900" for="small_size">Incapacidad</label>
+                        <input class="block w-full mb-5 text-xs text-gray-900 border
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50
+            focus:outline-none drop-shadow-md id=" small_size" type="file">
+                    </div>
+
+
+
+                    <div class="w-4xl mx-auto mt-5"  id="historia_clinica"> 
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="small_size">Historia Clinica</label>
+                        <input class="block w-full mb-5 text-xs text-gray-900 border
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50
+            focus:outline-none drop-shadow-md id=" small_size" type="file">
+                    </div>
+
+                    <div class="w-4xl mx-auto mt-5" id="cedula">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="small_size">Cedula</label>
+                        <input class="block w-full mb-5 text-xs text-gray-900 border
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50
+            focus:outline-none drop-shadow-md id=" small_size" type="file">
+                    </div>
+
+                    <div class="w-4xl mx-auto mt-5" id="soat">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="small_size">SOAT</label>
+                        <input class="block w-full mb-5 text-xs text-gray-900 border
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50
+            focus:outline-none drop-shadow-md id=" small_size" type="file">
+                    </div>
+
+                    <div class="w-4xl mx-auto mt-5" id="licencia_conduccion">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="small_size">Licencia de Conduccion</label>
+                        <input class="block w-full mb-5 text-xs text-gray-900 border
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50
+            focus:outline-none drop-shadow-md id=" small_size" type="file">
+                    </div>
+
+                    <div class="w-4xl mx-auto mt-5" id="tecnico_mecanica">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="small_size">Tecnico Mecanica</label>
+                        <input class="block w-full mb-5 text-xs text-gray-900 border
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50
+            focus:outline-none drop-shadow-md id=" small_size" type="file">
+                    </div>
+
+                    <div class="w-4xl mx-auto mt-5" id="Formulario_furips">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="small_size">Formulario Furips</label>
+                        <input class="block w-full mb-5 text-xs text-gray-900 border
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50
+            focus:outline-none drop-shadow-md id=" small_size" type="file">
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <!-- Mostar formulario de ingreso de nueva incapacidad -->
+            <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
+    </div>
 </body>
 
 </html>
