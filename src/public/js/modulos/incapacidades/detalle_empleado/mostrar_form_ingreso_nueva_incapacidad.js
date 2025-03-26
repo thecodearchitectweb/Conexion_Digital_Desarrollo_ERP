@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Elementos de selección principales
     const tipoIncapacidad = document.getElementById("tipo_incapacidad");
     const enfermedadGeneral = document.getElementById("enfermedad_general");
-    const accidenteTransito = document.getElementById("accidente_transito");
+    const accidenteTransito = document.getElementById("accidente_laboral_transito");
 
     // Contenedores que deben mostrarse según selección
     const enfermedadGeneralContainer = document.getElementById("enfermedad_general_container");

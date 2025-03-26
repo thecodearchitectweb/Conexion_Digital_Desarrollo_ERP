@@ -75,7 +75,7 @@
                             <label for="accidente_transito" class="block mb-2 text-sm font-medium text-gray-900">
                                 Accidente de Trabajo
                             </label>
-                            <select id="accidente_transito" name="detalle_incapacidad_eps_arl"
+                            <select id="accidente_laboral_transito" name="detalle_incapacidad_eps_arl"
                                 class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md">
                                 <option selected>Seleccione el Accidente de Trabajo</option>
                                 <option value="ORIGEN COMUN">Origen común</option>
@@ -114,7 +114,7 @@
                                         <path d="M12 15v3" />
                                     </svg>
                                 </div>
-                                <input datepicker datepicker-format="dd/mm/yyyy" id="arl-date_1" type="text" name="input_fecha_inicio_incapacidad"
+                                <input datepicker datepicker-format="dd/mm/yyyy" id="fecha_inicio_incapacidad" type="text" name="input_fecha_inicio_incapacidad"
                                     class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
                                     placeholder="DD/MM/AAAA" required />
                             </div>
@@ -131,7 +131,7 @@
                                         <path d="M16 2a1 1 0 0 1 .993 .883l.007 .117v1h1a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h1v-1a1 1 0 0 1 1.993 -.117l.007 .117v1h6v-1a1 1 0 0 1 1 -1zm3 7h-14v9.625c0 .705 .386 1.286 .883 1.366l.117 .009h12c.513 0 .936 -.53 .993 -1.215l.007 -.16v-9.625z" />
                                         <path d="M12 12a1 1 0 0 1 .993 .883l.007 .117v3a1 1 0 0 1 -1.993 .117l-.007 -.117v-2a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /></svg>
                                 </div>
-                                <input datepicker datepicker-format="dd/mm/yyyy" id="arl-date_2" type="text" name="input_fecha_final_incapacidad"
+                                <input datepicker datepicker-format="dd/mm/yyyy" id="fecha_final_incapacidad" type="text" name="input_fecha_final_incapacidad"
                                     class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
                                     placeholder="DD/MM/AAAA" required />
                             </div>
@@ -157,9 +157,9 @@
                                     <path d="M6 9h1.5a1.5 1.5 0 0 1 0 3h-.5h.5a1.5 1.5 0 0 1 0 3h-1.5" />
                                 </svg>
                                 </div>
-                                <input type="number" id="cantidad-dias" name="input_cantidad_dias_incapacidad" value="3"
+                                <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad" value=""
                                     class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
-                                    placeholder="" disabled />
+                                    placeholder=""  />
                             </div>
                         </div>
 
@@ -245,58 +245,58 @@
 
 
 
-            <div class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 my-2 drop-shadow-md"></div>
+            <div id="line_files" class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 my-2 drop-shadow-md hidden"></div>
 
 
             <!-- CARGUE DE DOCUMENTOS PDF  -->
 
-            <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 my-8 bg-gray-50 p-4 w-full  border border-gray-100 rounded-xl ">
+            <div id="container_files_incapacidad" class="relative container mx-auto px-4 sm:px-6 lg:px-8 my-8 bg-gray-50 p-4 w-full  border border-gray-100 rounded-xl hidden">
                 
       
                 <!-- FILE Incapacidad -->
-                <div class="mt-5 mx-auto w-full max-w-4xl" id="incapacidad">
+                <div class="mt-5 mx-auto w-full max-w-4xl hidden" id="file_incapacidad">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="incapacidad_file">Incapacidad</label>
                     <div class="flex justify-center">
                         <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none drop-shadow-md max-w-4xl" id="incapacidad_file" type="file" name="input_file_incapacidad">
                     </div>
                 </div>
             
-                <div class="mt-5 mx-auto w-full max-w-4xl" id="historia_clinica">
+                <div class="mt-5 mx-auto w-full max-w-4xl hidden" id="file_historia_clinica">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="historia_clinica_file">Historia Clínica</label>
                     <div class="flex justify-center">
                         <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none drop-shadow-md max-w-4xl" id="historia_clinica_file" type="file" name="input_file_historia_clinica">
                     </div>
                 </div>
                 
-                <div class="mt-5 mx-auto w-full max-w-4xl" id="cedula">
+                <div class="mt-5 mx-auto w-full max-w-4xl hidden" id="file_cedula">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="cedula_file">Cédula</label>
                     <div class="flex justify-center">
                         <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none drop-shadow-md max-w-4xl" id="cedula_file" type="file" name="input_file_cedula">
                     </div>
                 </div>
                 
-                <div class="mt-5 mx-auto w-full max-w-4xl" id="soat">
+                <div class="mt-5 mx-auto w-full max-w-4xl hidden" id="file_soat">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="soat_file">SOAT</label>
                     <div class="flex justify-center">
                         <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none drop-shadow-md max-w-4xl" id="soat_file" type="file" name="input_file_soat">
                     </div>
                 </div>
                 
-                <div class="mt-5 mx-auto w-full max-w-4xl" id="licencia_conduccion">
+                <div class="mt-5 mx-auto w-full max-w-4xl hidden" id="file_licencia_conduccion">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="licencia_file">Licencia de Conducción</label>
                     <div class="flex justify-center">
                         <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none drop-shadow-md max-w-4xl" id="licencia_file" type="file" name="input_file_licencia_conduccion">
                     </div>
                 </div>
                 
-                <div class="mt-5 mx-auto w-full max-w-4xl" id="tecnico_mecanica">
+                <div class="mt-5 mx-auto w-full max-w-4xl hidden" id="file_tecnico_mecanica">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="tecnico_file">Técnico Mecánica</label>
                     <div class="flex justify-center">
                         <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none drop-shadow-md max-w-4xl" id="tecnico_file" type="file" name="input_file_tecnico_mecanica">
                     </div>
                 </div>
                 
-                <div class="mt-5 mx-auto w-full max-w-4xl" id="Formulario_furips">
+                <div class="mt-5 mx-auto w-full max-w-4xl hidden" id="file_Formulario_furips">
                     <label class="block mb-2 text-sm font-medium text-gray-900" for="furips_file">Formulario Furips</label>
                     <div class="flex justify-center">
                         <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none drop-shadow-md max-w-4xl" id="furips_file" type="file" name="input_file_formulario_furips">
@@ -331,6 +331,13 @@
 
     <!-- Mostar formulario de ingreso de nueva incapacidad -->
     <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
+
+
+    <!-- Mostar formulario de ingreso de nueva incapacidad -->
+    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
+
+    <!-- Mostar formulario de ingreso de nueva incapacidad -->
+    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
 
 
 </body>
