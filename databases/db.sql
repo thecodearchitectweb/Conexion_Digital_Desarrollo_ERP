@@ -21,6 +21,19 @@ CREATE TABLE cie_10 (
 ) ENGINE=InnoDB;
 
 
+/* 
+
+INSERT INTO cie_10 (codigo_categoria, descripcion_categoria, codigo_subcategoria, descripcion_subcategoria)
+VALUES
+    ('A01', 'FIEBRES TIFOIDEA Y PARATIFOIDEA', 'A010', 'FIEBRE TIFOIDEA'),
+    ('A01', 'FIEBRES TIFOIDEA Y PARATIFOIDEA', 'A011', 'FIEBRE PARATIFOIDEA A'),
+    ('A01', 'FIEBRES TIFOIDEA Y PARATIFOIDEA', 'A012', 'FIEBRE PARATIFOIDEA B'),
+    ('A01', 'FIEBRES TIFOIDEA Y PARATIFOIDEA', 'A013', 'FIEBRE PARATIFOIDEA C'),
+    ('A01', 'FIEBRES TIFOIDEA Y PARATIFOIDEA', 'A014', 'FIEBRE PARATIFOIDEA, NO ESPECIFICADA');
+
+ */
+
+
 CREATE TABLE politicas_incapacidades (
     id_politicas_incapacidades INT AUTO_INCREMENT PRIMARY KEY,
     cumplimiento VARCHAR(10) DEFAULT NULL,
@@ -274,40 +287,37 @@ HAVING COUNT(*) > 1;
 
 
 
+select * from cie_10 LIMIT 150;
 
 
 
+SELECT 
+    e.id_empleado,
+    e.nombres,
+    e.apellidos,
+    e.documento,
+    e.contacto,
+    e.area,
+    e.fecha_contratacion,
+    e.tipo_contrato,
+    e.cargo,
+    e.estado,
+    e.lider,
+    e.salario,
+    e.valor_dia,
+    emp.id_empresa,
+    emp.nombre AS empresa_nombre,
+    emp.nit AS empresa_nit,
+    ss.id_seguridad_social,
+    ss.eps,
+    ss.arl,
+    ss.fondo_pension,
+    ss.caja_compensacion
+FROM empleado e
+    LEFT JOIN empresas emp ON e.id_empleado = emp.id_empleado
+    LEFT JOIN seguridad_social ss ON e.id_empleado = ss.id_empleado
+WHERE e.id_empleado = 2;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+describe cie_10;

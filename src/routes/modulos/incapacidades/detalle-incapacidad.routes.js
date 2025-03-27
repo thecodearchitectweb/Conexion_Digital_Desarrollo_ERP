@@ -7,4 +7,5 @@ import {detalleIncapacidadEmpleado} from '../../../controllers/modulos/incapacid
 router.get('/incapacidad/detalle/incapacidad/empleado/:id', detalleIncapacidadEmpleado);
 
 
+
 export default router;

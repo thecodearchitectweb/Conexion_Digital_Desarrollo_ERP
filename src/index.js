@@ -43,6 +43,7 @@ import seleccionarEmpleado  from './routes/modulos/incapacidades/seleccionar-emp
 import detalleIncapacidadEmpleado  from './routes/modulos/incapacidades/detalle-incapacidad.routes.js'
 import  registroNuevaIncapacidad from './routes/modulos/incapacidades/registro-nueva-incapacidad.routes.js'
 import  tablaIncapacidades from './routes/modulos/incapacidades/tabla-incapacidades.routes.js'
+import  appi_Cie10 from './routes/modulos/incapacidades/appi-cie-10.routes.js'
 
 
 // Usar rutas
@@ -50,6 +51,7 @@ app.use(seleccionarEmpleado)
 app.use(detalleIncapacidadEmpleado)
 app.use(registroNuevaIncapacidad)
 app.use(tablaIncapacidades)
+app.use(appi_Cie10)
 
 
 

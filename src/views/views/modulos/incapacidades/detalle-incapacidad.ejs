@@ -5,12 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle de incapacidad, filtro I</title>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
 </head>
 
 <header>
     <%- include('../../../partials/navbars/modulos/incapacidades/navbar_principal.ejs') %>
         <%-include('../../../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
             <%-include('../../../partials/header/header.ejs') %>
+            <%-include('../../../partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
 </header>
 
 <body class="bg-slate-200 px-0 mx-0">
@@ -114,7 +119,7 @@
                                         <path d="M12 15v3" />
                                     </svg>
                                 </div>
-                                <input datepicker datepicker-format="dd/mm/yyyy" id="fecha_inicio_incapacidad" type="text" name="input_fecha_inicio_incapacidad"
+                                <input  id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad"
                                     class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
                                     placeholder="DD/MM/AAAA" required />
                             </div>
@@ -131,7 +136,7 @@
                                         <path d="M16 2a1 1 0 0 1 .993 .883l.007 .117v1h1a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h1v-1a1 1 0 0 1 1.993 -.117l.007 .117v1h6v-1a1 1 0 0 1 1 -1zm3 7h-14v9.625c0 .705 .386 1.286 .883 1.366l.117 .009h12c.513 0 .936 -.53 .993 -1.215l.007 -.16v-9.625z" />
                                         <path d="M12 12a1 1 0 0 1 .993 .883l.007 .117v3a1 1 0 0 1 -1.993 .117l-.007 -.117v-2a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /></svg>
                                 </div>
-                                <input datepicker datepicker-format="dd/mm/yyyy" id="fecha_final_incapacidad" type="text" name="input_fecha_final_incapacidad"
+                                <input id="fecha_final_incapacidad" type="date" name="input_fecha_final_incapacidad"
                                     class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
                                     placeholder="DD/MM/AAAA" required />
                             </div>
@@ -157,16 +162,17 @@
                                     <path d="M6 9h1.5a1.5 1.5 0 0 1 0 3h-.5h.5a1.5 1.5 0 0 1 0 3h-1.5" />
                                 </svg>
                                 </div>
-                                <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad" value=""
-                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
-                                    placeholder=""  />
+                                <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad"  
+                                class= "bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    placeholder=""  disabled />
                             </div>
                         </div>
+                        
 
 
                         <!-- Enfermedad General -->
                         <div class="col-span-1">
-                            <label for="cantidad-dias" class="block mb-1.5 text-sm font-medium text-slate-900">Codigo Enfermedad General</label>
+                            <label for="codigo_enfermedad_general" class="block mb-1.5 text-sm font-medium text-slate-900">Codigo Enfermedad General</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
@@ -177,16 +183,16 @@
                                     <path d="M17 17l-2 2l2 2" />
                                 </svg>
                                 </div>
-                                <input type="number" id="cantidad-dias" value="" name=""
+                                <input type="text" id="codigo_enfermedad_general" value="" name="" list="lista_cie_10_codigo_categoria"
                                     class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
-                                    placeholder="" disabled />
+                                    placeholder=""  />
                             </div>
                         </div>
 
 
                         <!-- Enfermedad General -->
-                        <div class="col-span-1">
-                            <label for="cantidad-dias" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion Enfermedad</label>
+                        <div class="col-span-2">
+                            <label for="descripcion_diagnostico" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion diagnostico</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
@@ -199,9 +205,51 @@
                                     <path d="M15 13h1v3h-1z" />
                                 </svg>
                                 </div>
-                                <input type="number" id="cantidad-dias" name="" value="descripcion_enfermedad_cie_10"
+                                <input type="text" id="descripcion_diagnostico" name="" value=""
                                     class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
-                                    placeholder="" disabled />
+                                    placeholder="" readonly  />
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-span-1">
+                            <label for="codigo_categoria" class="block mb-1.5 text-sm font-medium text-slate-900">Codigo Categoria</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-barcode text-lime-600">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                    <path d="M8 13h1v3h-1z" />
+                                    <path d="M12 13v3" />
+                                    <path d="M15 13h1v3h-1z" />
+                                </svg>
+                                </div>
+                                <input type="text" id="codigo_categoria" name="" value=""
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    placeholder="" readonly />
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-span-1">
+                            <label for="descripcion_categoria" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion categoria</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-barcode text-lime-600">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                    <path d="M8 13h1v3h-1z" />
+                                    <path d="M12 13v3" />
+                                    <path d="M15 13h1v3h-1z" />
+                                </svg>
+                                </div>
+                                <input type="text" id="descripcion_categoria" name="" value=""
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    placeholder="" readonly />
                             </div>
                         </div>
 
@@ -230,9 +278,9 @@
                             <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" value="" class="sr-only peer" name="input_toggle_prorroga"> 
                                 <div
-                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-lime-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-lime-600">
+                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-lime-300 rounded-full peer  peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-lime-600">
                                 </div>
-                                <span class="ms-3 text-md font-medium text-gray-900 dark:text-gray-300">Prorroga</span>
+                                <span class="ms-3 text-md font-medium text-gray-900 ">Prorroga</span>
                             </label>
                         </div>
 
@@ -316,7 +364,7 @@
             </div>
             
 
-                <button type="submit" class="text-white bg-lime-600 hover:bg-lime-700 focus:outline-none focus:ring-4 focus:ring-lime-300 font-medium rounded-full text-sm px-10 py-2.5 text-center me-2 mb-2 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800">
+                <button type="submit" class="text-white bg-lime-600 hover:bg-lime-700 focus:outline-none focus:ring-4 focus:ring-lime-300 font-medium rounded-full text-sm px-10 py-2.5 text-center me-2 mb-2 ">
                     Guardar
                 </button>
 
@@ -333,12 +381,102 @@
     <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
 
 
-    <!-- Mostar formulario de ingreso de nueva incapacidad -->
+    <!-- Mostar input file para cargar los archivos correspondientes -->
     <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
 
-    <!-- Mostar formulario de ingreso de nueva incapacidad -->
+
+    <!-- calcula la cantidad de días de incapacidad -->
     <script src="./../../../../js/modulos/incapacidades/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
 
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    // Seleccionamos todos los input file dentro del contenedor
+    const fileInputs = document.querySelectorAll("#container_files_incapacidad input[type='file']");
+
+    fileInputs.forEach(input => {
+        input.addEventListener("change", function () {
+            const file = this.files[0]; // Obtener el archivo seleccionado
+            
+            if (file) {
+                const fileType = file.type; // Obtener tipo de archivo
+                const fileSize = file.size; // Obtener tamaño en bytes
+
+                // Validar que sea un PDF
+                if (fileType !== "application/pdf") {
+                    alert("❌ Solo se permiten archivos en formato PDF.");
+                    this.value = ""; // Limpiar el input file
+                    return;
+                }
+
+                // Validar que no supere los 5MB (5 * 1024 * 1024 bytes)
+                if (fileSize > 5 * 1024 * 1024) {
+                    alert("❌ El archivo no debe superar los 5MB.");
+                    this.value = ""; // Limpiar el input file
+                    return;
+                }
+
+                // ✅ Si cumple las validaciones, se mantiene el archivo seleccionado
+                console.log(`✔️ Archivo válido: ${file.name} (${(fileSize / 1024 / 1024).toFixed(2)} MB)`);
+            }
+        });
+    });
+});
+
+    </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const codigoInput = document.getElementById("codigo_enfermedad_general");
+        const descripcionDiagnosticoInput = document.getElementById("descripcion_diagnostico");
+        const codigoCategoriaInput = document.getElementById("codigo_categoria");
+        const descripcionCategoriaInput = document.getElementById("descripcion_categoria");
+
+        codigoInput.addEventListener("change", function () {
+            const codigo = codigoInput.value.trim(); 
+
+            if (codigo) {
+                console.log("🔍 Consultando API con código:", codigo); // Debug
+
+                fetch(`/api/cie_10/${codigo}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Error HTTP: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("📥 Datos recibidos:", data); // Debug
+
+                        if (data.success) {
+                            descripcionDiagnosticoInput.value = data.descripcion_subcategoria || "No disponible";
+                            codigoCategoriaInput.value = data.codigo_subcategoria || "No disponible";
+                            descripcionCategoriaInput.value = data.descripcion_categoria || "No disponible";
+                            
+                            
+                            console.log("✅ Inputs actualizados correctamente.");
+                        } else {
+                            alert("Código no encontrado en la base de datos.");
+                            descripcionDiagnosticoInput.value = "";
+                            codigoCategoriaInput.value = "";
+                            descripcionCategoriaInput.value = "";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("❌ Error en la consulta:", error);
+                        alert("Hubo un problema al obtener los datos.");
+                    });
+            }
+        });
+    });
+</script>
+
+
+    
+
+    
 
 </body>
 
