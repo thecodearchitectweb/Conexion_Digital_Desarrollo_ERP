@@ -18,11 +18,13 @@ export const codigo_enfermedad_general_cie_10 = async(req, res) => {
 
         // ✅ Consulta SQL corregida
         const [datos_cie_10] = await pool.query(
-            `SELECT descripcion_categoria, codigo_subcategoria, descripcion_subcategoria
+            `SELECT codigo_categoria, descripcion_categoria, codigo_subcategoria, descripcion_subcategoria
              FROM cie_10
              WHERE codigo_subcategoria = ?`, 
             [codigo] 
         );
+
+        console.log(datos_cie_10)
 
         // ✅ Validación corregida
         if (datos_cie_10.length > 0) {

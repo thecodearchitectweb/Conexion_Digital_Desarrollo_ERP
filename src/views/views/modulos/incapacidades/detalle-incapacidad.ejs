@@ -12,18 +12,28 @@
 </head>
 
 <header>
-    <%- include('../../../partials/navbars/modulos/incapacidades/navbar_principal.ejs') %>
-        <%-include('../../../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
+            <%- include('../../../partials/navbars/modulos/incapacidades/navbar_principal.ejs') %>
+            <%-include('../../../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
             <%-include('../../../partials/header/header.ejs') %>
             <%-include('../../../partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
+
+
+
+
 </header>
 
 <body class="bg-slate-200 px-0 mx-0">
 
 
+      
+
+
     <!-- DATOS DEL EMPLEADO -->
-    <div class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto mt-8 px-2 my-4 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full">
-        <div class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 mb-4 mt-4 drop-shadow-md"></div>
+    <div class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto mt-8 mb-32 px-2 my-4 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full">
+       
+        <%-include('../../../partials/breadcrumb/modulos/incapacidades/breadcrumb_detalle_incapacidad.ejs') %>
+       
+        <div class="max-w-7xl w-full mx-auto text-center border-b border-gray-400 pb-2 mb-4 mt-4 drop-shadow-md">
    
         <%-include('../../../partials/datos_empleado/datos_empleado.ejs') %>
 
@@ -31,7 +41,7 @@
 
             
 
-            <div class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 mb-2 mt-2 drop-shadow-md"></div>
+            <div class="w-full mx-auto text-center border-b-1 border-gray-400 pb-2 mb-2 mt-2 "></div>
 
             <!-- Contenedor 2, Seleccionar el tipo de incapacidad -->
 
@@ -41,6 +51,9 @@
             <div class="w-full text-center border-b border-lime-600 mt-6 mb-4 py-2 drop-shadow-md">
                 <h2 class="text-md font-bold">Ingreso Nueva Incapacidad</h2>
             </div>
+            
+            
+            
 
             <div class="w-full container mx-auto px-2 my-2 p-4 flex flex-col bg-gray-50 border border-gray-100 rounded-xl">
                 <div class="w-full py-2 ">
@@ -53,7 +66,7 @@
                                 Seleccione el tipo de incapacidad
                             </label> 
                             <select id="tipo_incapacidad" name="tipo_incapacidad"
-                                class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md">
+                                class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md ">
                                 <option selected>Seleccione el tipo de incapacidad</option>
                                 <option value="EPS">EPS</option>
                                 <option value="ARL">ARL</option>
@@ -93,13 +106,13 @@
 
 
 
-            <div class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 mb-2 mt-0 drop-shadow-md"></div>
+            <div class="w-full text-center border-b border-gray-400 pb-2 mb-2 drop-shadow-md"></div>
 
 
 
             <!-- INGRESO DATOS DE LA NUEVA INCAPACIDAD -->
             <div id="form_ingreso_nueva_incapacidad" class="relative w-full container mx-auto my-2 p-4 border border-gray-100 rounded-xl bg-gray-50">
-                <div class="w-full max-w-7xl mx-auto p-2 ">
+                <div class="w-full mx-auto p-2 ">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
                         
 
@@ -120,7 +133,7 @@
                                     </svg>
                                 </div>
                                 <input  id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad"
-                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md"
                                     placeholder="DD/MM/AAAA" required />
                             </div>
                         </div>
@@ -137,7 +150,7 @@
                                         <path d="M12 12a1 1 0 0 1 .993 .883l.007 .117v3a1 1 0 0 1 -1.993 .117l-.007 -.117v-2a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /></svg>
                                 </div>
                                 <input id="fecha_final_incapacidad" type="date" name="input_fecha_final_incapacidad"
-                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md"
                                     placeholder="DD/MM/AAAA" required />
                             </div>
                         </div>
@@ -164,7 +177,7 @@
                                 </div>
                                 <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad"  
                                 class= "bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
-                                    placeholder=""  disabled />
+                                    placeholder=""  readonly />
                             </div>
                         </div>
                         
@@ -184,74 +197,79 @@
                                 </svg>
                                 </div>
                                 <input type="text" id="codigo_enfermedad_general" value="" name="" list="lista_cie_10_codigo_categoria"
-                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md"
                                     placeholder=""  />
                             </div>
                         </div>
 
 
-                        <!-- Enfermedad General -->
+                         <!-- Enfermedad General -->
+
+                                                   
                         <div class="col-span-2">
                             <label for="descripcion_diagnostico" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion diagnostico</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-barcode text-lime-600">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-tidal text-lime-600">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                    <path d="M8 13h1v3h-1z" />
-                                    <path d="M12 13v3" />
-                                    <path d="M15 13h1v3h-1z" />
+                                    <path d="M5.333 6l3.334 3.25l3.333 -3.25l3.333 3.25l3.334 -3.25l3.333 3.25l-3.333 3.25l-3.334 -3.25l-3.333 3.25l3.333 3.25l-3.333 3.25l-3.333 -3.25l3.333 -3.25l-3.333 -3.25l-3.334 3.25l-3.333 -3.25z" />
                                 </svg>
                                 </div>
                                 <input type="text" id="descripcion_diagnostico" name="" value=""
-                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm  font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md"
                                     placeholder="" readonly  />
                             </div>
                         </div>
+
                         
-                        
+                        <div class="col-span-2">
+                            <label for="descripcion_categoria" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion categoria</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-body-scan text-lime-600">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+                                    <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+                                    <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+                                    <path d="M12 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                    <path d="M10 17v-1a2 2 0 1 1 4 0v1" />
+                                    <path d="M8 10c.666 .666 1.334 1 2 1h4c.666 0 1.334 -.334 2 -1" />
+                                    <path d="M12 11v3" />
+                                </svg>
+                                </div>
+                                <input type="text" id="descripcion_categoria" name="" value=""
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md"
+                                    placeholder="" readonly />
+                            </div>
+                        </div>
+
+
+
+
                         <div class="col-span-1">
                             <label for="codigo_categoria" class="block mb-1.5 text-sm font-medium text-slate-900">Codigo Categoria</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-barcode text-lime-600">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                    <path d="M8 13h1v3h-1z" />
-                                    <path d="M12 13v3" />
-                                    <path d="M15 13h1v3h-1z" />
-                                </svg>
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-category-2 text-lime-600">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M14 4h6v6h-6z" />
+                                        <path d="M4 14h6v6h-6z" />
+                                        <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                        <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                    </svg>
                                 </div>
                                 <input type="text" id="codigo_categoria" name="" value=""
-                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
+                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md"
                                     placeholder="" readonly />
                             </div>
                         </div>
                         
                         
-                        <div class="col-span-1">
-                            <label for="descripcion_categoria" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion categoria</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-barcode text-lime-600">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                    <path d="M8 13h1v3h-1z" />
-                                    <path d="M12 13v3" />
-                                    <path d="M15 13h1v3h-1z" />
-                                </svg>
-                                </div>
-                                <input type="text" id="descripcion_categoria" name="" value=""
-                                    class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md"
-                                    placeholder="" readonly />
-                            </div>
-                        </div>
+
 
 
                         <!-- Enfermedad General -->
@@ -292,13 +310,12 @@
 
 
 
-
-            <div id="line_files" class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 my-2 drop-shadow-md hidden"></div>
+            <div id="line_files" class="w-full mx-auto text-center border-b-1 border-gray-400 pb-2 my-4 drop-shadow-md hidden"></div>
 
 
             <!-- CARGUE DE DOCUMENTOS PDF  -->
 
-            <div id="container_files_incapacidad" class="relative container mx-auto px-4 sm:px-6 lg:px-8 my-8 bg-gray-50 p-4 w-full  border border-gray-100 rounded-xl hidden">
+            <div id="container_files_incapacidad" class="relative container mx-auto px-4 sm:px-6 lg:px-8 my-4 bg-gray-50 p-4 w-full  border border-gray-100 rounded-xl hidden">
                 
       
                 <!-- FILE Incapacidad -->
@@ -354,7 +371,12 @@
             </div>
 
 
-            <div class="w-7xl mx-auto text-center border-b-1 border-gray-400 pb-2 mb-2 mt-2 drop-shadow-md"></div>
+
+
+
+
+
+            <div class="w-full mx-auto text-center border-b-1 border-gray-400 pb-2 mb-2 mt-2 drop-shadow-md"></div>
 
 
             <!-- OBSERVACIONES -->
@@ -364,19 +386,38 @@
             </div>
             
 
-                <button type="submit" class="text-white bg-lime-600 hover:bg-lime-700 focus:outline-none focus:ring-4 focus:ring-lime-300 font-medium rounded-full text-sm px-10 py-2.5 text-center me-2 mb-2 ">
+            <div class="flex justify-center space-x-4 mt-8">
+                <button type="submit" class="text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-bl-2xl text-sm px-20 py-2.5 text-center">
                     Guardar
                 </button>
+                
+                <button data-modal-target="extralarge-modal"  data-modal-toggle="extralarge-modal"  class="text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-br-2xl text-sm px-20 py-2.5 text-center" type="button">
+                    Historial
+                </button>
+            </div>
+            
 
 
 
         </form>
-   
+
+
+        
+
+        
+  
+
+
 
             
     </div>
 
 
+    <!-- VISTA MODAL HISTORIAL INCAPACIDADES DEL EMPLEADO -->
+    <%-include('../../../partials/modals/modulos/incapacidades/modals_tabla_historial_incapacidades.ejs') %>
+
+
+    
     <!-- Mostar formulario de ingreso de nueva incapacidad -->
     <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
 
@@ -389,94 +430,15 @@
     <script src="./../../../../js/modulos/incapacidades/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
 
 
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    // Seleccionamos todos los input file dentro del contenedor
-    const fileInputs = document.querySelectorAll("#container_files_incapacidad input[type='file']");
-
-    fileInputs.forEach(input => {
-        input.addEventListener("change", function () {
-            const file = this.files[0]; // Obtener el archivo seleccionado
-            
-            if (file) {
-                const fileType = file.type; // Obtener tipo de archivo
-                const fileSize = file.size; // Obtener tamaño en bytes
-
-                // Validar que sea un PDF
-                if (fileType !== "application/pdf") {
-                    alert("❌ Solo se permiten archivos en formato PDF.");
-                    this.value = ""; // Limpiar el input file
-                    return;
-                }
-
-                // Validar que no supere los 5MB (5 * 1024 * 1024 bytes)
-                if (fileSize > 5 * 1024 * 1024) {
-                    alert("❌ El archivo no debe superar los 5MB.");
-                    this.value = ""; // Limpiar el input file
-                    return;
-                }
-
-                // ✅ Si cumple las validaciones, se mantiene el archivo seleccionado
-                console.log(`✔️ Archivo válido: ${file.name} (${(fileSize / 1024 / 1024).toFixed(2)} MB)`);
-            }
-        });
-    });
-});
-
-    </script>
+    <!-- VERIFICAR QUE SEA PDF, CALCULAR QUE TENGA MAXIMO UN PESO DE 5MB -->
+    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/verificacion_pdf_peso.js"></script>
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const codigoInput = document.getElementById("codigo_enfermedad_general");
-        const descripcionDiagnosticoInput = document.getElementById("descripcion_diagnostico");
-        const codigoCategoriaInput = document.getElementById("codigo_categoria");
-        const descripcionCategoriaInput = document.getElementById("descripcion_categoria");
-
-        codigoInput.addEventListener("change", function () {
-            const codigo = codigoInput.value.trim(); 
-
-            if (codigo) {
-                console.log("🔍 Consultando API con código:", codigo); // Debug
-
-                fetch(`/api/cie_10/${codigo}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Error HTTP: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log("📥 Datos recibidos:", data); // Debug
-
-                        if (data.success) {
-                            descripcionDiagnosticoInput.value = data.descripcion_subcategoria || "No disponible";
-                            codigoCategoriaInput.value = data.codigo_subcategoria || "No disponible";
-                            descripcionCategoriaInput.value = data.descripcion_categoria || "No disponible";
-                            
-                            
-                            console.log("✅ Inputs actualizados correctamente.");
-                        } else {
-                            alert("Código no encontrado en la base de datos.");
-                            descripcionDiagnosticoInput.value = "";
-                            codigoCategoriaInput.value = "";
-                            descripcionCategoriaInput.value = "";
-                        }
-                    })
-                    .catch(error => {
-                        console.error("❌ Error en la consulta:", error);
-                        alert("Hubo un problema al obtener los datos.");
-                    });
-            }
-        });
-    });
-</script>
+    <!-- API FETCH PARA CONSULTAR CIE 10 -->
+    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/api_fetch_cie_10.js"></script>
 
 
-    
 
-    
 
 </body>
 

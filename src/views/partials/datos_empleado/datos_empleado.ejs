@@ -46,7 +46,7 @@
             
             <% if (datos_empleado) { %>    
                 
-                <div class="p-0 border border-t-0 border-transparent  max-w-full mx-auto ">
+                <div class="p-0   w-full mx-auto ">
                 
                 
                     <!-- DATOS BASICOS DEL EMPLEADO -->
@@ -56,8 +56,8 @@
 
 
                     <!-- DATOS BASICOS DEL EMPLEADO INPUTS-->
-                    <div class="mx-auto px-2 my-6 bg-gray-50 p-4 flex flex-col items-center justify-center w-full max-w-10/12 border  border-gray-100 rounded-xl ">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5  gap-x-3 p-0 gap-y-2">
+                    <div class="mx-auto px-2 my-6 bg-gray-50 p-4 flex flex-col items-center justify-center w-full b border border-gray-100 rounded-xl  ro ">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-x-3 p-0 gap-y-2 w-full">
 
 
                             <!-- INPUT NOMBRE -->
@@ -76,8 +76,8 @@
                                         </svg>
                                     </div>
                                     <input type="text" id="input-group-1" value="<%= datos_empleado.nombres %>"
-                                        class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full px-8 p-1.5 uppercase shadow-md"
-                                        placeholder=""  disabled/>
+                                        class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full p-1.5 uppercase shadow-md"
+                                        placeholder=""  readonly/>
                                 </div>
                             </div>
 
@@ -98,7 +98,7 @@
                                     </div>
                                     <input type="text" id="input-group-1" value="<%= datos_empleado.apellidos %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -120,7 +120,7 @@
                                     </div>
                                     <input type="number" id="input-group-1" value="<%= datos_empleado.documento %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -143,7 +143,7 @@
                                     </div>
                                     <input type="text" id="input-group-1" value="<%= datos_empleado.estado %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -166,7 +166,7 @@
                                     </div>
                                     <input type="date" id="input-group-1"  value="<%= datos_empleado.fecha_contratacion %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10  p-1.5  shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -189,7 +189,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"   value="<%= datos_empleado.tipo_contrato %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -211,7 +211,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"  value="<%= datos_empleado.cargo %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -234,7 +234,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"  value="<%= datos_empleado.lider %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -252,7 +252,7 @@
                                     </div>
                                     <input type="text" id="salario" value="<%= datos_empleado.salario %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -276,7 +276,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"  value="<%= datos_empleado.valor_dia %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -295,7 +295,7 @@
                         <h2 class="text-md font-bold">Empresa Asociada</h2>
                     </div>
 
-                    <div class="mx-auto px-2 my-6 bg-gray-50 p-4 flex flex-col items-center justify-center w-full max-w-10/12 border  border-gray-100 rounded-xl">
+                    <div class="mx-auto px-2 my-6 bg-gray-50 p-4 flex flex-col items-center justify-center w-full  border  border-gray-100 rounded-xl">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-x-3 p-0 gap-y-2">
 
 
@@ -316,7 +316,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"   value="<%= datos_empleado.empresa_nombre %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full px-8 p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -332,7 +332,7 @@
                         <h2 class="text-md font-bold">Seguridad Social</h2>
                     </div>
 
-                    <div class="mx-auto px-4 my-6 bg-gray-50 p-4 flex flex-col items-center justify-center w-full max-w-10/12 border border-gray-100 rounded-xl">
+                    <div class="mx-auto px-4 my-6 bg-gray-50 p-4 flex flex-col items-center justify-center w-full  border border-gray-100 rounded-xl">
                         <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4  2xl:grid-cols-5 gap-x-3 p-0 ">
 
 
@@ -358,7 +358,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"   value="<%= datos_empleado.eps %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full px-8  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -385,7 +385,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"  value="<%= datos_empleado.arl %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full px-8  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -408,7 +408,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"  value="<%= datos_empleado.fondo_pension %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full px-8  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
@@ -440,7 +440,7 @@
                                     </div>
                                     <input type="text" id="input-group-1"   value="<%= datos_empleado.caja_compensacion %>"
                                         class="bg-gray-50 border-b-lime-600 border-gray-300 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full px-8  p-1.5 uppercase shadow-md"
-                                        placeholder="" disabled/>
+                                        placeholder="" readonly/>
                                 </div>
                             </div>
 
