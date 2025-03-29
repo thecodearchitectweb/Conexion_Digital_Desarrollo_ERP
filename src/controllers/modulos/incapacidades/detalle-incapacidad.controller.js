@@ -1,7 +1,5 @@
 import { pool } from "../../../models/db.js";
 
-//import bcrypt from "bcryptjs";
-
 
 import express from 'express';
 
@@ -12,6 +10,12 @@ const app = express();
     export const detalleIncapacidadEmpleado = async(req, res) => {
         try {
             const { id } = req.params;  //  Ahora obtenemos el ID desde req.params
+
+            
+            // Guardar el ID del empleado en la sesión
+            req.session.id_empleado_consultado = id; 
+            console.log("Empleado consultado, ID en sesión:", req.session.id_empleado_consultado);
+
     
             if (!id) {
                 return res.status(400).send('Error: ID de empleado no proporcionado');

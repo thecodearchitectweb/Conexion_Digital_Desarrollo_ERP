@@ -3,6 +3,8 @@ import { dirname, join } from "path";
 import express from "express";
 import dotenv from "dotenv";
 import morgan from 'morgan';
+import session from "express-session";
+import MySQLStore from "express-mysql-session";
 import { pool } from './models/db.js'; // Importa la conexión a la base de datos
 
 
@@ -32,10 +34,41 @@ app.set("views", join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 
+
+// Configuración de la tienda de sesiones
+const sessionStore = new (MySQLStore(session))({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
+}, pool);
+
+
+
+// Middleware de sesión
+const sessionMiddleware = session({
+  key: "session_cookie_name", // Nombre de la cookie de sesión
+  secret: "clave_secreta_segura", // Cambia esto por una clave segura
+  store: sessionStore, // Almacena sesiones en MySQL
+  resave: false, // No guardar sesión si no hay cambios
+  saveUninitialized: false, // No guardar sesiones vacías
+  cookie: {
+      httpOnly: true, // Protege contra ataques XSS
+      secure: false, // Cambia a `true` si usas HTTPS
+      sameSite: "strict", // Protección CSRF
+      maxAge: 1000 * 60 * 60 * 24 // Expira en 24 horas
+  }
+});
+
+
 // Middlewares generales
 app.use(morgan("dev")); // Registro de solicitudes
 app.use(express.urlencoded({ extended: true })); // Parsear formularios
 app.use(express.json()); // Parsear JSON
+app.use(sessionMiddleware); // Middleware de sesión
+
+
 
 
 // Importar y configurar rutas

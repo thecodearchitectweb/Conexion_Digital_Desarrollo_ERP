@@ -26,9 +26,18 @@ document.addEventListener("DOMContentLoaded", function () {
             if (tipoIncapacidad.value === "EPS") {
                 enfermedadGeneralContainer.classList.remove("hidden");
                 accidenteTransitoContainer.classList.add("hidden");
+
+                // Asegura que solo el select visible tenga name
+                enfermedadGeneral.setAttribute("name", "select_detalle_incapacidad_eps_arl");
+                accidenteTransito.removeAttribute("name");
+
             } else if (tipoIncapacidad.value === "ARL") {
                 accidenteTransitoContainer.classList.remove("hidden");
                 enfermedadGeneralContainer.classList.add("hidden");
+
+                // Asegura que solo el select visible tenga name
+                accidenteTransito.setAttribute("name", "select_detalle_incapacidad_eps_arl");
+                enfermedadGeneral.removeAttribute("name");
             }
         }
 

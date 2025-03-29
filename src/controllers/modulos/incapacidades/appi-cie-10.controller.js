@@ -16,7 +16,7 @@ export const codigo_enfermedad_general_cie_10 = async(req, res) => {
             return res.status(400).json({ success: false, message: "Código no proporcionado" });
         }
 
-        // ✅ Consulta SQL corregida
+
         const [datos_cie_10] = await pool.query(
             `SELECT codigo_categoria, descripcion_categoria, codigo_subcategoria, descripcion_subcategoria
              FROM cie_10
@@ -24,9 +24,9 @@ export const codigo_enfermedad_general_cie_10 = async(req, res) => {
             [codigo] 
         );
 
-        console.log(datos_cie_10)
+        console.log(datos_cie_10) 
 
-        // ✅ Validación corregida
+
         if (datos_cie_10.length > 0) {
             return res.json({ success: true, ...datos_cie_10[0] });
         } else {
