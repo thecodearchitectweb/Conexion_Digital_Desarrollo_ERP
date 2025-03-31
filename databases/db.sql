@@ -1,5 +1,7 @@
 CREATE DATABASE conexion_digital;
 
+USE conexion_digital;
+
 CREATE TABLE codificacion_entidades (
     id_codificacion_entidades INT AUTO_INCREMENT PRIMARY KEY,
     administradora VARCHAR(100) DEFAULT NULL,
@@ -12,10 +14,10 @@ CREATE TABLE codificacion_entidades (
 
 CREATE TABLE cie_10 (
     id_cie_10 INT AUTO_INCREMENT PRIMARY KEY,
-    codigo_categoria VARCHAR(10) DEFAULT NULL,
-    descripcion_categoria VARCHAR(100) DEFAULT NULL,
-    codigo_subcategoria VARCHAR(10) DEFAULT NULL,
-    descripcion_subcategoria VARCHAR(200) DEFAULT NULL,
+    codigo_categoria VARCHAR(50) DEFAULT NULL,
+    descripcion_categoria VARCHAR(300) DEFAULT NULL,
+    codigo_subcategoria VARCHAR(300) DEFAULT NULL,
+    descripcion_subcategoria VARCHAR(300) DEFAULT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
@@ -62,8 +64,6 @@ CREATE TABLE empleado(
     
 )ENGINE=InnoDB;
 
-ALTER TABLE empleado ADD COLUMN contacto BIGINT DEFAULT NULL;
-
 
 
 
@@ -103,8 +103,10 @@ CREATE TABLE incapacidades_historial(
     fecha_inicio_incapacidad DATE DEFAULT NULL,
     fecha_final_incapacidad DATE DEFAULT NULL,
     cantidad_dias INT DEFAULT NULL,
-    codigo_enfermedad_general VARCHAR(50) DEFAULT NULL,
-    descripcion_enfermedad_general VARCHAR(200) DEFAULT NULL,
+    codigo_categoria VARCHAR(200) DEFAULT NULL,
+    descripcion_categoria VARCHAR(300) DEFAULT NULL,
+    codigo_subcategoria VARCHAR(300) DEFAULT NULL,
+    descripcion_subcategoria VARCHAR(300) DEFAULT NULL,
     prorroga BOOLEAN DEFAULT NULL,
     id_empleado INT,
 

@@ -49,12 +49,13 @@ export const registroNuevaIncapacidad = async(req, res) => {
         const prorroga = input_toggle_prorroga ? 1 : 0;
 
 
+        /* INSERTAR DATOS EN LA TABLA HISTORIAL DE INCAPACIDADES */
         const [data_insert_incapacidad] = await pool.query(
 
-            'INSERT INTO incapacidades_historial  (tipo_incapacidad, subtipo_incapacidad, fecha_inicio_incapacidad, fecha_final_incapacidad, cantidad_dias, codigo_categoria, descripcion_categoria,  codigo_subcategoria, descripcion_subcatagoria,  prorroga, id_empleado ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            'INSERT INTO incapacidades_historial  (tipo_incapacidad, subtipo_incapacidad, fecha_inicio_incapacidad, fecha_final_incapacidad, cantidad_dias, codigo_categoria, descripcion_categoria,  codigo_subcategoria, descripcion_subcategoria,  prorroga, id_empleado ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [
                 select_tipo_incapacidad,
-                select_detalle_incapacidad_eps_arl,
+                select_detalle_incapacidad_eps_arl, 
                 input_fecha_inicio_incapacidad,
                 input_fecha_final_incapacidad,
                 input_cantidad_dias_incapacidad,
@@ -74,7 +75,23 @@ export const registroNuevaIncapacidad = async(req, res) => {
         console.log("ID de la incapacidad insertada:", data_insert_incapacidad_ID);
 
 
-        // 🔥 Verifica si Express responde correctamente
+
+        /* INSERTAR OBSERVACIONES EN LA TABLA  incapacidades_seguimiento*/
+        const [] = await pool.query(
+            
+            'INSERT INTO incapacidades_seguimiento (estado_incapacidad, observaciones, id_incapacidades_historial) VALUES (?, ?, ?)',
+            [
+                select_estado_incapacidad,
+                textarea_observaciones,
+                data_insert_incapacidad_ID
+            ]
+        );
+
+         // Obtener el ID de inserción
+         const data_insert_observaciones_incapacidad_ID = data_insert_incapacidad.insertId;
+
+
+
         res.redirect(`/incapacidad/seleccionar/empleado`);
 
 
