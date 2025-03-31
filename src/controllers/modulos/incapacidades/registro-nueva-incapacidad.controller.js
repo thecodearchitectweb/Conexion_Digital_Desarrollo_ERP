@@ -79,6 +79,9 @@ export const registroNuevaIncapacidad = async(req, res) => {
 
         req.session.id_incapacidad_registrada = data_insert_incapacidad_ID;
 
+        /* req.session.id_incapacidad_registrada = data_insert_incapacidad.insertId;
+ */
+
         console.log("registro nueva incapacidad controller - ID de la incapacidad insertada:", data_insert_incapacidad_ID);
 
 
@@ -100,25 +103,67 @@ export const registroNuevaIncapacidad = async(req, res) => {
 
 
 
-            // Ahora, guardar las rutas de los archivos subidos en la tabla `ruta_documentos`
-        // req.files es un objeto con claves que corresponden a los nombres de los campos definidos en el middleware
-        if (req.files) {
-            // Por cada campo (input) en req.files
-            for (const campo in req.files) {
-            // req.files[campo] es un arreglo de archivos para ese input
-            for (const file of req.files[campo]) {
-                // file.destination es la ruta absoluta donde se guardó el archivo.
-                // Queremos almacenar una ruta relativa a la carpeta "upload"
-                const rutaRelativa = path.join(file.destination.replace(path.join(process.cwd(), 'upload'), ''), file.filename);
-    
-                // Inserción en la tabla ruta_documentos
-                await pool.query(
-                'INSERT INTO ruta_documentos (nombre, ruta, id_incapacidades_historial) VALUES (?, ?, ?)',
-                [campo, rutaRelativa, data_insert_incapacidad_ID]
-                );
-            }
-            }
-        }
+            // Verificar si hay archivos en la solicitud
+/*             if (req.files) {
+                for (const campo in req.files) {
+                    for (const file of req.files[campo]) {
+                        // Obtener la ruta relativa del archivo
+                        const rutaRelativa = path.join(file.destination.replace(path.join(process.cwd(), 'upload'), ''), file.filename);
+
+
+                        // Insertar en la base de datos
+                        const [data_insert_ruta] = await pool.query(
+                            'INSERT INTO ruta_documentos (nombre, ruta, id_incapacidades_historial) VALUES (?, ?, ?)',
+                            [campo, rutaRelativa, data_insert_incapacidad_ID]
+                        );
+
+
+                        // Obtener el ID de inserción y mostrarlo en consola
+                        const data_insert_ruta_ID = data_insert_ruta.insertId;
+                        console.log("Registro nueva incapacidad controller - ID de la ruta insertada:", data_insert_ruta_ID);
+                    }
+                }
+            } */
+
+                
+                // Verificar si hay archivos en la solicitud
+                if (req.files) {
+                    // Inicializamos un arreglo para almacenar los IDs de cada ruta insertada
+                    let rutasIds = [];
+                    
+                    for (const campo in req.files) {
+                        for (const file of req.files[campo]) {
+                            // Obtener la ruta relativa del archivo
+                            const rutaRelativa = path.join(
+                                file.destination.replace(path.join(process.cwd(), 'upload'), ''),
+                                file.filename
+                            );
+
+                            // Insertar en la base de datos
+                            const [data_insert_ruta] = await pool.query(
+                                'INSERT INTO ruta_documentos (nombre, ruta, id_incapacidades_historial) VALUES (?, ?, ?)',
+                                [campo, rutaRelativa, data_insert_incapacidad_ID]
+                            );
+
+                            // Obtener el ID de inserción y agregarlo al arreglo
+                            const data_insert_ruta_ID = data_insert_ruta.insertId;
+                            rutasIds.push(data_insert_ruta_ID);
+                            console.log("Registro nueva incapacidad controller - ID de la ruta insertada:", data_insert_ruta_ID);
+                        }
+                    }
+                    
+                    // Guardamos el arreglo de IDs en la sesión
+                    req.session.ids_rutas_documentos = rutasIds;
+                }
+
+
+
+            
+
+           
+
+
+
 
 
         return res.redirect(`/incapacidad/confirmacion/incapacidad/recibida/${id_empleado}`);

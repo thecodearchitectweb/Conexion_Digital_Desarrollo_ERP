@@ -23,274 +23,82 @@
 
 
 
-            <!-- Modal body -->
-            <div class="p-4 md:p-10 space-y-16 overflow-auto max-h-[70vh] ">
-
-                <div class="relative overflow-x-auto drop-shadow-xl rounded-b-2xl ">
-                    <table class="w-full text-xs text-center rtl:text-right text-slate-700 ">
-                        <thead class="text-xs text-white uppercase bg-slate-700 ">
+            <div class="p-4 md:p-10 space-y-16 overflow-auto max-h-[70vh]">
+                <div class="relative overflow-x-auto drop-shadow-xl rounded-b-2xl">
+                    <table class="w-full text-xs text-center rtl:text-right text-slate-700">
+                        <thead class="text-xs text-white uppercase bg-slate-700">
                             <tr>
-                                <th scope="col" class="px-3 py-3 border border-white rounded-tl-xl ">
+                                <th scope="col" class="px-3 py-3 border border-white rounded-tl-xl">
                                     <div class="w-full flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-white">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-white">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
+                                            <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
+                                            <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                            <path d="M8 11h4" />
+                                            <path d="M8 15h3" />
+                                            <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
+                                            <path d="M18.5 19.5l2.5 2.5" />
+                                        </svg>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-3 py-3 border border-white">
-                                    DOCUMENTO
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">
-                                    FECHA REGISTRO
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">
-                                    INICIO INCAPACIDAD
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">
-                                    FINAL INCAPACIDAD
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">
-                                    DÍAS INCAPACIDAD
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white">
-                                    CATEGORIA
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">
-                                    DESC. CATEGORIA
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white">
-                                    SUBCATEGORIA
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">
-                                    DESC. SUBCATEGORIA
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white">
-                                    PRORROGA
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white rounded-tr-xl">
-                                    ESTADO
-                                </th>
+                                <th scope="col" class="px-3 py-3 border border-white">DOCUMENTO</th>
+                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">FECHA REGISTRO</th>
+                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">INICIO INCAPACIDAD</th>
+                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">FINAL INCAPACIDAD</th>
+                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">DÍAS INCAPACIDAD</th>
+                                <th scope="col" class="px-3 py-3 border border-white">CATEGORIA</th>
+                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">DESC. CATEGORIA</th>
+                                <th scope="col" class="px-3 py-3 border border-white">SUBCATEGORIA</th>
+                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">DESC. SUBCATEGORIA</th>
+                                <th scope="col" class="px-3 py-3 border border-white">PRORROGA</th>
+                                <th scope="col" class="px-3 py-3 border border-white rounded-tr-xl">ESTADO</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                    <a href="" target="_blank">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
-                                    </a>
-                                </td>
-                                <td class="px-3 py-1.5">123456789</td>
-                                <td class="px-3 py-1">2025-03-01</td>
-                                <td class="px-3 py-1">2025-03-05</td>
-                                <td class="px-3 py-1">2025-03-10</td>
-                                <td class="px-3 py-1 text-center">5</td>
-                                <td class="px-3 py-1">General</td>
-                                <td class="px-3 py-1">Enfermedad</td>
-                                <td class="px-3 py-1">Respiratoria</td>
-                                <td class="px-3 py-1">Bronquitis</td>
-                                <td class="px-3 py-1 text-center">No</td>
-                                <td class="px-3 py-1 text-center">
-                                    <span class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">Purple</span>
-                                </td>
-                            </tr>
-                            
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
-                                </td>
-                                <td class="px-3 py-1.5">987654321</td>
-                                <td class="px-3 py-1">2025-03-02</td>
-                                <td class="px-3 py-1">2025-03-06</td>
-                                <td class="px-3 py-1">2025-03-11</td>
-                                <td class="px-3 py-1 text-center">5</td>
-                                <td class="px-3 py-1">Accidente</td>
-                                <td class="px-3 py-1">Caída</td>
-                                <td class="px-3 py-1">Fractura</td>
-                                <td class="px-3 py-1">Brazo</td>
-                                <td class="px-3 py-1 text-center">Sí</td>
-                                <td class="px-3 py-1 text-center">
-                                    <span class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">Indigo</span>
-                                </td>
-                            </tr>
-                            
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
-                                </td>
-                                <td class="px-3 py-1.5">111223344</td>
-                                <td class="px-3 py-1">2025-03-03</td>
-                                <td class="px-3 py-1">2025-03-07</td>
-                                <td class="px-3 py-1">2025-03-12</td>
-                                <td class="px-3 py-1 text-center">5</td>
-                                <td class="px-3 py-1">General</td>
-                                <td class="px-3 py-1">Gastroenteritis</td>
-                                <td class="px-3 py-1">Intestinal</td>
-                                <td class="px-3 py-1">Infección</td>
-                                <td class="px-3 py-1 text-center">No</td>
-                                <td class="px-3 py-1 text-center">
-                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Yellow</span>
+                            <!-- Aquí iteramos sobre los datos de incapacidades -->
+                            <% datos_historial_incapacidades.forEach(incapacidad => { %>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
+                                        <a href="" target="_blank">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
+                                                <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
+                                                <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                                <path d="M8 11h4" />
+                                                <path d="M8 15h3" />
+                                                <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
+                                                <path d="M18.5 19.5l2.5 2.5" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td class="px-3 py-1"><%= incapacidad.documento %></td>
+                                    <td class="px-3 py-1"><%= incapacidad.fecha_registro %></td>
+                                    <td class="px-3 py-1"><%= incapacidad.inicio_incapacidad %></td>
+                                    <td class="px-3 py-1"><%= incapacidad.final_incapacidad %></td>
+                                    <td class="px-3 py-1 text-center"><%= incapacidad.dias_incapacidad %></td>
+                                    <td class="px-3 py-1"><%= incapacidad.categoria %></td>
+                                    <td class="px-3 py-1"><%= incapacidad.desc_subcategoria %></td>
+                                    <td class="px-3 py-1"><%= incapacidad.subcategoria %></td>
+                                    <td class="px-3 py-1"><%= incapacidad.desc_subcategoria %></td>
+                                    <td class="px-3 py-1 text-center"><%= incapacidad.prorroga ? 'Sí' : 'No' %></td>
+                                    <td class="px-3 py-1 text-center">
+                                        <span class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
+                                            <%= incapacidad.estado %>
+                                        </span>
+                                    </td>
                                 </tr>
-                            
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
-                                </td>
-                                <td class="px-3 py-1.5">556677889</td>
-                                <td class="px-3 py-1">2025-03-04</td>
-                                <td class="px-3 py-1">2025-03-08</td>
-                                <td class="px-3 py-1">2025-03-13</td>
-                                <td class="px-3 py-1 text-center">5</td>
-                                <td class="px-3 py-1">Accidente</td>
-                                <td class="px-3 py-1">Quemadura</td>
-                                <td class="px-3 py-1">Mano</td>
-                                <td class="px-3 py-1">Moderada</td>
-                                <td class="px-3 py-1 text-center">No</td>
-                                <td class="px-3 py-1 text-center">
-                                    <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Green</span>
-                                </tr>
-                            
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
-                                </td>
-                                <td class="px-3 py-1.5">223344556</td>
-                                <td class="px-3 py-1">2025-03-05</td>
-                                <td class="px-3 py-1">2025-03-09</td>
-                                <td class="px-3 py-1">2025-03-14</td>
-                                <td class="px-3 py-1 text-center">5</td>
-                                <td class="px-3 py-1">General</td>
-                                <td class="px-3 py-1">Migraña</td>
-                                <td class="px-3 py-1">Neuronal</td>
-                                <td class="px-3 py-1">Fuerte</td>
-                                <td class="px-3 py-1 text-center">No</td>
-                                <td class="px-3 py-1 text-center ">
-                                    <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Red</span>
-                                </tr>
-                            
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
-                                </td>
-                                <td class="px-3 py-1.5">334455667</td>
-                                <td class="px-3 py-1">2025-03-06</td>
-                                <td class="px-3 py-1">2025-03-10</td>
-                                <td class="px-3 py-1">2025-03-15</td>
-                                <td class="px-3 py-1 text-center">5</td>
-                                <td class="px-3 py-1">Accidente</td>
-                                <td class="px-3 py-1">Golpe</td>
-                                <td class="px-3 py-1">Cabeza</td>
-                                <td class="px-3 py-1">Conmoción</td>
-                                <td class="px-3 py-1 text-center">Sí</td>
-                                <td class="px-3 py-1 text-center">
-                                    <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">Dark</span>
-                                </tr>
-                            
-                            <tr class="bg-white border-b  border-gray-200 hover:bg-gray-50 ">
-                                <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                        <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M8 11h4" />
-                                        <path d="M8 15h3" />
-                                        <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                        <path d="M18.5 19.5l2.5 2.5" />
-                                    </svg>
-                                </td>
-                                <td class="px-3 py-1.5">445566778</td>
-                                <td class="px-3 py-1">2025-03-07</td>
-                                <td class="px-3 py-1">2025-03-11</td>
-                                <td class="px-3 py-1">2025-03-16</td>
-                                <td class="px-3 py-1 text-center">5</td>
-                                <td class="px-3 py-1">General</td>
-                                <td class="px-3 py-1">Cirugía</td>
-                                <td class="px-3 py-1">Rodilla</td>
-                                <td class="px-3 py-1">Postoperatorio</td>
-                                <td class="px-3 py-1 text-center">No</td>
-                                <td class="px-3 py-1 text-center">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Default</span>
-                                </td>
-                                
-                                
-                            
-                        
+                            <% }); %>
                         </tbody>
                     </table>
                 </div>
-
-
-
             </div>
+            
+
+
 
 
             <!-- Modal footer -->

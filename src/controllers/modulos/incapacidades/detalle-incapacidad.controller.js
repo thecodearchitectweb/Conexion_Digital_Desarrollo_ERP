@@ -76,24 +76,56 @@ const app = express();
                 `, [id]);
 
 
-
                 if (!datos_empleado.length) {
                     return res.status(404).send('Empleado no encontrado');
                 }
 
                 let empleado = datos_empleado[0];
 
-                // 🔹 Formatear salario y valor_dia con separadores de miles
-                const formatoMoneda = new Intl.NumberFormat('es-CO'); // Para formato colombiano
-                empleado.salario = formatoMoneda.format(empleado.salario);
-                empleado.valor_dia = formatoMoneda.format(empleado.valor_dia);
 
+                
+               // Consulta de historial de incapacidades (Ahora traemos todas las incapacidades del empleado)
+            const [datos_historial_incapacidades] = await pool.query(
+                `
+                SELECT 
+                    e.documento,
+                    ih.fecha_registro,
+                    ih.fecha_inicio_incapacidad AS inicio_incapacidad,
+                    ih.fecha_final_incapacidad AS final_incapacidad,
+                    ih.cantidad_dias AS dias_incapacidad,
+                    ih.descripcion_categoria AS categoria,
+                    ih.descripcion_subcategoria AS subcategoria,
+                    ih.descripcion_subcategoria AS desc_subcategoria,
+                    ih.prorroga,
+                    e.estado AS estado
+                FROM 
+                    incapacidades_historial ih
+                JOIN 
+                    empleado e ON ih.id_empleado = e.id_empleado
+                WHERE
+                    ih.id_empleado = ?;  -- Traemos todas las incapacidades del empleado
+                `, [id]
+            );
 
-            return res.render('./views/modulos/incapacidades/detalle-incapacidad.ejs', 
-                { 
-                    id, 
-                    datos_empleado: empleado   // Enviar solo el primer resultado 
-                });
+            console.log("Este es el historial de las incapacidades del usuario: ", datos_historial_incapacidades);
+
+            // Si no hay historial de incapacidades, podemos enviar un mensaje o simplemente mostrar un arreglo vacío
+            if (!datos_historial_incapacidades.length) {
+                console.log("No se encontraron incapacidades para este empleado.");
+            }
+
+            // Formatear salario y valor_dia con separadores de miles
+            const formatoMoneda = new Intl.NumberFormat('es-CO');
+            empleado.salario = formatoMoneda.format(empleado.salario);
+            empleado.valor_dia = formatoMoneda.format(empleado.valor_dia);
+
+            // Renderizar vista
+            return res.render('./views/modulos/incapacidades/detalle-incapacidad.ejs', {
+                id,
+                datos_empleado: empleado,   // Enviar solo el primer resultado del empleado
+                datos_historial_incapacidades // Se envían todas las incapacidades de ese empleado
+            });
+
     
         } catch (error) {
             console.error('Error al obtener detalle de incapacidad:', error);

@@ -1,26 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VENTANA CONFIRMACION INCAPACIDAD RECIBIDA</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VENTANA CONFIRMACION INCAPACIDAD RECIBIDA</title>
+  <!-- Puedes incluir tus estilos CSS aquí -->
 </head>
-
-
-<header>
-
-
-
-</header>
-
 <body class="bg-slate-200 px-0 mx-0">
-
-    <div class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto mt-8 mb-32 px-2 my-4 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full">
-
-        <h1>hola ventana </h1>
-
-
-    </div>
+  <div class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto mt-8 mb-32 px-2 my-4 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full">
     
+    <h1>Confirmación de Incapacidad Recibida</h1>
+
+    <!-- Datos del empleado -->
+    <section>
+      <h2>Datos del Empleado</h2>
+      <% if (datos_empleado) { %>
+        <p>ID: <%= datos_empleado.id_empleado %></p>
+        <p>Nombre: <%= datos_empleado.nombres %></p>
+        <p>apellidos: <%= datos_empleado.apellidos %></p>
+        <p>documento: <%= datos_empleado.documento %></p>
+        <p>fecha contratacion: <%= datos_empleado.fecha_contratacion %></p>
+        <p>tipo de contrato: <%= datos_empleado.tipo_contrato %></p>
+        <p>cargo: <%= datos_empleado.cargo %></p>
+        <p>estado: <%= datos_empleado.estado %></p>
+        <p>lider: <%= datos_empleado.lider %></p>
+        <p>salario: <%= datos_empleado.salario %></p>
+        <p>valor día: <%= datos_empleado.valor_dia %></p>
+        <p>fecha registro: <%= datos_empleado.empresa_nombre %></p>
+        <p>EPS: <%= datos_empleado.eps %></p>
+        <p>ARL: <%= datos_empleado.arl %></p>
+        <p>Fondo de Pensiones: <%= datos_empleado.fondo_pension %></p>
+        <p>Caja de Compensación: <%= datos_empleado.caja_compensacion %></p>
+        <!-- Agrega más propiedades según la estructura de tu objeto empleado -->
+      <% } else { %>
+        <p>No se encontraron datos del empleado.</p>
+      <% } %>
+    </section>
+
+
+
+
+
+    <!-- Datos de la incapacidad -->
+    <section>
+      <h2>Datos de la Incapacidad</h2>
+     
+      <% if (datos_incapacidad) { %>
+        <p>ID: <%= datos_incapacidad.id_incapacidades_historial %></p>
+        <p>Detalle: <%= datos_incapacidad.tipo_incapacidad || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.subtipo_incapacidad || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.fecha_inicio_incapacidad || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.fecha_final_incapacidad || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.cantidad_dias || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.codigo_categoria || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.descripcion_categoria || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.codigo_subcategoria || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.descripcion_subcategoria || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.prorroga || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.id_empleado || 'Sin detalle' %></p>
+        <p>Detalle: <%= datos_incapacidad.fecha_registro || 'Sin detalle' %></p>
+        <!-- Ajusta según las propiedades reales de tu objeto incapacidad -->
+      <% } else { %>
+        <p>No se encontraron datos de la incapacidad.</p>
+      <% } %>
+    
+    </section>
+
+
+
+
+    <!-- Archivos adjuntos -->
+    <section>
+      <h2>Archivos Adjuntos</h2>
+      <% if (datos_rutas_files && datos_rutas_files.length > 0) { %>
+        <ul>
+          <% datos_rutas_files.forEach(function(file) { %>
+            <li>
+              <strong>Nombre:</strong> <%= file.nombre %> <br>
+              <strong>Ruta:</strong> <%= file.ruta %>
+            </li>
+          <% }); %>
+        </ul>
+      <% } else { %>
+        <p>No se encontraron archivos adjuntos.</p>
+      <% } %>
+    </section>
+
+
+
+    <!-- Observaciones de seguimiento -->
+    <section>
+      <h2>Observaciones de Seguimiento</h2>
+      <% if (datos_observaciones_seguimiento && datos_observaciones_seguimiento.length > 0) { %>
+        <!-- Se asume que solo existe un registro, de lo contrario, podrías iterar -->
+        <p><strong>Estado:</strong> <%= datos_observaciones_seguimiento[0].estado_incapacidad %></p>
+        <p><strong>Observaciones:</strong> <%= datos_observaciones_seguimiento[0].observaciones %></p>
+      <% } else { %>
+        <p>No se encontraron observaciones de seguimiento.</p>
+      <% } %>
+    </section>
+
+  </div>
 </body>
 </html>
