@@ -1,5 +1,6 @@
 import { pool } from "../../../models/db.js";
 //import bcrypt from "bcryptjs";
+import path from 'path';
 
 
 import express from 'express';
@@ -10,6 +11,8 @@ const app = express();
 
 export const registroNuevaIncapacidad = async(req, res) => {
     try {
+
+        /* ID GUARDADO EN LA SESSION DESDE DETALLE INCAPACIDAD CONTROLLER */
         const id_empleado = req.session.id_empleado_consultado;
 
         if (!id_empleado) {
@@ -17,7 +20,7 @@ export const registroNuevaIncapacidad = async(req, res) => {
             return res.status(400).send("Error: No se encontró el ID del empleado en la sesión.");
         }
 
-        console.log("ID del empleado consultado:", id_empleado);
+        console.log("registro nueva incapacidad controller - ID del empleado consultado:", id_empleado);
 
         const datos = req.body;
 
@@ -69,15 +72,19 @@ export const registroNuevaIncapacidad = async(req, res) => {
             ]
         );
 
+
+
         // Obtener el ID de inserción
         const data_insert_incapacidad_ID = data_insert_incapacidad.insertId;
 
-        console.log("ID de la incapacidad insertada:", data_insert_incapacidad_ID);
+        req.session.id_incapacidad_registrada = data_insert_incapacidad_ID;
+
+        console.log("registro nueva incapacidad controller - ID de la incapacidad insertada:", data_insert_incapacidad_ID);
 
 
 
         /* INSERTAR OBSERVACIONES EN LA TABLA  incapacidades_seguimiento*/
-        const [] = await pool.query(
+        const [data_insert_seguimiento_incapacidad] = await pool.query(
             
             'INSERT INTO incapacidades_seguimiento (estado_incapacidad, observaciones, id_incapacidades_historial) VALUES (?, ?, ?)',
             [
@@ -88,11 +95,34 @@ export const registroNuevaIncapacidad = async(req, res) => {
         );
 
          // Obtener el ID de inserción
-         const data_insert_observaciones_incapacidad_ID = data_insert_incapacidad.insertId;
+         const data_insert_observaciones_incapacidad_ID = data_insert_seguimiento_incapacidad.insertId;
+         console.log("registro nueva incapacidad controller - ID de la observacion insertada - incapacidad insertada:", data_insert_observaciones_incapacidad_ID);
 
 
 
-        res.redirect(`/incapacidad/seleccionar/empleado`);
+            // Ahora, guardar las rutas de los archivos subidos en la tabla `ruta_documentos`
+        // req.files es un objeto con claves que corresponden a los nombres de los campos definidos en el middleware
+        if (req.files) {
+            // Por cada campo (input) en req.files
+            for (const campo in req.files) {
+            // req.files[campo] es un arreglo de archivos para ese input
+            for (const file of req.files[campo]) {
+                // file.destination es la ruta absoluta donde se guardó el archivo.
+                // Queremos almacenar una ruta relativa a la carpeta "upload"
+                const rutaRelativa = path.join(file.destination.replace(path.join(process.cwd(), 'upload'), ''), file.filename);
+    
+                // Inserción en la tabla ruta_documentos
+                await pool.query(
+                'INSERT INTO ruta_documentos (nombre, ruta, id_incapacidades_historial) VALUES (?, ?, ?)',
+                [campo, rutaRelativa, data_insert_incapacidad_ID]
+                );
+            }
+            }
+        }
+
+
+        return res.redirect(`/incapacidad/confirmacion/incapacidad/recibida/${id_empleado}`);
+
 
 
     } catch (error) {

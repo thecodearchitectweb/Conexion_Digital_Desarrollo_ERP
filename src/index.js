@@ -49,7 +49,7 @@ const sessionStore = new (MySQLStore(session))({
 // Middleware de sesión
 const sessionMiddleware = session({
   key: "session_cookie_name", // Nombre de la cookie de sesión
-  secret: "clave_secreta_segura", // Cambia esto por una clave segura
+  secret: process.env.SECRET_SESSION_KEY || "fallback_secret",
   store: sessionStore, // Almacena sesiones en MySQL
   resave: false, // No guardar sesión si no hay cambios
   saveUninitialized: false, // No guardar sesiones vacías
@@ -77,6 +77,7 @@ import detalleIncapacidadEmpleado  from './routes/modulos/incapacidades/detalle-
 import  registroNuevaIncapacidad from './routes/modulos/incapacidades/registro-nueva-incapacidad.routes.js'
 import  tablaIncapacidades from './routes/modulos/incapacidades/tabla-incapacidades.routes.js'
 import  appi_Cie10 from './routes/modulos/incapacidades/appi-cie-10.routes.js'
+import  ventanaIncapacidadRecibida from './routes/modulos/incapacidades/ventana_confirmacion_incapacidad_recibida.routes.js'
 
 
 // Usar rutas
@@ -85,6 +86,7 @@ app.use(detalleIncapacidadEmpleado)
 app.use(registroNuevaIncapacidad)
 app.use(tablaIncapacidades)
 app.use(appi_Cie10)
+app.use(ventanaIncapacidadRecibida)
 
 
 

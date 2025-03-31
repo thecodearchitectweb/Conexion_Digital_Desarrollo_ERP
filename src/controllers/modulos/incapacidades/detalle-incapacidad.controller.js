@@ -1,6 +1,8 @@
 import { pool } from "../../../models/db.js";
 
 
+
+
 import express from 'express';
 
 const app = express();
@@ -14,7 +16,7 @@ const app = express();
             
             // Guardar el ID del empleado en la sesión
             req.session.id_empleado_consultado = id; 
-            console.log("Empleado consultado, ID en sesión:", req.session.id_empleado_consultado);
+            console.log("detalle incapacidad controller -  Empleado consultado, ID en sesión:", req.session.id_empleado_consultado);
 
     
             if (!id) {
