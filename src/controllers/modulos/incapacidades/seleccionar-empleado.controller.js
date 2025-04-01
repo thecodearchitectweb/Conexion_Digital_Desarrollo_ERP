@@ -9,7 +9,9 @@ const app = express();
 
     export const getseleccionarEmpleado = (req, res) => {
         try {
-            res.render("./views/modulos/incapacidades/seleccionar-empleado.ejs", { Empleados: [] });
+
+            return res.render("./views/modulos/incapacidades/seleccionar-empleado.ejs", { Empleados: [] });
+
         } catch (error) {
             console.error("Error al renderizar la vista:", error);
             res.status(500).send("Error en el servidor");
@@ -66,7 +68,10 @@ const app = express();
             console.log("Resultados de la consulta:", filtroEmpleados);
     
             // Enviar los datos a la vista
-            return res.render("./views/modulos/incapacidades/seleccionar-empleado.ejs", { Empleados: filtroEmpleados });
+            return res.render("./views/modulos/incapacidades/seleccionar-empleado.ejs", 
+                { 
+                    Empleados: filtroEmpleados 
+                });
            
         } catch (error) {
             console.error("Error en postseleccionarEmpleado:", error);

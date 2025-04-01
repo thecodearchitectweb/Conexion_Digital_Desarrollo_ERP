@@ -1,5 +1,7 @@
 import { pool } from "../../../models/db.js";
 //import bcrypt from "bcryptjs";
+import {SessionManager } from "../../../utils/modulos/incapacidades/sessionManager.js"
+
 
 
 import express from 'express';
@@ -11,12 +13,14 @@ export const incapacidadRecibida = async(req, res) =>{
 
     try {
 
-        /* ID GUARDADOS EN SESSION, PARA LLAMAR A LAS BASES DE DATOS MAS FACILMENTE */
-        const id_empleado = req.session.id_empleado_consultado;
-        const id_incapacidad_recibida = req.session.id_incapacidad_registrada;
-        const id_ruta_file_incapacidad_recibida = req.session.ids_rutas_documentos;
-   
 
+        /* ID GUARDADOS EN SESSION, PARA LLAMAR A LAS BASES DE DATOS MÁS FÁCILMENTE */
+        const id_empleado = await SessionManager.get(req, "id_empleado_consultado");
+        const id_incapacidad_recibida = await SessionManager.get(req, "id_incapacidad_registrada");
+        const id_ruta_file_incapacidad_recibida = await SessionManager.get(req, "ids_rutas_documentos");
+
+        console.log("Los ID de los archivos recibidos son: ", id_ruta_file_incapacidad_recibida)
+        console.log("Datos guardados en la sesión req.session.ids_rutas_documentos:", req.session.ids_rutas_documentos);
 
 
 
@@ -134,7 +138,7 @@ export const incapacidadRecibida = async(req, res) =>{
         let datos_incapacidad = datos_incapacidad_confirmacion[0]; // Asegurar que la variable está definida antes de usarla
 
 
-        /* CONSULTA PARA OBTENER LOS ARCHIVOS CON LOS ID GUARDADOS */
+
         /* CONSULTA PARA OBTENER LOS ARCHIVOS CON LOS ID GUARDADOS */
         let datos_rutas_files = [];  // Declaramos la variable antes del if
 
@@ -185,31 +189,40 @@ export const incapacidadRecibida = async(req, res) =>{
 
 
 
-            /* ELIMINAR ID DE LA SESSION, LUEGO DE UTILIZARLA */
-            console.log("Session antes de borrar:", req.session);
-
-            if (req.session) {
-                if (req.session.id_empleado_consultado) {
-                    console.log("Borrando id_empleado_consultado:", req.session.id_empleado_consultado);
-                    delete req.session.id_empleado_consultado;
-                }
-                if (req.session.id_incapacidad_registrada) {
-                    console.log("Borrando id_incapacidad_registrada:", req.session.id_incapacidad_registrada);
-                    delete req.session.id_incapacidad_registrada;
-                }
-            }
-            console.log("Session después de borrar:", req.session);
-            
-
-
-
         /* RENDERIZAR VISTA CON LOS DATOS */
-        return res.render('./views/modulos/incapacidades/ventana_confirmacion_incapacidad_recibida.ejs', {
+        res.render('./views/modulos/incapacidades/ventana_confirmacion_incapacidad_recibida.ejs', {
             datos_empleado: datos_empleado,   // Antes pasabas "empleado" (que no existe), ahora pasas la variable correcta
             datos_incapacidad: datos_incapacidad,   
             datos_rutas_files,
             datos_observaciones_seguimiento
         });
+
+        
+
+        /* ELIMINAR ID DE LA SESSION, LUEGO DE UTILIZARLA */
+        console.log("Session antes de borrar:", req.session);
+
+        if (req.session) {
+            if (req.session.id_empleado_consultado) {
+                console.log("Borrando id_empleado_consultado:", req.session.id_empleado_consultado);
+                delete req.session.id_empleado_consultado;
+            }
+            if (req.session.id_incapacidad_registrada) {
+                console.log("Borrando id_incapacidad_registrada:", req.session.id_incapacidad_registrada);
+                delete req.session.id_incapacidad_registrada;
+            }
+            // Asegúrate de eliminar los IDs de las rutas también
+            if (req.session.ids_rutas_documentos) {
+                console.log("Borrando ids_rutas_documentos:", req.session.ids_rutas_documentos);
+                delete req.session.ids_rutas_documentos;
+            }
+        }
+
+        console.log("Session después de borrar:", req.session);
+
+
+
+
                 
             } catch (error) {
                 console.error('Error al obtener detalle de incapacidad:', error);

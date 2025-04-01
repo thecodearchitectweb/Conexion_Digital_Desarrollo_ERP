@@ -1,5 +1,5 @@
 import { pool } from "../../../models/db.js";
-
+import {SessionManager } from "../../../utils/modulos/incapacidades/sessionManager.js"
 
 
 
@@ -13,12 +13,23 @@ const app = express();
         try {
             const { id } = req.params;  //  Ahora obtenemos el ID desde req.params
 
-            
-            // Guardar el ID del empleado en la sesión
-            req.session.id_empleado_consultado = id; 
-            console.log("detalle incapacidad controller -  Empleado consultado, ID en sesión:", req.session.id_empleado_consultado);
 
+            
+        // Guardar el ID del empleado en la sesión usando SessionManager
+        await SessionManager.set(req, "id_empleado_consultado", id);
+        console.log("Antes de guardar sesión, id_empleado_consultado:", await SessionManager.get(req, "id_empleado_consultado"));
+
+        // Forzar el guardado de la sesión
+        await SessionManager.save(req);
+
+
+
+        // Obtener el ID desde la sesión (Ejemplo de cómo se usa en otro momento)
+        const idEmpleadoGuardado = SessionManager.get(req, "id_empleado_consultado");
+        console.log("ID de empleado consultado guardado en sesión:", idEmpleadoGuardado);
     
+
+
             if (!id) {
                 return res.status(400).send('Error: ID de empleado no proporcionado');
             }
@@ -113,6 +124,8 @@ const app = express();
             if (!datos_historial_incapacidades.length) {
                 console.log("No se encontraron incapacidades para este empleado.");
             }
+
+            
 
             // Formatear salario y valor_dia con separadores de miles
             const formatoMoneda = new Intl.NumberFormat('es-CO');
