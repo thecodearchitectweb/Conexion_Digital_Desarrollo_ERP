@@ -1,5 +1,8 @@
 import { pool } from "../../../models/db.js";
 import {SessionManager } from "../../../utils/modulos/incapacidades/sessionManager.js"
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+
 
 
 
@@ -86,12 +89,21 @@ const app = express();
 
                 `, [id]);
 
+                
 
-                if (!datos_empleado.length) {
-                    return res.status(404).send('Empleado no encontrado');
-                }
+            if (!datos_empleado.length) {
+                return res.status(404).send('Empleado no encontrado');
+            }
 
-                let empleado = datos_empleado[0];
+            let empleado = datos_empleado[0];
+
+
+
+            // Formatear la fecha de contratación
+            empleado.fecha_contratacion = empleado.fecha_contratacion 
+            ? format(new Date(empleado.fecha_contratacion), "dd 'de' MMMM 'de' yyyy", { locale: es }) 
+            : "Fecha no disponible";
+
 
 
                 
@@ -119,6 +131,29 @@ const app = express();
             );
 
             console.log("Este es el historial de las incapacidades del usuario: ", datos_historial_incapacidades);
+
+
+
+            // Formatear las fechas de cada registro
+            datos_historial_incapacidades.forEach(record => {
+                record.fecha_registro = record.fecha_registro 
+                    ? format(new Date(record.fecha_registro), "dd 'de' MMMM 'de' yyyy, HH:mm:ss", { locale: es }) 
+                    : "Fecha no disponible";
+
+                record.inicio_incapacidad = record.inicio_incapacidad 
+                    ? format(new Date(record.inicio_incapacidad), "dd 'de' MMMM 'de' yyyy", { locale: es }) 
+                    : "Fecha no disponible";
+
+                record.final_incapacidad = record.final_incapacidad 
+                    ? format(new Date(record.final_incapacidad), "dd 'de' MMMM 'de' yyyy", { locale: es }) 
+                    : "Fecha no disponible";
+            });
+
+            
+            console.log("Historial fechas formateado:", datos_historial_incapacidades);
+
+
+
 
             // Si no hay historial de incapacidades, podemos enviar un mensaje o simplemente mostrar un arreglo vacío
             if (!datos_historial_incapacidades.length) {

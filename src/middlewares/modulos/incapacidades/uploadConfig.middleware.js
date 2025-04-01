@@ -7,7 +7,7 @@ import { getEmpleadoById } from '../../../repositories/modulos/incapacidades/emp
 
 
 /* RUTA DONDE SE GARDARAN LAS CARPETAS Y SUBCARPETAS CON SUS ARCHIVOS CORRESPONDIENTES */
-const baseDir = path.join(process.cwd(), 'upload');
+const baseDir = path.join(process.cwd(), 'upload', 'empleados');
 
 
 

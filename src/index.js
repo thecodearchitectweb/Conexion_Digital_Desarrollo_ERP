@@ -1,5 +1,6 @@
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import path from 'path';
 import express from "express";
 import dotenv from "dotenv";
 import morgan from 'morgan';
@@ -27,6 +28,13 @@ const app = express()
 // Archivos estáticos
 app.use(express.static(join(__dirname, "public")));
 console.log("Ruta de archivos estáticos:", join(__dirname, "public"));
+
+
+// Archivos estáticos de la carpeta "upload"
+app.use('/upload', express.static(path.join(process.cwd(), 'upload')));
+console.log("Ruta pública para archivos de upload:", path.join(process.cwd(), 'upload'));
+
+
 
 
 app.set("port", process.env.PORT || 3000);

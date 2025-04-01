@@ -1,6 +1,9 @@
 import { pool } from "../../../models/db.js";
 //import bcrypt from "bcryptjs";
 import {SessionManager } from "../../../utils/modulos/incapacidades/sessionManager.js"
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+
 
 
 
@@ -70,6 +73,7 @@ export const incapacidadRecibida = async(req, res) =>{
                     e.lider,
                     e.salario,
                     e.valor_dia,
+                    e.fecha_registro,
 
                     emp.id_empresa,
                     emp.nombre AS empresa_nombre,
@@ -115,6 +119,12 @@ export const incapacidadRecibida = async(req, res) =>{
         console.log(datos_empleado);
 
 
+        // Formatear la fecha de contratación
+datos_empleado.fecha_contratacion = datos_empleado.fecha_contratacion 
+? format(new Date(datos_empleado.fecha_contratacion), "dd 'de' MMMM 'de' yyyy", { locale: es }) 
+: "Fecha no disponible";
+
+
 
         /* CONSULTA INCAPACIDAD HISTORIAL SEGUMIENTO */
         const [datos_incapacidad_confirmacion] = await pool.query(
@@ -143,7 +153,6 @@ export const incapacidadRecibida = async(req, res) =>{
         let datos_rutas_files = [];  // Declaramos la variable antes del if
 
         if (id_ruta_file_incapacidad_recibida && id_ruta_file_incapacidad_recibida.length > 0) {
-            // Ejecutar la consulta usando la cláusula IN para buscar todos los IDs
             [datos_rutas_files] = await pool.query(
                 `
                 SELECT * FROM ruta_documentos
@@ -151,10 +160,23 @@ export const incapacidadRecibida = async(req, res) =>{
                 `,
                 [id_ruta_file_incapacidad_recibida]
             );
-            console.log("Datos de documentos:", datos_rutas_files);
+            console.log("Datos de documentos (antes de transformación):", datos_rutas_files);
+        
+            // Transformar las rutas: reemplazar backslashes por forward slashes
+            datos_rutas_files = datos_rutas_files.map(file => {
+                // Reemplaza todas las barras invertidas (\) por barras normales (/)
+                let rutaTransformada = file.ruta.replace(/\\/g, '/');
+                // Si no comienza con "/upload", agregarlo
+                if (!rutaTransformada.startsWith('/upload')) {
+                    rutaTransformada = '/upload' + rutaTransformada;
+                }
+                return { ...file, ruta: rutaTransformada };
+            });
+            console.log("Datos de documentos (después de transformación):", datos_rutas_files);
         } else {
             console.log("No se encontraron rutas de documentos en la sesión.");
         }
+        
 
         
 
