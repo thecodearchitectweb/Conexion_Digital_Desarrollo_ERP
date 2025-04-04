@@ -38,7 +38,17 @@ console.log("Ruta pública para archivos de upload:", path.join(process.cwd(), '
 
 
 app.set("port", process.env.PORT || 3000);
-app.set("views", join(__dirname, "views"));
+
+
+const viewDirectories = [
+  join(__dirname, "modules/incapacidades/views/views")
+]
+
+
+app.set("views", viewDirectories);
+
+console.log("Directorios de vistas configurados", viewDirectories)
+
 app.set("view engine", "ejs");
 
 
@@ -80,12 +90,12 @@ app.use(sessionMiddleware); // Middleware de sesión
 
 
 // Importar y configurar rutas
-import seleccionarEmpleado  from './routes/modulos/incapacidades/seleccionar-empleado.routes.js'
-import detalleIncapacidadEmpleado  from './routes/modulos/incapacidades/detalle-incapacidad.routes.js'
-import  registroNuevaIncapacidad from './routes/modulos/incapacidades/registro-nueva-incapacidad.routes.js'
-import  tablaIncapacidades from './routes/modulos/incapacidades/tabla-incapacidades.routes.js'
-import  appi_Cie10 from './routes/modulos/incapacidades/appi-cie-10.routes.js'
-import  ventanaIncapacidadRecibida from './routes/modulos/incapacidades/ventana_confirmacion_incapacidad_recibida.routes.js'
+import seleccionarEmpleado  from './modules/incapacidades/routes/seleccionar-empleado.routes.js'
+import detalleIncapacidadEmpleado  from './modules/incapacidades/routes/detalle-incapacidad.routes.js'
+import  registroNuevaIncapacidad from './modules/incapacidades/routes/registro-nueva-incapacidad.routes.js'
+import  tablaIncapacidades from './modules/incapacidades/routes/tabla-incapacidades.routes.js'
+import  appi_Cie10 from './modules/incapacidades/routes/appi-cie-10.routes.js'
+import  ventanaIncapacidadRecibida from './modules/incapacidades/routes/ventana_confirmacion_incapacidad_recibida.routes.js'
 
 
 // Usar rutas
