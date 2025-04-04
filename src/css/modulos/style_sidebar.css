@@ -13,7 +13,7 @@
 
   width: 100%;
   min-height: 100vh;
-  background: #e0e0e0;
+  background: #ffffff;
 }
 
 .sidebar {
@@ -224,3 +224,5 @@
   text-align: center;
   font-size: 3rem;
 }
+
+

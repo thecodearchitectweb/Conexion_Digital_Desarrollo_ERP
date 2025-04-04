@@ -168,7 +168,7 @@ const app = express();
             empleado.valor_dia = formatoMoneda.format(empleado.valor_dia);
 
             // Renderizar vista
-            return res.render('./views/modulos/incapacidades/detalle-incapacidad.ejs', {
+            return res.render('detalle-incapacidad', {
                 id,
                 datos_empleado: empleado,   // Enviar solo el primer resultado del empleado
                 datos_historial_incapacidades // Se envían todas las incapacidades de ese empleado

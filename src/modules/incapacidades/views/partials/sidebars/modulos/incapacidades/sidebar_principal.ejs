@@ -1,169 +1,241 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- ICONS -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- STYLESHEET -->
-    <link rel="stylesheet" href="../../../../../css/modulos/style_sidebar.css" />
+<header>
+  <link rel="stylesheet" href="/incapacidades/css/sidebar/style_sidebar.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</header>
 
-    <title>Sidebar</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="sidebar">
-        <div class="menu-btn">
-          <i class="ph-bold ph-caret-left"></i>
-        </div>
-        <div class="head">
-          <div class="user-img">
-            <img src="user.jpg" alt="" />
-          </div>
-          <div class="user-details">
-            <p class="title">web developer</p>
-            <p class="name">John Doe</p>
-          </div>
-        </div>
-        <div class="nav">
-          <div class="menu">
+<body>
 
-            <!-- MAIN PRINCIPAL TITULO -->
-            <p class="title">Main</p>
-            <ul>
-              
-                <li>
-                    <a href="#">
-                    <i class="icon ph-bold ph-house-simple"></i>
-                    <span class="text">Dashboard</span>
-                    </a>
-                </li>
+<!-- NAVBAR SUPERIOR -->
+<nav class="navbar">
+  <div class="navbar-left ">
+    <img src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" class="h-24 p-0" alt="Logo" />
+    <img src="/incapacidades/img/logo/LOGO_SPEED_NETWORKS_SAS-01.png" class="h-18 p-0" alt="Flowbite Logo" />
+  </div>
 
-                <li>
-                    <a href="#">
-                    <i class="icon ph-bold ph-user"></i>
-                    <span class="text">Audience</span>
-                    <i class="arrow ph-bold ph-caret-down"></i>
-                    </a>
-
-                    <ul class="sub-menu">
-                    <li>
-                        <a href="#">
-                        <span class="text">Users</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                        <span class="text">Subscribers</span>
-                        </a>
-                    </li>
-                    </ul>
-                </li>
+  <div class="navbar-right">
+    <span class="navbar-user">Hola, John</span>
+    <i class='bx bx-user-circle text-2xl ml-4'></i>
+    <i class='bx bx-exit ml-4 text-xl cursor-pointer'></i>
+  </div>
+</nav>
 
 
-              <li class="active">
-                <a href="#">
-                  <i class="icon ph-bold ph-file-text"></i>
-                  <span class="text">Posts</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="icon ph-bold ph-calendar-blank"></i>
-                  <span class="text">Schedules</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="icon ph-bold ph-chart-bar"></i>
-                  <span class="text">Income</span>
-                  <i class="arrow ph-bold ph-caret-down"></i>
-                </a>
-                <ul class="sub-menu">
-                  <li>
-                    <a href="#">
-                      <span class="text">Earnings</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <span class="text">Funds</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <span class="text">Declines</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <span class="text">Payouts</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="menu">
-            <p class="title">Settings</p>
-            <ul>
-              <li>
-                <a href="#">
-                  <i class="icon ph-bold ph-gear"></i>
-                  <span class="text">Settings</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="menu">
-          <p class="title">Account</p>
-          <ul>
-            <li>
-              <a href="#">
-                <i class="icon ph-bold ph-info"></i>
-                <span class="text">Help</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="icon ph-bold ph-sign-out"></i>
-                <span class="text">Logout</span>
-              </a>
-            </li>
+  
+  <div class="menu-btn sidebar-btn" id="sidebar-btn">
+    <i class='bx bx-menu'></i>
+    <i class='bx bx-x'></i>
+  </div>
+  
+
+  
+  <div class="main-content">
+
+  <div class="sidebar" id="sidebar">
+    <div class="header">
+      <div class="menu-btn" id="menu-btn">
+        <i class='bx bx-chevron-left'></i>
+      </div>
+      
+      <div class="brand">
+        <img class="brand-light" src="/incapacidades/img/logo/conexion_digital.png" alt="logo">
+        <img class="brand-dark" src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="logo">
+        <span>Ghostly</span>
+      </div>
+    </div>
+    
+    
+    <div class="menu-container">
+    
+      <!-- SEARCH -->
+<!--       <div class="search">
+        <i class='bx bx-search'></i>
+        <input type="search" placeholder="Search">
+      </div> -->
+
+      <!-- MENU -->
+      <ul class="menu">
+
+        <!-- HOME -->
+        <li class="menu-item menu-item-static">
+          <a href="#" class="menu-link">
+            <i class='bx bx-home-alt-2'></i>
+            <span>Home</span>
+          </a>
+        </li>
+
+        <!-- DASHBOARD -->
+        <li class="menu-item menu-item-static">
+          <a href="#" class="menu-link">
+            <i class='bx bx-bar-chart-alt-2'></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+
+        <!-- INCAPACIDADES -->
+        <li class="menu-item menu-item-dropdown">
+          <a href="#" class="menu-link">
+            <i class='bx bx-plus-medical bx-rotate-90' ></i>
+            <span>Incapacidades</span>
+            <i class='bx bx-chevron-down'></i>
+          </a>
+          <ul class="sub-menu">
+            <li><a href="/incapacidad/seleccionar/empleado" class="sub-menu-link">Nueva Incapacidad</a></li>
+            <li><a href="#" class="sub-menu-link">Busqueda Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Tabla Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
+            <li><a href="#" class="sub-menu-link">Dashboard Incapacidades</a></li>
           </ul>
+        </li>
+        <li class="menu-item menu-item-static">
+          <a href="#" class="menu-link">
+            <i class='bx bx-task'></i>
+            <span>Task</span>
+          </a>
+        </li>
+        <li class="menu-item menu-item-dropdown">
+          <a href="#" class="menu-link">
+            <i class='bx bx-file-blank'></i>
+            <span>File</span>
+            <i class='bx bx-chevron-down'></i>
+          </a>
+          <ul class="sub-menu">
+            <li><a href="#" class="sub-menu-link">Images</a></li>
+            <li><a href="#" class="sub-menu-link">Audios</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="footer">
+      <ul class="menu">
+        <li class="menu-item menu-item-static">
+          <a href="#" class="menu-link">
+            <i class='bx bx-bell'></i>
+            <span>Notifications</span>
+          </a>
+        </li>
+        <li class="menu-item menu-item-static">
+          <a href="#" class="menu-link">
+            <i class='bx bx-cog'></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+      <div class="user">
+        <div class="user-img">
+          <img src="/incapacidades/img\sidebar\user.jpg" alt="user">
+
+        </div>
+        <div class="user-data">
+          <span class="name">John Walker</span>
+          <span class="email">jhon@gmail.com</span>
+        </div>
+        <div class="user-icon">
+          <i class='bx bx-exit'></i>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- Jquery -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js"
-      integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw=="
-      crossorigin="anonymous"
-    ></script>
 
-    <script>
-        $(".menu > ul > li").click(function (e) {
-        // remove active from already active
-        $(this).siblings().removeClass("active");
-        // add active to clicked
-        $(this).toggleClass("active");
-        // if has sub menu open it
-        $(this).find("ul").slideToggle();
-        // close other sub menu if any open
-        $(this).siblings().find("ul").slideUp();
-        // remove active class of sub menu items
-        $(this).siblings().find("ul").find("li").removeClass("active");
+  
+
+  <script>
+    const menusItemsDropDown = document.querySelectorAll('.menu-item-dropdown');
+    const menusItemsStatic = document.querySelectorAll('.menu-item-static');
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menu-btn');
+    const sidebarBtn = document.getElementById('sidebar-btn');
+/*     const darkModeBtn = document.getElementById('dark-mode-btn');
+ */
+
+/*     darkModeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    }); */
+
+    sidebarBtn.addEventListener('click', () => {
+      document.body.classList.toggle('sidebar-hidden');
+    });
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('minimize');
+    });
+
+    menusItemsDropDown.forEach((menuItem) => {
+      menuItem.addEventListener('click', () => {
+        const subMenu = menuItem.querySelector('.sub-menu');
+        const isActive = menuItem.classList.toggle('sub-menu-toggle');
+        if (subMenu) {
+          if (isActive) {
+            subMenu.style.height = `${subMenu.scrollHeight + 6}px`;
+            subMenu.style.padding = '0.2rem 0';
+          } else {
+            subMenu.style.height = '0';
+            subMenu.style.padding = '0';
+          }
+        }
+        menusItemsDropDown.forEach((item) => {
+          if (item !== menuItem) {
+            const otherSubmenu = item.querySelector('.sub-menu');
+            if (otherSubmenu) {
+              item.classList.remove('sub-menu-toggle');
+              otherSubmenu.style.height = '0';
+              otherSubmenu.style.padding = '0';
+            }
+          }
         });
+      });
+    });
 
-        $(".menu-btn").click(function () {
-        $(".sidebar").toggleClass("active");
+    menusItemsStatic.forEach((menuItem) => {
+      menuItem.addEventListener('mouseenter', () => {
+
+        if (!sidebar.classList.contains('minimize')) return;
+
+        menusItemsDropDown.forEach((item) => {
+          const otherSubmenu = item.querySelector('.sub-menu');
+          if (otherSubmenu) {
+            item.classList.remove('sub-menu-toggle');
+            otherSubmenu.style.height = '0';
+            otherSubmenu.style.padding = '0';
+          }
         });
-    </script>
+      });
+    });
+
+    function checkWindowsSize() {
+      sidebar.classList.remove('minimize');
+    }
+    checkWindowsSize();
+    window.addEventListener('resize', checkWindowsSize);/*  */
+  </script>
 
 
 
-  </body>
+</body>
+
 </html>

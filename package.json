@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "style": "npx tailwindcss -i ./src/modules/incapacidades/public/css/input.css -o ./src/modules/incapacidades/public/css/output.css --watch"
+    "style": "npx tailwindcss -i ./src/public/css/input.css -o ./src/public/css/output.css --watch"
+
   },
   "keywords": [],
   "author": "",

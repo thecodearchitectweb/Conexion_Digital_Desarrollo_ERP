@@ -8,5 +8,5 @@ const app = express();
 
 
 export const tablaIncapacidades = (req, res) =>{
-    return res.render('./views/modulos/incapacidades/tabla-incapacidades.ejs')
+    return res.render('tabla-incapacidades')
 }

@@ -5,16 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle de incapacidad, filtro I</title>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 
 </head>
 
 <header>
-            <%- include('./partials/navbars/modulos/incapacidades/navbar_principal.ejs') %>
-            <%-include('./partials/header/header.ejs') %>
-            <%-include('./partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
+            <%- include('./../partials/header/header.ejs') %>
+            <%-include('./../partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
 
 
 
@@ -24,20 +21,20 @@
 <body class="bg-slate-200 px-0 mx-0">
 
 
-    <%-include('./partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
   
 
 
     <!-- DATOS DEL EMPLEADO -->
     <div class="relative container filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] mx-auto mt-8 mb-32 px-2 my-4 bg-white p-4 rounded-xl flex flex-col items-center justify-center w-full">
        
-        <%-include('../../../partials/breadcrumb/modulos/incapacidades/breadcrumb_detalle_incapacidad.ejs') %>
+        <%-include('./../partials/breadcrumb/modulos/incapacidades/breadcrumb_detalle_incapacidad.ejs') %>
        
         <div class="max-w-7xl w-full mx-auto text-center border-b border-gray-400 pb-2 mb-4 mt-4 drop-shadow-md">
             
    
-        <%-include('../../../partials/datos_empleado/datos_empleado.ejs') %>
+        <%-include('./../partials/datos_empleado/datos_empleado.ejs') %>
 
+        
         <form action="/incapacidad/registro/nueva/incapacidad" method="POST" enctype="multipart/form-data">
 
             
@@ -107,7 +104,7 @@
 
 
 
-            <div class="w-full text-center border-b border-gray-400 pb-2 mb-2 drop-shadow-md"></div>
+            <div class="w-full text-center border-b border-gray-400 my-6 drop-shadow-md"></div>
 
 
 
@@ -415,30 +412,27 @@
 
 
     <!-- VISTA MODAL HISTORIAL INCAPACIDADES DEL EMPLEADO -->
-    <%-include('../../../partials/modals/modulos/incapacidades/modals_tabla_historial_incapacidades.ejs') %>
+    <%-include('./../partials/modals/modulos/incapacidades/modals_tabla_historial_incapacidades.ejs') %>
 
 
     
     <!-- Mostar formulario de ingreso de nueva incapacidad -->
-    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
+    <script src="/incapacidades/js/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
 
 
     <!-- Mostar input file para cargar los archivos correspondientes -->
-    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
+    <script src="/incapacidades/js/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
 
 
     <!-- calcula la cantidad de días de incapacidad -->
-    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
+    <script src="/incapacidades/js/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
 
 
     <!-- VERIFICAR QUE SEA PDF, CALCULAR QUE TENGA MAXIMO UN PESO DE 5MB -->
-    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/verificacion_pdf_peso.js"></script>
-
+    <script src="/incapacidades/js/detalle_empleado/verificacion_pdf_peso.js"></script>
 
     <!-- API FETCH PARA CONSULTAR CIE 10 -->
-    <script src="./../../../../js/modulos/incapacidades/detalle_empleado/api_fetch_cie_10.js"></script>
-
-
+    <script src="/incapacidades/js\detalle_empleado\api_fetch_cie_10.js"></script>
 
 
 </body>

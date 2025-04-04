@@ -30,6 +30,11 @@ app.use(express.static(join(__dirname, "public")));
 console.log("Ruta de archivos estáticos:", join(__dirname, "public"));
 
 
+app.use("/incapacidades",  express.static(join(__dirname, "modules", "incapacidades", "public")));
+
+
+
+
 // Archivos estáticos de la carpeta "upload"
 app.use('/upload', express.static(path.join(process.cwd(), 'upload')));
 console.log("Ruta pública para archivos de upload:", path.join(process.cwd(), 'upload'));

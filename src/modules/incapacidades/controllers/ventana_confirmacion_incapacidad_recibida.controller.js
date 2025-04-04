@@ -120,9 +120,9 @@ export const incapacidadRecibida = async(req, res) =>{
 
 
         // Formatear la fecha de contratación
-datos_empleado.fecha_contratacion = datos_empleado.fecha_contratacion 
-? format(new Date(datos_empleado.fecha_contratacion), "dd 'de' MMMM 'de' yyyy", { locale: es }) 
-: "Fecha no disponible";
+        datos_empleado.fecha_contratacion = datos_empleado.fecha_contratacion 
+        ? format(new Date(datos_empleado.fecha_contratacion), "dd 'de' MMMM 'de' yyyy", { locale: es }) 
+        : "Fecha no disponible";
 
 
 
@@ -212,7 +212,7 @@ datos_empleado.fecha_contratacion = datos_empleado.fecha_contratacion
 
 
         /* RENDERIZAR VISTA CON LOS DATOS */
-        res.render('./views/modulos/incapacidades/ventana_confirmacion_incapacidad_recibida.ejs', {
+        res.render('ventana_confirmacion_incapacidad_recibida', {
             datos_empleado: datos_empleado,   // Antes pasabas "empleado" (que no existe), ahora pasas la variable correcta
             datos_incapacidad: datos_incapacidad,   
             datos_rutas_files,
