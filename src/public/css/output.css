@@ -176,6 +176,24 @@
 .clear-start {
   clear: inline-start;
 }
+.\!container {
+  width: 100% !important;
+  @media (width >= 40rem) {
+    max-width: 40rem !important;
+  }
+  @media (width >= 48rem) {
+    max-width: 48rem !important;
+  }
+  @media (width >= 64rem) {
+    max-width: 64rem !important;
+  }
+  @media (width >= 80rem) {
+    max-width: 80rem !important;
+  }
+  @media (width >= 96rem) {
+    max-width: 96rem !important;
+  }
+}
 .container {
   width: 100%;
   @media (width >= 40rem) {
@@ -275,6 +293,9 @@
 .mr-2 {
   margin-right: calc(var(--spacing) * 2);
 }
+.mb-0 {
+  margin-bottom: calc(var(--spacing) * 0);
+}
 .mb-1 {
   margin-bottom: calc(var(--spacing) * 1);
 }
@@ -296,17 +317,17 @@
 .mb-32 {
   margin-bottom: calc(var(--spacing) * 32);
 }
-.ml-0 {
-  margin-left: calc(var(--spacing) * 0);
+.mb-\[-2\] {
+  margin-bottom: -2;
+}
+.mb-\[-\] {
+  margin-bottom: -;
 }
 .ml-2 {
   margin-left: calc(var(--spacing) * 2);
 }
 .ml-4 {
   margin-left: calc(var(--spacing) * 4);
-}
-.ml-7 {
-  margin-left: calc(var(--spacing) * 7);
 }
 .ml-8 {
   margin-left: calc(var(--spacing) * 8);
@@ -316,9 +337,6 @@
 }
 .ml-72 {
   margin-left: calc(var(--spacing) * 72);
-}
-.ml-96 {
-  margin-left: calc(var(--spacing) * 96);
 }
 .ml-\[-60px\] {
   margin-left: -60px;
@@ -445,9 +463,6 @@
 }
 .h-24 {
   height: calc(var(--spacing) * 24);
-}
-.h-30 {
-  height: calc(var(--spacing) * 30);
 }
 .h-\[90px\] {
   height: 90px;
@@ -1676,20 +1691,20 @@
 .ps-12 {
   padding-inline-start: calc(var(--spacing) * 12);
 }
+.pt-0 {
+  padding-top: calc(var(--spacing) * 0);
+}
+.pt-1 {
+  padding-top: calc(var(--spacing) * 1);
+}
 .pt-2 {
   padding-top: calc(var(--spacing) * 2);
 }
 .pt-\[120px\] {
   padding-top: 120px;
 }
-.pr-4 {
-  padding-right: calc(var(--spacing) * 4);
-}
 .pr-6 {
   padding-right: calc(var(--spacing) * 6);
-}
-.pr-8 {
-  padding-right: calc(var(--spacing) * 8);
 }
 .pb-2 {
   padding-bottom: calc(var(--spacing) * 2);
@@ -2574,6 +2589,22 @@
   &:hover {
     @media (hover: hover) {
       background-color: var(--color-white);
+    }
+  }
+}
+.hover\:text-sm {
+  &:hover {
+    @media (hover: hover) {
+      font-size: var(--text-sm);
+      line-height: var(--tw-leading, var(--text-sm--line-height));
+    }
+  }
+}
+.hover\:text-xs {
+  &:hover {
+    @media (hover: hover) {
+      font-size: var(--text-xs);
+      line-height: var(--tw-leading, var(--text-xs--line-height));
     }
   }
 }

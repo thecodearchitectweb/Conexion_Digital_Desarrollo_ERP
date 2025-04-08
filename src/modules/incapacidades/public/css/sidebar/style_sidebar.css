@@ -57,6 +57,7 @@ body {
 .sidebar.minimize{
     width: 4.94rem;
 }
+
 /* Header */
 .header{
     width: 100%;
@@ -414,7 +415,7 @@ body.dark-mode .dark-mode-btn i:first-child{
 }
 
 /* Responsive */
-@media (max-height: 683px){
+@media (max-height: 583px){
     .footer{
         box-shadow: none;
     }
@@ -435,7 +436,8 @@ body.dark-mode .dark-mode-btn i:first-child{
         padding: 2rem;
     }
 }
-@media (max-width:700px) or (max-height:683px){
+
+@media (max-width:600px) or (max-height:583px){
     #menu-btn{
         display: none;
     }
