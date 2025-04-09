@@ -1,0 +1,12 @@
+    
+    
+    /* Ejemplo de CSS para el contenedor y estados de la sidebar */
+    /* Ajusta los valores a tu diseño */
+    .container-expanded {
+        margin-left: 8rem; /* Cuando la sidebar está minimizada, el contenedor se expande */
+        transition: margin-left 0.3s ease;
+      }
+      .container-collapsed {
+        margin-left: 18rem; /* Cuando la sidebar está expandida, el contenedor deja espacio */
+        transition: margin-left 0.3s ease;
+      }
