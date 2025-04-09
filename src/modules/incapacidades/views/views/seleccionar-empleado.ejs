@@ -5,125 +5,159 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Seleccionar Empleado</title>
+  <link rel="stylesheet" href="/incapacidades/css/sidebar/style_sidebar_adaptacion_pantalla.css">
+
+
+  <%- include('./../partials/header/header.ejs') %>
 
 </head>
 
-<header>
-  <%- include('./../partials/header/header.ejs') %>
-
-
-
-</header>
 
 
 
 
+<body class="bg-slate-200" >
 
-<body class="bg-slate-200" id="body">
+  <!-- NAVBAR -->
+  <header>
+    <!-- NAVBAR SUPERIOR -->
+    <nav class="navbar">
+      <div class="navbar-left ">
+        <div class="navbar-left" style="gap: 0.5rem;">
+          <img src="/incapacidades/img/logo/LOGO_SPEED_NETWORKS_SAS-01.png" alt="Logo 1" style="height: 60px;" />
+          <img src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="Logo 2" style="height: 90px;" />
+        </div>
+      </div>
 
+      <div class="navbar-right">
+        <span class="navbar-user">Hola, Alex Alejandro Oviedo Gonzalez</span>
+        <i class='bx bx-user-circle text-2xl ml-4'></i>
+        <i class='bx bx-exit ml-4 text-xl cursor-pointer'></i>
+      </div>
+    </nav>
+  </header>
 
-  <aside id="" class=" fixed left-0 top-0 h-full z-40">
-    <%- include('./../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
+  <!-- SIDEBAR -->
+  <aside>
+    <!-- SIDEBAR (partial) -->
+    <div id="sidebar_principal_incapacidades" class="main-content">
+      <aside id="sidebar" class="sidebar">
+        <%- include('./../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
+      </aside>
+    </div>
+
   </aside>
 
 
-  <div id="container_seleccionar_empleado" 
-  class="flex flex-col min-h-screen gap-6 mx-auto pt-[120px] pr-6 w-full max-w-11/12 transition-all duration-500">
+<div class="w-full flex">
+  <div  id="container_seleccionar_empleado" class=" flex-col gap-6 mt-16 p-8 w-full max-w-11/12 transition-all duration-500 container-collapsed ">
 
-
-    <div id="container-seleccionar-empleado" class="relative shadow-[0px_4px_10px_rgba(100,116,139,0.5)] bg-white p-6 rounded-2xl w-full mx-auto my-6 flex flex-col items-center justify-center ">
-
-      <%- include('./../partials/breadcrumb/modulos/incapacidades/breadcrumb_busquedad_personal_incapacidad.ejs') %>
-
-      <div class="flex justify-center w-full">
-        <h1 class="text-slate-800 font-[Markazi] font-bold  items-center justify-center text-sm block">SELECCIONE EMPLEADO</h1>
-      </div>
-
-      <form action="/incapacidad/seleccionar/empleado" method="POST" class="p-4 pt-1 w-full max-w-3xl flex flex-col gap-4 ">
-
-        <select id="filtro" name="filtro" class="bg-gray-50 border drop-shadow-sm border-gray-300 text-gray-900 text-xs rounded-lg outline-none focus:ring-lime-500 focus:border-lime-500 block w-full p-1.5">
-          <option selected>Seleccione una opción</option>
-          <option value="cedula">CEDULA</option>
-          <option value="contacto">CONTACTO</option>
-          <option value="nombres">NOMBRES</option>
-          <option value="apellidos">APELLIDOS</option>
-        </select>
-
-        <input id="busqueda" name="busqueda" type="text" class="outline-none w-full p-1.5 hidden drop-shadow-sm bg-gray-50 uppercase border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingrese valor" required />
-
-        <div class="w-full flex justify-center mt-2">
-          <button type="submit" class="text-white bg-slate-700 w-2xs hover:bg-slate-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2 me-1 mb-1 focus:outline-none">Buscar</button>
+   
+  
+  
+      <div id="container-seleccionar-empleado" class=" shadow-[0px_4px_10px_rgba(100,116,139,0.5)] bg-white p-6 rounded-2xl w-full mx-auto my-6 flex flex-col items-center justify-center ">
+  
+        <%- include('./../partials/breadcrumb/modulos/incapacidades/breadcrumb_busquedad_personal_incapacidad.ejs') %>
+  
+        <div class="flex justify-center w-full">
+          <h1 class="text-slate-800 font-[Markazi] font-bold  items-center justify-center text-sm block">SELECCIONE EMPLEADO</h1>
         </div>
-      </form>
-    </div>
-
-
-    <% if (Empleados.length > 0) { %>
-
-    <div class="w-full my-6  rounded-2xl flex flex-col items-center justify-center  ">
-
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
-
-        <table class="w-full text-xs text-left rtl:text-right text-gray-500">
-          <thead class="text-xs text-white uppercase bg-slate-700">
-            <tr>
-              <th class="px-2 py-2.5 border-r border-white text-center">Acceso</th>
-              <th class="px-4 py-2.5 border-r border-white">Nombres</th>
-              <th class="px-4 py-2.5 border-r border-white">Apellidos</th>
-              <th class="px-4 py-2.5 border-r border-white">Documento</th>
-              <th class="px-4 py-2.5 border-r border-white">Contacto</th>
-              <th class="px-4 py-2.5 border-r border-white">Área</th>
-              <th class="px-4 py-2.5 border-r border-white">Cargo</th>
-              <th class="px-4 py-2.5 border-r border-white">Estado</th>
-              <th class="px-4 py-2.5 border-r border-white">Jefe Inmediato</th>
-              <th class="px-4 py-2.5 border-r border-white">EPS</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% if (Empleados.length > 0) { %>
-            <% for (let i = 0; i < Empleados.length; i++) { %>
-            <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-              <td class="px-2 text-center">
-                <a href="/incapacidad/detalle/incapacidad/empleado/<%= Empleados[i].id_empleado %>">
-                  <i class='bx bxs-edit text-lg p-0 mr-2 text-cyan-800'></i>
-                </a>
-              </td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].nombres %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].apellidos %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].documento %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].contacto %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].area %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].cargo %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].estado %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].lider %></td>
-              <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].eps %></td>
-            </tr>
-            <% } %>
-            <% } else { %>
-            <tr>
-              <td colspan="10" class="px-4 py-3 text-center text-gray-800">
-                No se encontraron empleados.
-              </td>
-            </tr>
-            <% } %>
-          </tbody>
-        </table>
-
+  
+        <form action="/incapacidad/seleccionar/empleado" method="POST" class="p-4 pt-1 w-full max-w-3xl flex flex-col gap-4 ">
+  
+          <select id="filtro" name="filtro" class="bg-gray-50 border drop-shadow-sm border-gray-300 text-gray-900 text-xs rounded-lg outline-none focus:ring-lime-500 focus:border-lime-500 block w-full p-1.5">
+            <option selected>Seleccione una opción</option>
+            <option value="cedula">CEDULA</option>
+            <option value="contacto">CONTACTO</option>
+            <option value="nombres">NOMBRES</option>
+            <option value="apellidos">APELLIDOS</option>
+          </select>
+  
+          <input id="busqueda" name="busqueda" type="text" class="outline-none w-full p-1.5 hidden drop-shadow-sm bg-gray-50 uppercase border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingrese valor" required />
+  
+          <div class="w-full flex justify-center mt-2">
+            <button type="submit" class="text-white bg-slate-700 w-2xs hover:bg-slate-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2 me-1 mb-1 focus:outline-none">Buscar</button>
+          </div>
+        </form>
       </div>
-    </div>
-
-
-    <% } else { %>
-
-    <div class="mx-auto px-4 my-10 p-4 rounded-2xl flex flex-col items-center justify-center w-full max-w-10/12 bg-red-100 border border-red-400 text-red-700">
-      <p class="text-lg font-semibold">No se encontraron empleados.</p>
-    </div>
-
-    <% } %>
-
-
+  
+  
+      <% if (Empleados.length > 0) { %>
+  
+      <div class="w-full my-6  rounded-2xl flex flex-col items-center justify-center  ">
+  
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
+  
+          <table class="w-full text-xs text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-white uppercase bg-slate-700">
+              <tr>
+                <th class="px-2 py-2.5 border-r border-white text-center">Acceso</th>
+                <th class="px-4 py-2.5 border-r border-white">Nombres</th>
+                <th class="px-4 py-2.5 border-r border-white">Apellidos</th>
+                <th class="px-4 py-2.5 border-r border-white">Documento</th>
+                <th class="px-4 py-2.5 border-r border-white">Contacto</th>
+                <th class="px-4 py-2.5 border-r border-white">Área</th>
+                <th class="px-4 py-2.5 border-r border-white">Cargo</th>
+                <th class="px-4 py-2.5 border-r border-white">Estado</th>
+                <th class="px-4 py-2.5 border-r border-white">Jefe Inmediato</th>
+                <th class="px-4 py-2.5 border-r border-white">EPS</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <% if (Empleados.length > 0) { %>
+              <% for (let i = 0; i < Empleados.length; i++) { %>
+              <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                <td class="px-2 text-center">
+                  <a href="/incapacidad/detalle/incapacidad/empleado/<%= Empleados[i].id_empleado %>">
+                    <i class='bx bxs-edit text-lg p-0 mr-2 text-cyan-800'></i>
+                  </a>
+                </td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].nombres %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].apellidos %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].documento %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].contacto %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].area %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].cargo %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].estado %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].lider %></td>
+                <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].eps %></td>
+              </tr>
+              <% } %>
+              <% } else { %>
+              <tr>
+                <td colspan="10" class="px-4 py-3 text-center text-gray-800">
+                  No se encontraron empleados.
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+  
+        </div>
+      </div>
+  
+  
+      <% } else { %>
+  
+      <div class="mx-auto px-4 my-10 p-4 rounded-2xl flex flex-col items-center justify-center w-full max-w-10/12 bg-red-100 border border-red-400 text-red-700">
+        <p class="text-lg font-semibold">No se encontraron empleados.</p>
+      </div>
+  
+      <% } %>
+  
+  
+   
+  
+  
   </div>
+</div>
+
+
+
+
+
+
 
 
 
@@ -135,95 +169,7 @@
   
 
   
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const menuBtn   = document.getElementById('menu-btn');
-      const sidebar   = document.getElementById('sidebar');
-      const container = document.getElementById('container_seleccionar_empleado');
-      const DESKTOP_THRESHOLD = 700; // píxeles para definir desktop vs mobile
-  
-      if (!menuBtn || !sidebar || !container) {
-        console.error("Faltan elementos requeridos: asegúrate de tener menu-btn, sidebar y container_seleccionar_empleado");
-        return;
-      }
-  
-      // Función para determinar si estamos en modo desktop
-      const isDesktop = () => window.innerWidth > DESKTOP_THRESHOLD;
-  
-      // Función que aplica el estado guardado en desktop
-      function applyDesktopState() {
-        // Primero, limpia las clases de margen en el contenedor
-        container.classList.remove('ml-32', 'ml-72');
-  
-        const savedState = localStorage.getItem('sidebarState') || 'open';
-        if (savedState === 'closed') {
-          sidebar.classList.add('closed');
-          container.classList.add('ml-32'); // contenedor reducido
-        } else {
-          sidebar.classList.remove('closed');
-          container.classList.add('ml-72'); // contenedor expandido
-        }
-      }
-  
-      // Función para aplicar estado en mobile: dejamos que CSS media query maneje la visualización
-      function applyMobileState() {
-        // Eliminamos cualquier clase de estado que pueda interferir
-        sidebar.classList.remove('closed');
-        container.classList.remove('ml-32', 'ml-72');
-        // Además, si usas una clase en body para controlar la transformación en mobile, la eliminamos:
-        document.body.classList.remove('sidebar-hidden');
-      }
-  
-      // Función central que aplica el estado según el modo actual
-      function applyState() {
-        if (isDesktop()) {
-          applyDesktopState();
-        } else {
-          applyMobileState();
-        }
-      }
-  
-      // Función para togglear la sidebar en desktop y actualizar el contenedor
-      function toggleSidebarDesktop() {
-        // Alternamos el estado de la sidebar
-        const wasClosed = sidebar.classList.toggle('closed');
-        // Guardamos el estado en localStorage
-        localStorage.setItem('sidebarState', wasClosed ? 'closed' : 'open');
-        // Actualizamos las clases del contenedor
-        container.classList.remove('ml-32', 'ml-72');
-        container.classList.add(wasClosed ? 'ml-32' : 'ml-72');
-      }
-  
-      // Función para togglear la sidebar en mobile
-      function toggleSidebarMobile() {
-        // En mobile, usamos la clase del body para activar la transformación CSS
-        document.body.classList.toggle('sidebar-hidden');
-        // No modificamos los márgenes del contenedor en mobile.
-      }
-  
-      // Listener para el botón de menú: ejecuta la función según el modo
-      menuBtn.addEventListener('click', () => {
-        if (isDesktop()) {
-          toggleSidebarDesktop();
-        } else {
-          toggleSidebarMobile();
-        }
-      });
-  
-      // Detecta cambios de tamaño de pantalla y re-aplica el estado si cambia el modo
-      let currentDesktopMode = isDesktop();
-      window.addEventListener('resize', () => {
-        const nowDesktop = isDesktop();
-        if (nowDesktop !== currentDesktopMode) {
-          currentDesktopMode = nowDesktop;
-          applyState();
-        }
-      });
-  
-      // Aplica el estado inicial al cargar la página
-      applyState();
-    });
-  </script>
+  <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
   
   
   

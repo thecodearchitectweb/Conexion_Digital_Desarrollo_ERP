@@ -482,7 +482,7 @@ body.dark-mode .dark-mode-btn i:first-child{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 50;
+    z-index: 99999;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
     border-bottom: 1px solid #e2e8f0; /* tailwind slate-200 */
   }

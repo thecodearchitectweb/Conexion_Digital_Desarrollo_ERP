@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const codigoCategoriaInput = document.getElementById("codigo_categoria");
     const descripcionCategoriaInput = document.getElementById("descripcion_categoria");
 
+
     codigoInput.addEventListener("change", function () {
         const codigo = codigoInput.value.trim(); 
 

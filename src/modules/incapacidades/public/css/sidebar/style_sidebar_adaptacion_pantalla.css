@@ -5,8 +5,19 @@
     .container-expanded {
         margin-left: 8rem; /* Cuando la sidebar está minimizada, el contenedor se expande */
         transition: margin-left 0.3s ease;
+
       }
       .container-collapsed {
-        margin-left: 18rem; /* Cuando la sidebar está expandida, el contenedor deja espacio */
+        margin-left: 20rem; /* Cuando la sidebar está expandida, el contenedor deja espacio */
         transition: margin-left 0.3s ease;
+        
       }
+
+/* 
+      #sidebar {
+        background-color: rgba(255, 0, 0, 0.1);
+      }
+      #container_seleccionar_empleado {
+        background-color: rgba(0, 255, 0, 0.1);
+      } */
+      

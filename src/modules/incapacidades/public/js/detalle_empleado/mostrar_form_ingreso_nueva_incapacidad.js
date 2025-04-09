@@ -61,4 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     tipoIncapacidad.addEventListener("change", verificarCamposLlenos);
     enfermedadGeneral.addEventListener("change", verificarCamposLlenos);
     accidenteTransito.addEventListener("change", verificarCamposLlenos);
+
+    verificarCamposLlenos();
+
 });

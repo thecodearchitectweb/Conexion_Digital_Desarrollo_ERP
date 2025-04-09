@@ -1,0 +1,381 @@
+<!-- Extra Large Modal -->
+<div id="edit_incapacidad_vent_confirm" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 mt-10 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full ">
+  <div class="relative w-full max-w-[90vw] max-h-full  rounded-3xl">
+    <!-- Modal content -->
+    <div class="relative bg-gray-50 rounded-2xl shadow-sm  z-10 ">
+      <!-- Modal header -->
+      <div class="flex items-center justify-between w-full p-0 md:p-1 border-b rounded-b border-gray-50 shadow-sm bg-slate-800 rounded-2xl">
+
+        <h3 class="text-sm font-medium text-gray-100 w-full text-center">
+          EDITAR INCAPACIDAD REGISTRADA
+        </h3>
+
+        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="edit_incapacidad_vent_confirm">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+
+
+
+      <!-- EDITAR CAMPOS -->
+      <!-- Contenido con scroll -->
+      <div class="p-4 md:p-6 overflow-y-auto h-full max-h-[70vh]">
+
+
+        <!-- FORMULARIO PARA INGRESO DE NUEVA INCAPACIDAD -->
+        <form action="#" method="POST" enctype="multipart/form-data">
+
+
+
+          <!-- SELECCIÒN DEL TIPO DE INCAPACIDAD -->
+          <div class="w-full text-center border-b border-lime-600 mt-6 mb-4 py-2 drop-shadow-md">
+            <h2 class="text-md font-bold">EDITAR INCAPACIDAD REGISTRADA</h2>
+          </div>
+
+
+          <div class="w-full container mx-auto px-2 my-2 p-4 flex flex-col bg-gray-50 border border-gray-100 rounded-xl drop-shadow-md">
+            <div class="w-full py-2 ">
+              <div class=" mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 p-0 w-full max-w-10/12   ">
+
+
+                <!-- Tipo de incapacidad -->
+                <div class="w-full">
+                  <label for="tipo_incapacidad" class="block mb-2 text-sm font-medium text-gray-900">
+                    Seleccione el tipo de incapacidad
+                  </label>
+                  <select id="tipo_incapacidad" name="select_tipo_incapacidad" value="<%= datos_incapacidad.tipo_incapacidad || 'Sin detalle' %>" class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md ">
+                    <option disabled <%= !datos_incapacidad.tipo_incapacidad ? 'selected' : '' %>>Seleccione el tipo de incapacidad</option>
+                    <option value="EPS" <%= datos_incapacidad.tipo_incapacidad === 'EPS' ? 'selected' : '' %>>EPS</option>
+                    <option value="ARL" <%= datos_incapacidad.tipo_incapacidad === 'ARL' ? 'selected' : '' %>>ARL</option>
+                  </select>
+                </div>
+
+                <!-- Enfermedad General (Oculto por defecto) -->
+                <div id="enfermedad_general_container" class="w-full hidden">
+                  <label for="enfermedad_general" class="block mb-2 text-sm font-medium text-gray-900">
+                    Enfermedad General
+                  </label>
+                  <select id="enfermedad_general" name="select_detalle_incapacidad_eps_arl " value=" <%= datos_incapacidad.subtipo_incapacidad || 'Sin detalle' %>" class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md">
+                    <option disabled <%= !datos_incapacidad.subtipo_incapacidad ? 'selected' : '' %>>Seleccione la Enfermedad General</option>
+                    <option value="ORIGEN COMUN" <%= datos_incapacidad.subtipo_incapacidad === "ORIGEN COMUN" ? "selected" : "" %>>Origen Común</option>
+                    <option value="ACCIDENTE DE TRANSITO" <%= datos_incapacidad.subtipo_incapacidad === "ACCIDENTE DE TRANSITO" ? "selected" : "" %>>Accidente de tránsito</option>
+                    <option value="LICENCIA DE PATERNIDAD" <%= datos_incapacidad.subtipo_incapacidad === "LICENCIA DE PATERNIDAD" ? "selected" : "" %>>Licencia de Paternidad</option>
+                    <option value="LICENCIA DE MATERNIDAD" <%= datos_incapacidad.subtipo_incapacidad === "LICENCIA DE MATERNIDAD" ? "selected" : "" %>>Licencia de Maternidad</option>
+                  </select>
+                </div>
+
+                <!-- Accidente de Trabajo (Oculto por defecto) -->
+                <div id="accidente_transito_container" class="w-full hidden">
+                  <label for="accidente_transito" class="block mb-2 text-sm font-medium text-gray-900">
+                    Accidente de Trabajo
+                  </label>
+                  <select id="accidente_laboral_transito" name="select_detalle_incapacidad_eps_arl" class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md">
+                    <option disabled <%= !datos_incapacidad.subtipo_incapacidad ? 'selected' : '' %>>Seleccione el Accidente de Trabajo</option>
+                    <option value="ORIGEN COMUN" <%= datos_incapacidad.subtipo_incapacidad === "ORIGEN COMUN" ? "selected" : "" %>>Origen común</option>
+                    <option value="ACCIDENTE DE TRANSITO" <%= datos_incapacidad.subtipo_incapacidad === "ACCIDENTE DE TRANSITO" ? "selected" : "" %>>Accidente de tránsito</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="w-full text-center border-b border-gray-200 my-6 drop-shadow-md"></div>
+
+
+
+          <!-- INGRESO DATOS DE LA NUEVA INCAPACIDAD -->
+          <div id="form_ingreso_nueva_incapacidad" class="relative w-full container mx-auto my-2 p-4 border border-gray-100 rounded-xl bg-gray-50 drop-shadow-md">
+            <div class="w-full mx-auto p-2 ">
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+
+
+                <!-- Inicio Incapacidad -->
+                <div class="col-span-1">
+                  <label for="arl-date" class="block mb-1.5 text-sm font-medium text-slate-900">Inicio Incapacidad</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none ">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar text-lime-600">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                        <path d="M16 3v4" />
+                        <path d="M8 3v4" />
+                        <path d="M4 11h16" />
+                        <path d="M11 15h1" />
+                        <path d="M12 15v3" />
+                      </svg>
+                    </div>
+                    <input id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad" value="" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
+                  </div>
+                </div>
+
+
+                <!-- Finalización Incapacidad -->
+                <div class="col-span-1">
+                  <label for="arl-date" class="block mb-1.5 text-sm font-medium text-slate-900">Finalización Incapacidad</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none  ">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-calendar text-lime-600">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M16 2a1 1 0 0 1 .993 .883l.007 .117v1h1a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h1v-1a1 1 0 0 1 1.993 -.117l.007 .117v1h6v-1a1 1 0 0 1 1 -1zm3 7h-14v9.625c0 .705 .386 1.286 .883 1.366l.117 .009h12c.513 0 .936 -.53 .993 -1.215l.007 -.16v-9.625z" />
+                        <path d="M12 12a1 1 0 0 1 .993 .883l.007 .117v3a1 1 0 0 1 -1.993 .117l-.007 -.117v-2a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                      </svg>
+                    </div>
+                    <input id="fecha_final_incapacidad" type="date" name="input_fecha_final_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
+                  </div>
+                </div>
+
+
+                <!-- Cantidad de días -->
+                <div class="col-span-1">
+                  <label for="cantidad-dias" class="block mb-1.5 text-sm font-medium text-slate-900">Cantidad de días</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-scoreboard text-lime-600">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                        <path d="M12 5v2" />
+                        <path d="M12 10v1" />
+                        <path d="M12 14v1" />
+                        <path d="M12 18v1" />
+                        <path d="M7 3v2" />
+                        <path d="M17 3v2" />
+                        <path d="M15 10.5v3a1.5 1.5 0 0 0 3 0v-3a1.5 1.5 0 0 0 -3 0z" />
+                        <path d="M6 9h1.5a1.5 1.5 0 0 1 0 3h-.5h.5a1.5 1.5 0 0 1 0 3h-1.5" />
+                      </svg>
+                    </div>
+                    <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md" placeholder="" readonly />
+                  </div>
+                </div>
+
+
+
+                <!-- Enfermedad General -->
+                <div class="col-span-1">
+                  <label for="codigo_enfermedad_general" class="block mb-1.5 text-sm font-medium text-slate-900">Codigo Enfermedad General</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-filter-code text-lime-600">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M11.19 20.27l-2.19 .73v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v1.5" />
+                        <path d="M20 21l2 -2l-2 -2" />
+                        <path d="M17 17l-2 2l2 2" />
+                      </svg>
+                    </div>
+                    <input type="text" id="codigo_enfermedad_general" value="<%= datos_incapacidad.codigo_subcategoria || 'Sin detalle' %>" name="list_codigo_enfermedad_general" list="lista_cie_10_codigo_categoria" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="" />
+                  </div>
+                </div>
+
+
+                <!-- Enfermedad General -->
+
+
+                <div class="col-span-2">
+                  <label for="descripcion_diagnostico" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion diagnostico</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-tidal text-lime-600">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5.333 6l3.334 3.25l3.333 -3.25l3.333 3.25l3.334 -3.25l3.333 3.25l-3.333 3.25l-3.334 -3.25l-3.333 3.25l3.333 3.25l-3.333 3.25l-3.333 -3.25l3.333 -3.25l-3.333 -3.25l-3.334 3.25l-3.333 -3.25z" />
+                      </svg>
+                    </div>
+                    <input type="text" id="descripcion_diagnostico" name="input_descripcion_diagnostico" value="<%= datos_incapacidad.descripcion_subcategoria || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm  font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="" readonly />
+                  </div>
+                </div>
+
+
+                <div class="col-span-2">
+                  <label for="descripcion_categoria" class="block mb-1.5 text-sm font-medium text-slate-900">Descripcion categoria</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-body-scan text-lime-600">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+                        <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+                        <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+                        <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+                        <path d="M12 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                        <path d="M10 17v-1a2 2 0 1 1 4 0v1" />
+                        <path d="M8 10c.666 .666 1.334 1 2 1h4c.666 0 1.334 -.334 2 -1" />
+                        <path d="M12 11v3" />
+                      </svg>
+                    </div>
+                    <input type="text" id="descripcion_categoria" name="input_descripcion_categoria" value=" <%= datos_incapacidad.descripcion_categoria || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="" readonly />
+                  </div>
+                </div>
+
+
+
+
+                <div class="col-span-1">
+                  <label for="codigo_categoria" class="block mb-1.5 text-sm font-medium text-slate-900">Codigo Categoria</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-category-2 text-lime-600">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M14 4h6v6h-6z" />
+                        <path d="M4 14h6v6h-6z" />
+                        <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                        <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                      </svg>
+                    </div>
+                    <input type="text" id="codigo_categoria" name="input_codigo_categoria" value="<%= datos_incapacidad.codigo_categoria || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="" readonly />
+                  </div>
+                </div>
+
+
+
+
+
+                <!-- Enfermedad General -->
+                <% const ultimaObservacion = datos_observaciones_seguimiento.at(-1) || {}; %>
+
+                <!-- Estado Incapacidad -->
+                <div class="col-span-1">
+                  <label for="select_estado_incapacidad" class="block mb-1.5 text-sm font-medium text-slate-900">Estado Incapacidad</label>
+                  <div class="relative">
+                    <select id="select_estado_incapacidad" name="select_estado_incapacidad" class="w-full max-w-xs sm:max-w-full p-1.5 border-b-lime-600 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md">
+                      <option disabled <%= !ultimaObservacion.estado_incapacidad ? "selected" : "" %>>Seleccione estado de la incapacidad</option>
+                      <option value="CONTABILIZADOS" <%= ultimaObservacion.estado_incapacidad === "CONTABILIZADOS" ? "selected" : "" %>>Contabilizados</option>
+                      <option value="PAGADOS" <%= ultimaObservacion.estado_incapacidad === "PAGADOS" ? "selected" : "" %>>Pagados</option>
+                      <option value="ENTREGADO" <%= ultimaObservacion.estado_incapacidad === "ENTREGADO" ? "selected" : "" %>>Entregado</option>
+                      <option value="PRE-LIQUIDACION" <%= ultimaObservacion.estado_incapacidad === "PRE-LIQUIDACION" ? "selected" : "" %>>Pre-liquidacion</option>
+                      <option value="NEGADA" <%= ultimaObservacion.estado_incapacidad === "NEGADA" ? "selected" : "" %>>Negada</option>
+                      <option value="RADICADA" <%= ultimaObservacion.estado_incapacidad === "RADICADA" ? "selected" : "" %>>Radicada</option>
+                      <option value="DEVOLUCION" <%= ultimaObservacion.estado_incapacidad === "DEVOLUCION" ? "selected" : "" %>>Devolucion</option>
+                    </select>
+                  </div>
+                </div>
+                
+
+
+                <!-- Toggle Switch centrado con color verde -->
+                <div class="col-span-1 flex justify-center items-end mb-1.5">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" value="1" class="sr-only peer" name="input_toggle_prorroga">
+                    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-lime-300 rounded-full peer  peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-lime-600">
+                    </div>
+                    <span class="ms-3 text-md font-medium text-gray-900 ">Prorroga</span>
+                  </label>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="w-full mx-auto text-center border-b-1 border-gray-200 pb-2 my-4 drop-shadow-md "></div>
+
+
+          <!-- ----------------------------------------------------------------- -->
+
+          
+            <div class="p-2 my-8 overflow-auto max-h-[70vh] flex justify-center">
+                <div class="relative overflow-x-auto drop-shadow-xl rounded-lg w-full max-w-11/12">
+                  <table class="w-full text-xs text-center text-slate-700 table-fixed">
+                    <thead class="text-xs text-white uppercase bg-slate-800">
+                      <tr>
+                        <th scope="col" class="w-1/2 px-3 py-2 border border-white">Nombre actual</th>
+                        <th scope="col" class="w-1/2 px-3 py-2 border border-white">Nuevo archivo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if (datos_rutas_files && datos_rutas_files.length > 0) { %>
+                        <% datos_rutas_files.forEach((file, index) => { %>
+                          <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                            <!-- Nombre actual -->
+                            <td class="px-3 py-2 align-middle">
+                              <%= file.nombre %>
+                              <input type="hidden" name="archivos_existentes[<%= index %>][nombre_actual]" value="<%= file.nombre %>">
+                            </td>
+              
+                            <!-- Input para nuevo archivo -->
+                            <td class="px-3 py-2">
+                                <label class="inline-block relative cursor-pointer group">
+                                    <input
+                                      type="file"
+                                      name="archivos_existentes[<%= index %>][archivo_nuevo]"
+                                      accept="application/pdf"
+                                      class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer archivo-input"
+                                      data-index="<%= index %>"
+                                    >
+                                    <div class="px-3 py-1 text-xs bg-slate-800 text-white border border-gray-300 rounded-md hover:bg-gray-300 transition archivo-label" id="archivo-label-<%= index %>">
+                                      Seleccionar archivo
+                                    </div>
+                                  </label>
+                                  
+                            </td>
+                          </tr>
+                        <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="2" class="px-3 py-3 text-center">No se encontraron archivos adjuntos.</td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+          
+          
+          
+          
+          
+
+
+
+          <!-- ----------------------------------------------------------------- -->
+
+
+
+
+
+
+          <div class="w-full mx-auto text-center border-b-1 border-gray-200 pb-2 mb-2 mt-2 drop-shadow-md"></div>
+
+
+          <!-- OBSERVACIONES -->
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8 my-4 bg-white p-4 w-full  border border-gray-100 rounded-xl">
+            <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Observaciones</label>
+            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-lime-600 focus:ring-lime-600 focus:border-lime-600 placeholder-gray-400" name="textarea_observaciones"></textarea>
+          </div>
+
+
+          <div class="flex justify-center space-x-4 mt-8 gap-x-2">
+            <button type="submit" class="text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center">
+              Guardar
+            </button>
+
+          </div>
+
+
+
+
+        </form>
+
+
+      </div>
+
+
+      <div class="p-4 md:p-10 space-y-16 overflow-auto max-h-[70vh]">
+        <div class="relative overflow-x-auto drop-shadow-xl rounded-b-2xl">
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  
+  
+</div
+
