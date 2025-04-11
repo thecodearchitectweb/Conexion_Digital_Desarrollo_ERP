@@ -26,8 +26,7 @@
 
 
         <!-- FORMULARIO PARA INGRESO DE NUEVA INCAPACIDAD -->
-        <form action="#" method="POST" enctype="multipart/form-data">
-
+        <form id="update-form" enctype="multipart/form-data">
 
 
           <!-- SELECCIÒN DEL TIPO DE INCAPACIDAD -->
@@ -109,7 +108,7 @@
                         <path d="M12 15v3" />
                       </svg>
                     </div>
-                    <input id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad" value="" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
+                    <input id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad" value="<%= datos_incapacidad.fecha_inicio_incapacidad || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
                   </div>
                 </div>
 
@@ -125,7 +124,7 @@
                         <path d="M12 12a1 1 0 0 1 .993 .883l.007 .117v3a1 1 0 0 1 -1.993 .117l-.007 -.117v-2a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
                       </svg>
                     </div>
-                    <input id="fecha_final_incapacidad" type="date" name="input_fecha_final_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
+                    <input id="fecha_final_incapacidad" type="date" value="<%= datos_incapacidad.fecha_final_incapacidad || 'Sin detalle' %>" name="input_fecha_final_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
                   </div>
                 </div>
 
@@ -148,7 +147,7 @@
                         <path d="M6 9h1.5a1.5 1.5 0 0 1 0 3h-.5h.5a1.5 1.5 0 0 1 0 3h-1.5" />
                       </svg>
                     </div>
-                    <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md" placeholder="" readonly />
+                    <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad" value="<%= datos_incapacidad.cantidad_dias || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md" placeholder="" readonly />
                   </div>
                 </div>
 
@@ -275,54 +274,58 @@
 
 
           <!-- ----------------------------------------------------------------- -->
-
+<!-- Archivos files -->
           
-            <div class="p-2 my-8 overflow-auto max-h-[70vh] flex justify-center">
-                <div class="relative overflow-x-auto drop-shadow-xl rounded-lg w-full max-w-11/12">
-                  <table class="w-full text-xs text-center text-slate-700 table-fixed">
-                    <thead class="text-xs text-white uppercase bg-slate-800">
-                      <tr>
-                        <th scope="col" class="w-1/2 px-3 py-2 border border-white">Nombre actual</th>
-                        <th scope="col" class="w-1/2 px-3 py-2 border border-white">Nuevo archivo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% if (datos_rutas_files && datos_rutas_files.length > 0) { %>
-                        <% datos_rutas_files.forEach((file, index) => { %>
-                          <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-                            <!-- Nombre actual -->
-                            <td class="px-3 py-2 align-middle">
-                              <%= file.nombre %>
-                              <input type="hidden" name="archivos_existentes[<%= index %>][nombre_actual]" value="<%= file.nombre %>">
-                            </td>
-              
-                            <!-- Input para nuevo archivo -->
-                            <td class="px-3 py-2">
-                                <label class="inline-block relative cursor-pointer group">
-                                    <input
-                                      type="file"
-                                      name="archivos_existentes[<%= index %>][archivo_nuevo]"
-                                      accept="application/pdf"
-                                      class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer archivo-input"
-                                      data-index="<%= index %>"
-                                    >
-                                    <div class="px-3 py-1 text-xs bg-slate-800 text-white border border-gray-300 rounded-md hover:bg-gray-300 transition archivo-label" id="archivo-label-<%= index %>">
-                                      Seleccionar archivo
-                                    </div>
-                                  </label>
-                                  
-                            </td>
-                          </tr>
-                        <% }); %>
-                      <% } else { %>
-                        <tr>
-                          <td colspan="2" class="px-3 py-3 text-center">No se encontraron archivos adjuntos.</td>
-                        </tr>
-                      <% } %>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+<div class="p-2 my-8 overflow-auto max-h-[70vh] flex justify-center">
+  <div class="relative overflow-x-auto drop-shadow-xl rounded-lg w-full max-w-11/12">
+    <table class="w-full text-xs text-center text-slate-700 table-fixed">
+      <thead class="text-xs text-white uppercase bg-slate-800">
+        <tr>
+          <th scope="col" class="w-1/12 px-3 py-2 border border-white">ID File</th>
+          <th scope="col" class="w-1/2 px-3 py-2 border border-white">Nombre actual</th>
+          <th scope="col" class="w-1/2 px-3 py-2 border border-white">Nuevo archivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (datos_rutas_files && datos_rutas_files.length > 0) { %>
+          <% datos_rutas_files.forEach((file, index) => { %>
+            <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+              <!-- ID File: se muestra el ID y se guarda en un input oculto -->
+              <td class="px-3 py-2 align-middle">
+                <%= file.id_ruta_documentos %>
+                <input type="hidden" name="archivos_existentes[<%= index %>][id_ruta_documentos]" value="<%= file.id_ruta_documentos %>">
+              </td>
+              <!-- Nombre actual: se muestra el nombre y se guarda en un input oculto (opcional) -->
+              <td class="px-3 py-2 align-middle">
+                <%= file.nombre %>
+                <input type="hidden" name="archivos_existentes[<%= index %>][nombre_actual]" value="<%= file.nombre %>">
+              </td>
+              <!-- Input para nuevo archivo -->
+              <td class="px-3 py-2">
+                <label class="inline-block relative cursor-pointer group">
+                  <input
+                    type="file"
+                    name="archivos_existentes[<%= index %>][archivo_nuevo]"
+                    accept="application/pdf"
+                    class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer archivo-input"
+                    data-index="<%= index %>"
+                  >
+                  <div class="px-3 py-1 text-xs bg-slate-800 text-white border border-gray-300 rounded-md hover:bg-gray-300 transition archivo-label" id="archivo-label-<%= index %>">
+                    Seleccionar archivo
+                  </div>
+                </label>
+              </td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="3" class="px-3 py-3 text-center">No se encontraron archivos adjuntos.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
           
           

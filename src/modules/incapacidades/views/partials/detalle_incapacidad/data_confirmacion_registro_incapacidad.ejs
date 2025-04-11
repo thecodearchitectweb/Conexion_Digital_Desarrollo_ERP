@@ -1,0 +1,169 @@
+<div id="" class="relative w-full container mx-auto my-2 mb-4 p-4 border border-gray-100 rounded-xl bg-gray-50">
+
+    <div class="w-full mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start">
+
+
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950" data-id-incapacidad="<%= datos_incapacidad.id_incapacidades_historial %>">
+          ID INCAPACIDAD:
+          <small class="text-xs font-style: italic font-serif font-normal text-slate-600 ml-2">
+            <%= datos_incapacidad.id_incapacidades_historial || 'Sin detalle' %>
+          </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950" data-id-empleado="<%= datos_incapacidad.id_empleado %>">
+          ID EMPLEADO:
+          <small class="text-xs font-style: italic font-serif font-normal text-slate-600 ml-2">
+            <%= datos_incapacidad.id_empleado || 'Sin detalle' %>
+          </small>
+        </label>
+      
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TIPO INCAPACIDAD:
+          <small class="text-xs font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.tipo_incapacidad || 'Sin detalle' %> </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">SUB-TIPO INCAPACIDAD:
+          <small class="text-xs font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.subtipo_incapacidad || 'Sin detalle' %> </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950"> INICIO INCAPACIDAD:
+          <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  <%= datos_incapacidad.fecha_inicio_incapacidad || 'Sin detalle' %> </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">FINAL INCAPACIDAD: 
+          <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.fecha_final_incapacidad || 'Sin detalle' %> </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">DIAS INCAPACIDAD:
+          <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.cantidad_dias || 'Sin detalle' %> </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">PRORROGA:
+          <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.prorroga || 'Sin detalle' %> </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">CODIGO CATEGORIA:
+          <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.codigo_categoria || 'Sin detalle' %> </small>
+        </label>
+
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">CODIGO SUB-CATEGORIA:
+          <small class="text-xs font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.codigo_subcategoria || 'Sin detalle' %> </small>
+        </label>
+
+        <div class="col-span-2">
+          <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">DESCRIPCION CATEGORIA:
+            <small class="text-xs font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.descripcion_categoria || 'Sin detalle' %> </small>
+          </label>
+        </div>
+
+
+        <div class="col-span-2">
+          <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">DESCRIPCION SUB-CATEGORIA:
+            <small class="text-xs font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.descripcion_subcategoria || 'Sin detalle' %> </small>
+          </label>
+        </div>
+
+      </div>
+
+
+
+
+      <div class="w-full container mx-auto my-2 mb-4 mt-8 p-4 border border-gray-100 rounded-xl bg-gray-50">
+        <h2 class="text-sm font-semibold text-slate-800 mb-2">OBSERVACIONES</h2>
+
+        <% if (datos_observaciones_seguimiento && datos_observaciones_seguimiento.length > 0) { %>
+        <div class="overflow-x-auto rounded-lg">
+          <table class="w-full border-collapse border border-gray-200 bg-white shadow-md rounded-lg">
+            <thead>
+              <tr class="bg-slate-800 text-white text-xs ">
+                <th class="px-4 py-2 border border-gray-200 w-1/5">ID</th> <!-- 20% del ancho -->
+                <th class="px-4 py-2 border border-gray-200 w-1/5">ESTADO</th> <!-- 20% del ancho -->
+                <th class="px-4 py-2 border border-gray-200 w-4/5">OBSERVACIONES</th> <!-- 80% del ancho -->
+              </tr>
+            </thead>
+            <tbody>
+              <% datos_observaciones_seguimiento.forEach(observacion => { %>
+              <tr class="text-gray-800 text-xs hover:bg-gray-50">
+                <td class="px-4 py-1.5 border border-gray-200 text-center"><%= observacion.id_incapacidades_seguimiento %></td>
+                <td class="px-4 py-1.5 border border-gray-200 text-center hidden" value="<%= observacion.id_incapacidades_seguimiento %>"><%= observacion.id_incapacidades_seguimiento %></td>
+                <td class="px-4 py-1.5 border border-gray-200 text-center"><%= observacion.estado_incapacidad %></td>
+                <td class="px-4 py-1.5 border border-gray-200"><%= observacion.observaciones %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+        <% } else { %>
+        <p class="text-gray-600 italic">No se encontraron observaciones de seguimiento.</p>
+        <% } %>
+      </div>
+
+
+      <div class="flex justify-end items-end w-full mt-4 pr-8 gap-0 ">
+
+        <!-- Editar -->
+        <div class="relative group me-2">
+          <button  data-modal-target="edit_incapacidad_vent_confirm" data-modal-toggle="edit_incapacidad_vent_confirm"  type="button" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);">
+              <path d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z"></path>
+              <path d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"></path>
+            </svg>
+            <span class="sr-only">Editar</span>
+          </button>
+          <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg">
+            Editar
+          </div>
+        </div>
+
+        <!-- Agregar -->
+        <div class="relative group me-2">
+          <button type="button" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
+              <path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path>
+            </svg>
+            <span class="sr-only">Agregar</span>
+          </button>
+          <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg">
+            Agregar Nueva Incapacidad
+          </div>
+        </div>
+
+        <!-- Eliminar -->
+        <div class="relative group me-2">
+          <button type="button" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
+              <path d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path>
+              <path d="M9 10h2v8H9zm4 0h2v8h-2z"></path>
+            </svg>
+            <span class="sr-only">Eliminar</span>
+          </button>
+          <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg">
+            Eliminar
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+  const dataDiv = document.getElementById("datos-clave");
+
+  const idEmpleado = dataDiv.dataset.idEmpleado;
+  const idIncapacidad = dataDiv.dataset.idIncapacidad;
+  const idFiles = JSON.parse(dataDiv.dataset.idFiles || "[]");
+
+  console.log("🧠 ID Empleado:", idEmpleado);
+  console.log("📄 ID Incapacidad:", idIncapacidad);
+  console.log("📎 Archivos:", idFiles);
+});
+
+    </script>
+
+  </div>
+
+
+

@@ -147,7 +147,13 @@ export const registroNuevaIncapacidad = async(req, res) => {
             }
             
             // Guardamos el arreglo de IDs en la sesión
-            req.session.ids_rutas_documentos = rutasIds;
+            /* req.session.ids_rutas_documentos = rutasIds; */
+            await SessionManager.set(req, "ids_rutas_documentos", rutasIds);
+            console.log("Guardado en sesión:", req.session.ids_rutas_documentos);
+
+
+
+           
         }
 
        

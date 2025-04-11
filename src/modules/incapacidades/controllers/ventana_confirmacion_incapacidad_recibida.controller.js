@@ -22,6 +22,11 @@ export const incapacidadRecibida = async(req, res) =>{
         const id_incapacidad_recibida = await SessionManager.get(req, "id_incapacidad_registrada");
         const id_ruta_file_incapacidad_recibida = await SessionManager.get(req, "ids_rutas_documentos");
 
+        console.log("💡 id_ruta_file_incapacidad_recibida:", id_ruta_file_incapacidad_recibida);
+        console.log("👉 Tipo:", typeof id_ruta_file_incapacidad_recibida);
+        console.log("👉 Es array:", Array.isArray(id_ruta_file_incapacidad_recibida));
+
+
         console.log("Los ID de los archivos recibidos son: ", id_ruta_file_incapacidad_recibida)
         console.log("Datos guardados en la sesión req.session.ids_rutas_documentos:", req.session.ids_rutas_documentos);
 
@@ -121,7 +126,7 @@ export const incapacidadRecibida = async(req, res) =>{
 
         // Formatear la fecha de contratación
         datos_empleado.fecha_contratacion = datos_empleado.fecha_contratacion 
-        ? format(new Date(datos_empleado.fecha_contratacion), "dd 'de' MMMM 'de' yyyy", { locale: es }) 
+        ? format(new Date(datos_empleado.fecha_contratacion), "dd/MM/yyyy") 
         : "Fecha no disponible";
 
 
@@ -146,6 +151,18 @@ export const incapacidadRecibida = async(req, res) =>{
         }
 
         let datos_incapacidad = datos_incapacidad_confirmacion[0]; // Asegurar que la variable está definida antes de usarla
+
+
+        /* FORMATEO DE FECHA INICIO INCAPACIDAD */
+        datos_incapacidad.fecha_inicio_incapacidad =  datos_incapacidad.fecha_inicio_incapacidad
+        ? format(new Date(datos_incapacidad.fecha_inicio_incapacidad), "yyyy-MM-dd")
+        : "Fecha no disponible"
+
+
+        /* FORMATEO DE FECHA INICIO INCAPACIDAD */
+        datos_incapacidad.fecha_final_incapacidad =  datos_incapacidad.fecha_final_incapacidad
+        ? format(new Date(datos_incapacidad.fecha_final_incapacidad), "yyyy-MM-dd")
+        : "Fecha no disponible"
 
 
 
@@ -187,7 +204,7 @@ export const incapacidadRecibida = async(req, res) =>{
         const [datos_observaciones_seguimiento] = await pool.query(
             `
                 SELECT 
-                    estado_incapacidad, observaciones 
+                    id_incapacidades_seguimiento, estado_incapacidad, observaciones 
                 FROM 
                     incapacidades_seguimiento
                 WHERE 
@@ -196,12 +213,8 @@ export const incapacidadRecibida = async(req, res) =>{
             [id_incapacidad_recibida]
         );
 
-        console.log(datos_observaciones_seguimiento);
 
 
-
-
-            
 
             // 🔹 Formatear salario y valor_dia con separadores de miles
             const formatoMoneda = new Intl.NumberFormat('es-CO'); // Para formato colombiano
@@ -233,6 +246,8 @@ export const incapacidadRecibida = async(req, res) =>{
                 console.log("Borrando id_incapacidad_registrada:", req.session.id_incapacidad_registrada);
                 delete req.session.id_incapacidad_registrada;
             }
+
+
             // Asegúrate de eliminar los IDs de las rutas también
             if (req.session.ids_rutas_documentos) {
                 console.log("Borrando ids_rutas_documentos:", req.session.ids_rutas_documentos);
