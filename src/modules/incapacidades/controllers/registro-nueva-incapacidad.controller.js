@@ -31,7 +31,7 @@ export const registroNuevaIncapacidad = async(req, res) => {
         /* TRAER DATOS DEL BODY */
         const datos = req.body;
 
-        console.log(datos)
+        console.log("-------------------> Datos recibidos desde el front, ver select_detalle_incapacidad_eps_arl",datos)
 
 
 

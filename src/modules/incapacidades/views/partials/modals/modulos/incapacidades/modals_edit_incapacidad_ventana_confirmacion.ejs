@@ -57,7 +57,7 @@
                   <label for="enfermedad_general" class="block mb-2 text-sm font-medium text-gray-900">
                     Enfermedad General
                   </label>
-                  <select id="enfermedad_general" name="select_detalle_incapacidad_eps_arl " value=" <%= datos_incapacidad.subtipo_incapacidad || 'Sin detalle' %>" class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md">
+                  <select id="enfermedad_general" name="select_detalle_incapacidad_eps_arl" value="<%= datos_incapacidad.subtipo_incapacidad || 'Sin detalle' %>" class="w-full max-w-xs sm:max-w-full p-1.5 bg-gray-50 border border-gray-300 border-b-lime-600 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 drop-shadow-md">
                     <option disabled <%= !datos_incapacidad.subtipo_incapacidad ? 'selected' : '' %>>Seleccione la Enfermedad General</option>
                     <option value="ORIGEN COMUN" <%= datos_incapacidad.subtipo_incapacidad === "ORIGEN COMUN" ? "selected" : "" %>>Origen Común</option>
                     <option value="ACCIDENTE DE TRANSITO" <%= datos_incapacidad.subtipo_incapacidad === "ACCIDENTE DE TRANSITO" ? "selected" : "" %>>Accidente de tránsito</option>
@@ -353,7 +353,7 @@
 
 
           <div class="flex justify-center space-x-4 mt-8 gap-x-2">
-            <button type="submit" class="text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center">
+            <button id="submit-button" type="submit" class="text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center">
               Guardar
             </button>
 

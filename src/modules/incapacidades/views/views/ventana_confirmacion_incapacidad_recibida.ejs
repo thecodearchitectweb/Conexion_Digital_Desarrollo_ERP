@@ -205,6 +205,7 @@
   </div>
 
 
+
   <script>
     document.querySelectorAll('.archivo-input').forEach(input => {
       input.addEventListener('change', function () {
@@ -220,14 +221,69 @@
   </script>
   
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("update-form");
+    
+        if (!form) return;
+    
+        const tipoIncapacidad = form.querySelector("#tipo_incapacidad");
+        const enfermedadGeneralContainer = form.querySelector("#enfermedad_general_container");
+        const accidenteTransitoContainer = form.querySelector("#accidente_transito_container");
+        const enfermedadGeneral = form.querySelector("#enfermedad_general");
+        const accidenteTransito = form.querySelector("#accidente_laboral_transito");
+    
+        function actualizarUIyNames() {
+            const tipo = tipoIncapacidad.value;
+    
+            if (tipo === "EPS") {
+                enfermedadGeneralContainer.classList.remove("hidden");
+                accidenteTransitoContainer.classList.add("hidden");
+    
+                enfermedadGeneral.setAttribute("name", "select_detalle_incapacidad_eps_arl");
+                accidenteTransito.removeAttribute("name");
+            } else if (tipo === "ARL") {
+                accidenteTransitoContainer.classList.remove("hidden");
+                enfermedadGeneralContainer.classList.add("hidden");
+    
+                accidenteTransito.setAttribute("name", "select_detalle_incapacidad_eps_arl");
+                enfermedadGeneral.removeAttribute("name");
+            } else {
+                enfermedadGeneralContainer.classList.add("hidden");
+                accidenteTransitoContainer.classList.add("hidden");
+    
+                enfermedadGeneral.removeAttribute("name");
+                accidenteTransito.removeAttribute("name");
+            }
+        }
+    
+        // Ejecuta esto de inmediato, para corregir el DOM que EJS ensució
+        actualizarUIyNames();
+    
+        tipoIncapacidad.addEventListener("change", actualizarUIyNames);
+    
+        // Debug del formulario
+        form.addEventListener("submit", function (e) {
+            const fd = new FormData(form);
+            console.log("📤 ENVIANDO:");
+            for (let [key, value] of fd.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+        });
+    });
+    </script>
+    
+    
+
+
   <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
 
   <!-- Mostar formulario de ingreso de nueva incapacidad -->
-  <script src="/incapacidades/js/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
+<!--   <script src="/incapacidades/js/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script> -->
 
-
+  
   <!-- Mostar input file para cargar los archivos correspondientes -->
-  <script src="/incapacidades/js/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
+<!--   <script src="/incapacidades/js/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script> -->
 
 
   <!-- calcula la cantidad de días de incapacidad -->
@@ -246,6 +302,7 @@
 
 
 
+    
 
 </body>
 
