@@ -118,10 +118,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const result = await response.json();
       console.log("✅ Actualización exitosa:", result);
 
-      if (result.ok) {
+/*       if (result.ok) {
         console.log("🔄 Redireccionando a '/incapacidad/tabla/incapacidades'");
         window.location.href = "/incapacidad/tabla/incapacidades";
-      }
+      } */
     } catch (error) {
       console.error("❌ Error al actualizar:", error);
     } finally {
