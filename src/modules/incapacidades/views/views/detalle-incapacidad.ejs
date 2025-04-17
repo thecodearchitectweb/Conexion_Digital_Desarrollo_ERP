@@ -8,6 +8,8 @@
 
   <link rel="stylesheet" href="/incapacidades/css/sidebar/style_sidebar_adaptacion_pantalla.css">
 
+
+
   <%- include('./../partials/header/header.ejs') %>
   <%-include('./../partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
 </head>
@@ -431,8 +433,15 @@
   <!-- VERIFICAR QUE SEA PDF, CALCULAR QUE TENGA MAXIMO UN PESO DE 5MB -->
   <script src="/incapacidades/js/detalle_empleado/verificacion_pdf_peso.js"></script>
 
+
   <!-- API FETCH PARA CONSULTAR CIE 10 -->
-  <script src="/incapacidades/js\detalle_empleado\api_fetch_cie_10.js"></script>
+  <script src="/incapacidades/js/detalle_empleado/api_fetch_cie_10.js"></script>
+
+
+  <!-- API FETCH PARA CONSULTAR SI HAY DUPLICIDAD CON LA INCAPACIDAD -->
+  <script  src="/incapacidades/js/detalle_empleado/api_fetch_duplicidad_incapacidad.js"></script>
+
+  <script src="/incapacidades/js/edit_incapacidad_ventana_confirmacion/validacion_campos_edit_incapacidad.js"></script>
 
 
 </body>

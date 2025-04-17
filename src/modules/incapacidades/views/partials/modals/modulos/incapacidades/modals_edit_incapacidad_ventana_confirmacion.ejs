@@ -108,7 +108,7 @@
                         <path d="M12 15v3" />
                       </svg>
                     </div>
-                    <input id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad" value="<%= datos_incapacidad.fecha_inicio_incapacidad || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
+                    <input id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad" value="<%= datos_incapacidad.fecha_inicio_incapacidad || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA"  />
                   </div>
                 </div>
 
@@ -124,7 +124,7 @@
                         <path d="M12 12a1 1 0 0 1 .993 .883l.007 .117v3a1 1 0 0 1 -1.993 .117l-.007 -.117v-2a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
                       </svg>
                     </div>
-                    <input id="fecha_final_incapacidad" type="date" value="<%= datos_incapacidad.fecha_final_incapacidad || 'Sin detalle' %>" name="input_fecha_final_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
+                    <input id="fecha_final_incapacidad" type="date" value="<%= datos_incapacidad.fecha_final_incapacidad || 'Sin detalle' %>" name="input_fecha_final_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA"  />
                   </div>
                 </div>
 
@@ -147,7 +147,7 @@
                         <path d="M6 9h1.5a1.5 1.5 0 0 1 0 3h-.5h.5a1.5 1.5 0 0 1 0 3h-1.5" />
                       </svg>
                     </div>
-                    <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad" value="<%= datos_incapacidad.cantidad_dias || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md" placeholder="" readonly />
+                    <input type="number" id="cantidad_dias" name="input_cantidad_dias_incapacidad" value="<%= datos_incapacidad.cantidad_dias || 'Sin detalle' %>" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm text-center font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-10 p-1.5 shadow-md" placeholder="" readonly  />
                   </div>
                 </div>
 
@@ -165,7 +165,7 @@
                         <path d="M17 17l-2 2l2 2" />
                       </svg>
                     </div>
-                    <input type="text" id="codigo_enfermedad_general" value="<%= datos_incapacidad.codigo_subcategoria || 'Sin detalle' %>" name="list_codigo_enfermedad_general" list="lista_cie_10_codigo_categoria" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="" />
+                    <input type="text" id="codigo_enfermedad_general" value="<%= datos_incapacidad.codigo_subcategoria || 'Sin detalle' %>" name="list_codigo_enfermedad_general" list="lista_cie_10_codigo_categoria" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder=""  />
                   </div>
                 </div>
 
@@ -278,7 +278,7 @@
           <!-- OBSERVACIONES -->
           <div class="container mx-auto px-4 sm:px-6 lg:px-8 my-4 bg-white p-4 w-full  border border-gray-100 rounded-xl">
             <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Observaciones</label>
-            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-lime-600 focus:ring-lime-600 focus:border-lime-600 placeholder-gray-400" name="textarea_observaciones"></textarea>
+            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-lime-600 focus:ring-lime-600 focus:border-lime-600 placeholder-gray-400" name="textarea_observaciones" ></textarea>
           </div>
 
 

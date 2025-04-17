@@ -12,10 +12,13 @@
             <div class="w-full mx-auto">
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start">
 
-    
-                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ID EMPLEADO:
-                  <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_empleado.id_empleado || "Sin detalles"  %> </small>
-                </label>
+              <label id="info_empleado" data-id="<%= datos_empleado.id_empleado %>" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">
+                ID EMPLEADO:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">
+                  <%= datos_empleado.id_empleado || "Sin detalles" %>
+                </small>
+              </label>
+              
     
                 <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
                   <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_empleado.nombres || "Sin detalles"  %> </small>

@@ -59,6 +59,21 @@ export const registroNuevaIncapacidad = async(req, res) => {
         const prorroga = input_toggle_prorroga ? 1 : 0;
 
 
+
+        
+    // Validar si ya existe una incapacidad con la misma fecha de inicio
+    const [validacion_duplicado_incapacidad] = await pool.query(
+        `SELECT fecha_inicio_incapacidad FROM incapacidades_historial WHERE id_empleado = ? AND fecha_inicio_incapacidad = ?`,
+        [id_empleado, input_fecha_inicio_incapacidad]
+    );
+
+    if (validacion_duplicado_incapacidad.length > 0) {
+        return res.status(409).json({ mensaje: "Ya existe una incapacidad registrada para ese mismo día." });
+    }
+
+
+
+
         /* INSERTAR DATOS EN LA TABLA HISTORIAL DE INCAPACIDADES */
         const [data_insert_incapacidad] = await pool.query(
 
