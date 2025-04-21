@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         text: 'La incapacidad fue actualizada correctamente.',
         confirmButtonColor: '#3085d6',
       }).then(() => {
-        window.location.href = '/incapacidad/tabla/incapacidades';
+        window.location.href = '/incapacidad/user/disabiblity/table';
       });
 
     } catch (error) {
