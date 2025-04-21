@@ -6,6 +6,8 @@ export const edit_incapacidad_ventana = async (req, res) => {
     console.log("=== Iniciando edit_incapacidad_ventana ===");
     console.log("📥 BODY:", req.body);
 
+
+    /* DATOS RECIBIDOS DEL BODY */
     const {
       id_incapacidades_historial, 
       id_empleado,
@@ -17,8 +19,15 @@ export const edit_incapacidad_ventana = async (req, res) => {
       input_descripcion_diagnostico,
       input_descripcion_categoria, 
       input_codigo_categoria, 
+      select_estado_incapacidad,
+      input_observaciones,
+      input_toggle_prorroga
+
+
     } = req.body;
 
+
+    /* VALIDACION DE ID */
     if (!id_incapacidades_historial || !id_empleado) {
       console.log("❌ Datos obligatorios faltantes");
       return res.status(400).json({ message: "Faltan datos obligatorios." });
@@ -26,7 +35,9 @@ export const edit_incapacidad_ventana = async (req, res) => {
 
     console.log("🟢 Actualizando datos principales de la incapacidad...");
 
-    await pool.query(
+
+    /* ACTUALIZAR LOS DATOS REGISTRADOS DE LA INCAPACIDAD */
+    const [update_tracking_data] = await pool.query(
       `UPDATE incapacidades_historial SET 
         tipo_incapacidad = ?,                      
         subtipo_incapacidad = ?,                  
@@ -36,9 +47,9 @@ export const edit_incapacidad_ventana = async (req, res) => {
         codigo_categoria = ?,                     
         descripcion_categoria = ?,                
         codigo_subcategoria = ?,                  
-        descripcion_subcategoria = ?,             
-        id_empleado = ?                           
-      WHERE id_incapacidades_historial = ?`,
+        descripcion_subcategoria = ?,    
+        prorroga = ?        
+      WHERE id_empleado = ? AND id_incapacidades_historial = ?`,
       [
         select_tipo_incapacidad,
         select_detalle_incapacidad_eps_arl,
@@ -50,12 +61,35 @@ export const edit_incapacidad_ventana = async (req, res) => {
         input_descripcion_categoria,
         list_codigo_enfermedad_general,
         input_descripcion_diagnostico,
+        input_toggle_prorroga,
         id_empleado,
         id_incapacidades_historial
       ]
     );
+    
 
-    console.log("✅ Datos principales actualizados");
+    console.log("✅ Datos de tabla INCAPACIDAD HISTORIAL, actualizados exitosamente: ", update_tracking_data);
+    
+    
+    /* INSERTAR OBSERVACIONES Y ESTADO DE INCAPACIDAD */
+    const [insert_tracking_data] = await pool.query(
+      `
+        INSERT INTO incapacidades_seguimiento
+          (estado_incapacidad, observaciones, id_incapacidades_historial)
+        VALUES
+          (?, ?, ?)
+      `,
+      [
+        select_estado_incapacidad,
+        input_observaciones,
+        id_incapacidades_historial
+      ]
+    );
+
+    console.log("✅ Datos de tabla INCAPACIDAD HISTORIAL, actualizados exitosamente: ", insert_tracking_data);
+    
+    
+    /* RESPUESTA A LA API POR MEDIO DE JSON */
     console.log("=== Proceso completado. Enviando respuesta al cliente ===");
     return res.json({
       ok: true,

@@ -40,9 +40,13 @@
           <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.cantidad_dias || 'Sin detalle' %> </small>
         </label>
 
-        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">PRORROGA:
-          <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.prorroga || 'Sin detalle' %> </small>
+        <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">
+          PRÓRROGA:
+          <small class="text-sm italic font-serif font-normal text-slate-600 ml-2">
+            <%= datos_incapacidad.prorroga === 1 ? 'Sí' : (datos_incapacidad.prorroga === 0 ? 'No' : 'Sin detalle') %>
+          </small>
         </label>
+        
 
         <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">CODIGO CATEGORIA:
           <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad.codigo_categoria || 'Sin detalle' %> </small>

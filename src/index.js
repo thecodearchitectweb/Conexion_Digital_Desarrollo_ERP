@@ -103,6 +103,7 @@ import  appi_Cie10 from './modules/incapacidades/routes/appi-cie-10.routes.js'
 import  ventanaIncapacidadRecibida from './modules/incapacidades/routes/ventana_confirmacion_incapacidad_recibida.routes.js'
 import  edit_incapacidad_ventana from './modules/incapacidades/routes/appi-edit-incapacidad.routes.js'
 import  api_fetch_duplicidad_incapacidad from './modules/incapacidades/routes/api_fetch_duplicidad_incapacidad.routes.js'
+import  UserDisabilityTable from './modules/incapacidades/routes/user_disability_table.routes.js'
 
 
 // Usar rutas
@@ -114,6 +115,7 @@ app.use(appi_Cie10)
 app.use(ventanaIncapacidadRecibida)
 app.use(edit_incapacidad_ventana)
 app.use(api_fetch_duplicidad_incapacidad)
+app.use(UserDisabilityTable)
 
 
 

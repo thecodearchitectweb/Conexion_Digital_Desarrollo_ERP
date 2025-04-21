@@ -22,6 +22,13 @@ export const incapacidadRecibida = async(req, res) =>{
         const id_incapacidad_recibida = await SessionManager.get(req, "id_incapacidad_registrada");
         const id_ruta_file_incapacidad_recibida = await SessionManager.get(req, "ids_rutas_documentos");
 
+
+        console.log("------------------ ID EMPLEADO RECIBIDO EN VENTANA CONFIRMACION CONTROLLER: ",id_empleado )
+
+        console.log("------------------ ID INCAPACIDAD RECIBIDO EN VENTANA CONFIRMACION CONTROLLER: ",id_incapacidad_recibida )
+
+        console.log("------------------ ID RUTAS FILES RECIBIDO EN VENTANA CONFIRMACION CONTROLLER: ",id_ruta_file_incapacidad_recibida )
+
         console.log("💡 id_ruta_file_incapacidad_recibida:", id_ruta_file_incapacidad_recibida);
         console.log("👉 Tipo:", typeof id_ruta_file_incapacidad_recibida);
         console.log("👉 Es array:", Array.isArray(id_ruta_file_incapacidad_recibida));

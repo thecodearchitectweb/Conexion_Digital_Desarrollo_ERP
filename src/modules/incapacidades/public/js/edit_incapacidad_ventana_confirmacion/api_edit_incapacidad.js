@@ -1,22 +1,24 @@
+// Comentamos todo el código para mejor comprensión
+
 document.addEventListener("DOMContentLoaded", function () {
+  // Mensaje de que el DOM está completamente cargado
   console.log("🟢 DOMContentLoaded: Iniciando script de actualización de incapacidad");
 
-  const updateForm = document.getElementById("update-form"); // Formulario de actualización
-  const submitButton = document.getElementById("submit-button"); // Botón de envío del formulario
+  // Obtenemos el formulario de actualización y el botón de envío
+  const updateForm = document.getElementById("update-form");
+  const submitButton = document.getElementById("submit-button");
 
-
-  // Recoge los IDs desde atributos en el HTML
+  // Recoge los IDs desde atributos en el HTML (puestos en un label por ejemplo)
   const idIncapacidad = document.querySelector('label[data-id-incapacidad]')?.dataset.idIncapacidad;
   const idEmpleado = document.querySelector('label[data-id-empleado]')?.dataset.idEmpleado;
   console.log("🟢 IDs recogidos:", { idIncapacidad, idEmpleado });
 
-
-  // Evento que se activa al enviar el formulario
+  // Escucha el envío del formulario
   updateForm.addEventListener("submit", async (e) => {
-    e.preventDefault(); // 🚫 Evita que se recargue la página automáticamente al enviar el formulario
+    e.preventDefault(); // Previene que el formulario se envíe normalmente (recarga la página)
     console.log("🔄 Form submit capturado. Iniciando procesamiento...");
-    submitButton.disabled = true; // ⛔ Se desactiva el botón para evitar múltiples envíos
 
+    submitButton.disabled = true; // Deshabilita el botón para evitar envíos múltiples
 
     // Captura los valores de los campos del formulario
     const tipoIncapacidad = document.getElementById("tipo_incapacidad").value;
@@ -29,10 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const descripcionCategoria = document.getElementById("descripcion_categoria").value;
     const codigoCategoria = document.getElementById("codigo_categoria").value;
     const estadoIncapacidad = document.getElementById("select_estado_incapacidad").value;
-    const observaciones = document.getElementById("message").value; // Obtenemos el valor del textarea de observaciones
+    const observaciones = document.getElementById("message").value;
+    const prorroga = document.getElementById("input_toggle_prorroga").checked ? 1 : 0; // ✔ Capturamos el estado del toggle
 
-
-    // Validación de campos vacíos
+    // Validación de campos obligatorios
     const requiredFields = [
       "tipo_incapacidad",
       tipoIncapacidad === "EPS" ? "enfermedad_general" : "accidente_laboral_transito",
@@ -43,22 +45,19 @@ document.addEventListener("DOMContentLoaded", function () {
       "descripcion_categoria",
       "codigo_categoria",
       "select_estado_incapacidad",
-      "message"  // Agregamos el campo de observaciones a la validación
+      "message"
     ];
 
     let isValid = true;
     requiredFields.forEach((fieldId) => {
       const field = document.getElementById(fieldId);
       if (field && !field.value.trim()) {
-        // Borde superior delgado (por defecto) y borde inferior grueso
-        field.classList.add("border-t", "border-red-600", "border-b-4", "border-b-red-600"); 
+        field.classList.add("border-t", "border-red-600", "border-b-4", "border-b-red-600");
         isValid = false;
       } else {
-        field.classList.remove("border-t", "border-red-600", "border-b-4", "border-b-red-600"); // Elimina los bordes si es válido
+        field.classList.remove("border-t", "border-red-600", "border-b-4", "border-b-red-600");
       }
-
-
-      // Quitamos el borde rojo cuando el usuario empieza a escribir
+      // Elimina el borde rojo al escribir
       field.addEventListener("input", () => {
         field.classList.remove("border-t", "border-red-600", "border-b-4", "border-b-red-600");
       });
@@ -75,11 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-
-    // Creamos el objeto con los datos que se enviarán al servidor
+    // Creamos el objeto que vamos a enviar al backend
     const payload = {
-      id_incapacidades_historial: idIncapacidad, // Se agrega el ID de la incapacidad
-      id_empleado: idEmpleado, // Se agrega el ID del empleado
+      id_incapacidades_historial: idIncapacidad,
+      id_empleado: idEmpleado,
       select_tipo_incapacidad: tipoIncapacidad,
       select_detalle_incapacidad_eps_arl: tipoIncapacidad === "EPS" ? enfermedadGeneral : accidenteTransito,
       input_fecha_inicio_incapacidad: fechaInicio,
@@ -89,13 +87,13 @@ document.addEventListener("DOMContentLoaded", function () {
       input_descripcion_categoria: descripcionCategoria,
       input_codigo_categoria: codigoCategoria,
       select_estado_incapacidad: estadoIncapacidad,
-      input_observaciones: observaciones // Incluimos las observaciones
+      input_observaciones: observaciones,
+      input_toggle_prorroga: prorroga // ✔ Se agrega la prorrogra al payload
     };
 
     console.log("🟢 Enviando petición al endpoint '/api/edit/incapacidad'...");
 
-    
-    // Petición fetch para enviar los datos al backend
+    // Hacemos la petición a la API
     try {
       const response = await fetch('/api/edit/incapacidad', {
         method: 'POST',
@@ -118,7 +116,9 @@ document.addEventListener("DOMContentLoaded", function () {
         icon: 'success',
         title: 'Actualizado con éxito',
         text: 'La incapacidad fue actualizada correctamente.',
-        confirmButtonColor: '#3085d6'
+        confirmButtonColor: '#3085d6',
+      }).then(() => {
+        window.location.href = '/incapacidad/tabla/incapacidades';
       });
 
     } catch (error) {
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
     } finally {
-      submitButton.disabled = false; // ✅ Se vuelve a habilitar el botón
+      submitButton.disabled = false;
       console.log("🔄 Botón habilitado nuevamente.");
     }
   });

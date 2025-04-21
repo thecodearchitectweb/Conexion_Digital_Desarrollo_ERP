@@ -165,7 +165,7 @@ export const registroNuevaIncapacidad = async(req, res) => {
             /* req.session.ids_rutas_documentos = rutasIds; */
             await SessionManager.set(req, "ids_rutas_documentos", rutasIds);
             console.log("Guardado en sesión:", req.session.ids_rutas_documentos);
-
+            await SessionManager.save(req);
 
 
            
