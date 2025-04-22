@@ -7,6 +7,10 @@ import express from 'express';
 const app = express();
 
 
-export const tablaIncapacidades = (req, res) =>{
+export const tablaIncapacidades = async(req, res) =>{
+
+
+
+
     return res.render('tabla-incapacidades')
 }

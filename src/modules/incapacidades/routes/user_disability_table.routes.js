@@ -4,7 +4,7 @@ const router = Router()
 
 import {UserDisabilityTable} from '../../../modules/incapacidades/controllers/user_disability_table.controller.js'
 
-router.get('/incapacidad/user/disabiblity/table', UserDisabilityTable);
+router.get('/incapacidad/user/disabiblity/table/:id_empleado/:id_incapacidad', UserDisabilityTable);
 
 
 
