@@ -87,6 +87,8 @@ export const edit_incapacidad_ventana = async (req, res) => {
     );
 
     console.log("✅ Datos de tabla INCAPACIDAD HISTORIAL, actualizados exitosamente: ", insert_tracking_data);
+
+
     
     
     /* RESPUESTA A LA API POR MEDIO DE JSON */
