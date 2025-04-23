@@ -104,6 +104,7 @@ import  ventanaIncapacidadRecibida from './modules/incapacidades/routes/ventana_
 import  edit_incapacidad_ventana from './modules/incapacidades/routes/appi-edit-incapacidad.routes.js'
 import  api_fetch_duplicidad_incapacidad from './modules/incapacidades/routes/api_fetch_duplicidad_incapacidad.routes.js'
 import  UserDisabilityTable from './modules/incapacidades/routes/user_disability_table.routes.js'
+import  api_download_user_disability from './modules/incapacidades/routes/api-download-user-disability.routes.js'
 
 
 // Usar rutas
@@ -116,6 +117,7 @@ app.use(ventanaIncapacidadRecibida)
 app.use(edit_incapacidad_ventana)
 app.use(api_fetch_duplicidad_incapacidad)
 app.use(UserDisabilityTable)
+app.use(api_download_user_disability)
 
 
 

@@ -38,6 +38,8 @@
     <div class="flex w-full">
       <div id="container_seleccionar_empleado" class="max-w-[calc(100vw-200px)]  min-h-screen gap-6 mt-32 mr-20 p-8 w-full  transition-all duration-500 container-collapsed bg-white rounded-xl overflow-hidden">
 
+
+        
         <!-- Tabla con bordes redondeados -->
         <div class="relative shadow-md max-w-full overflow-x-auto p-4 rounded-sm bg-white border border-slate-300">
           <table class="table-auto w-max text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-xl overflow-hidden">
@@ -76,304 +78,96 @@
 
               </tr>
             </thead>
+
+<!-- 
+      <button data-modal-target="extralarge-modal" data-modal-toggle="extralarge-modal" class="text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-br-2xl text-sm px-20 py-2.5 text-center" type="button">
+        Historial
+      </button>            
+-->
+
+
             <tbody>
+              <% if (datosLiquidacion && datosLiquidacion.length > 0) { %>  
+                <% datosLiquidacion.forEach(liq => { %>
+                  <tr class="bg-gray-50 border-b border-gray-200 hover:bg-slate-200 py-0">
+                    <td class="px-6 py-0 h-0 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-center">
+                      <% if (liq.downloaded === 0) { %>
+                        <a href="#" id="alert_downloaded_false" class="py-0" data-modal-target="legalization_disability" data-modal-toggle="legalization_disability">
+                          <i class='bx bx-error text-[22px] text-amber-700 h-0 py-0'></i>
+                        </a>
+                      <% } else { %>
+                        <a href="#" class="py-0">
+                          <i class='bx bx-street-view text-[22px] text-amber-600 h-0 py-0'></i>
+                        </a>
+                        <a href="#" class="py-0">
+                          <i class='bx bx-street-view text-[22px] text-amber-700 h-0 py-0'></i>
+                        </a>
+                        <a href="#" class="py-0">
+                          <i class='bx bx-street-view text-[22px] text-amber-200 h-0 py-0'></i>
+                        </a>
+                      <% } %>
+                    </td>
+              
+                    <% if (liq.downloaded === 0) { %>
+                      <td colspan="28" class="text-start text-amber-700 italic border border-white py-2">
+                        La incapacidad no se ha descargado, para descargar la incapacidad de clic en el icono
+                      </td>
+                    <% } else { %>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.creador %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.fecha_registro_incapacidad %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.nombres %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.apellidos %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.documento %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.contacto %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.salario_empleado %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_dia_empleado %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.tipo_incapacidad %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.subtipo_incapacidad %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.fecha_inicio_incapacidad %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.fecha_final_incapacidad %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.cantidad_dias %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.codigo_categoria %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.descripcion_categoria %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.codigo_subcategoria %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.descripcion_subcategoria %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.prorroga %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_empleador %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_empleador %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_eps %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_eps %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_arl %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_arl %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_fp %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_fp %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_fp_eps %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_fp_eps %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.estado_incapacidad %></td>
+                    <% } %>
+                  </tr>
+                <% }) %>
+              <% } %>
+              </tbody>
+              
 
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200  py-0">
-                <td class="px-6 py-0 h-0 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-center " >
-                  <a href="#" class="py-0 ">
-                    <i class='bx bx-street-view text-[22px] text-amber-600 h-0 py-0 ' ></i>
-                  </a>
-                  <a href="#" class="py-0">
-                    <i class='bx bx-street-view text-[22px] text-amber-700 h-0 py-0' ></i>
-                  </a>
-                  <a href="#" class="py-0">
-                    <i class='bx bx-street-view text-[22px] text-amber-700 h-0 py-0' ></i>
-                  </a>
-                  <a href="#" class="py-0">
-                    <i class='bx bx-error text-[22px] text-amber-700 h-0 py-0'></i>
-                  </a>
-                  
-                </td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200 ">
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center " >ICONOS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200 ">
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center " >ICONOS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200 ">
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center " >ICONOS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200 ">
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center " >ICONOS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200 ">
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center " >
-                  <i class='bx bx-street-view'></i>
-                </td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200 ">
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center " >ICONOS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-              <tr class="bg-gray-50 border-b  border-gray-200 hover:bg-slate-200 ">
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center " >ICONOS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">DIANA LOPEZ</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Alex Alejandro</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">Oviedo Gonzalez</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100557789</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">3154522890</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">1.500.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">50.000</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">EPS</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">ORIGEN COMUN</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">18/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">21/04/2025</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A00</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">A028</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs">XXX</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">SI</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">3</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">100.005</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">0</td>
-                <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center">RADICADA</td>
-              </tr>
-
-
-            </tbody>
           </table>
         </div>
+
+
+        
+
+
 
       </div>
     </div>
   </div>
+
+  
+
+  <!-- MODALS -->
+    <%- include('./../partials/modals/modulos/incapacidades/confirmation_legalization_disability_settlement.ejs') %>
+ 
+
+
 
   <!-- Script que maneja la sidebar y el contenedor -->
   <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
