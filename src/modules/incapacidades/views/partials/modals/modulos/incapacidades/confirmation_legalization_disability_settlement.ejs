@@ -21,90 +21,40 @@
                 </button>
             </div>
 
+
+
+            <!-- DATOS EN COLUNMAS -->
             <div class="w-full mx-auto p-10 bg-gray-200">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start">
   
-                <label id="info_empleado"  class="block mb-1.5 text-xs font-bold font-serif text-slate-950">
-                  ID EMPLEADO:
-                  <small class="mb-1.5 text-xs font-semibold font-serif text-gray-700">
-                    Oviedo
+
+                <label id="info_empleado"  class="blockmb-1.5 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  ID:
+                  <small class="mb-1.5 ml-2 text-sm font-medium font-serif text-slate-700"">  
+                    
+                  </small>
+                </label>
+  
+
+                <label   class="blockmb-1.5 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  ID:
+                  <small id="modal-id-liquidacion" class="mb-1.5 ml-2 text-sm font-medium font-serif text-slate-700"">  
+                      
+                  </small>
+                </label>
+  
+
+                <label id="info_empleado" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  Nombre:
+                  <small id="modal-nombres" class="mb-1.5 ml-2 text-sm font-medium font-serif text-slate-700">
+                    <!-- Aquí se mostrará dinámicamente el nombre del empleado -->
                   </small>
                 </label>
                 
-      
-                  <label for="arl-date" class="font-semibold text-gray-900 whitespace-nowrap text-sm">NOMBRES:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-sm font-bold font-serif text-slate-950">APELLIDOS:
-                    <small class=" font-medium text-gray-900 whitespace-nowrap text-xs"> Oviedo  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">DOCUMENTO:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">CONTACTO:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">AREA:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">FECHA DE CONTRATACION:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">TIPO DE CONTRATO:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">CARGO:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">ESTADO:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">LIDER:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">SALARIO:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">VALOR DIA:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">EMPRESA:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">NIT:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">EPS:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">ARL:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">FONDO DE PENSION:
-                    <small class="text-sm font-style: italic font-serif  font-normal text-slate-600 ml-2">  </small>
-                  </label>
-      
-                  <label for="arl-date" class="block mb-1.5 text-xs font-bold text-slate-950">CAJA DE COMPENSACION:
-                    <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2 ">  </small>
-                  </label>
-      
-      
+            
                 </div>
               </div>    
 

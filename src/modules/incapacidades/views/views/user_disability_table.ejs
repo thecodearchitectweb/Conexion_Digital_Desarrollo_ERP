@@ -92,7 +92,18 @@
                   <tr class="bg-gray-50 border-b border-gray-200 hover:bg-slate-200 py-0">
                     <td class="px-6 py-0 h-0 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-center">
                       <% if (liq.downloaded === 0) { %>
-                        <a href="#" id="alert_downloaded_false" class="py-0" data-modal-target="legalization_disability" data-modal-toggle="legalization_disability">
+                        <a href="#" id="alert_downloaded_false" class="py-0" data-modal-target="legalization_disability" data-modal-toggle="legalization_disability"
+                        data-id-liquidacion="<%= liq.id_incapacidades_liquidacion %>" 
+                        data-creador="<%= liq.creador %>" 
+                        data-nombres="<%= liq.nombres %>"
+                        data-apellidos="<%= liq.apellidos %>"
+                        data-documento="<%= liq.documento %>"
+                        data-fecha="<%= liq.fecha_registro_incapacidad %>"
+                        data-salario="<%= liq.salario_empleado %>"
+                        data-subtipo="<%= liq.subtipo_incapacidad %>"
+                        onclick="abrirModal(this)
+                        
+                        ">
                           <i class='bx bx-error text-[22px] text-amber-700 h-0 py-0'></i>
                         </a>
                       <% } else { %>
@@ -102,7 +113,10 @@
                         <a href="#" class="py-0">
                           <i class='bx bx-street-view text-[22px] text-amber-700 h-0 py-0'></i>
                         </a>
-                        <a href="#" class="py-0">
+                        <a href="#" 
+                        class="py-0"
+                        
+                        ">
                           <i class='bx bx-street-view text-[22px] text-amber-200 h-0 py-0'></i>
                         </a>
                       <% } %>
@@ -159,14 +173,32 @@
 
       </div>
     </div>
+      <!-- MODALS -->
+      <%- include('./../partials/modals/modulos/incapacidades/confirmation_legalization_disability_settlement.ejs') %>
   </div>
 
   
 
-  <!-- MODALS -->
-    <%- include('./../partials/modals/modulos/incapacidades/confirmation_legalization_disability_settlement.ejs') %>
- 
 
+<!-- SCRIPT DE MODAL -->
+<script>
+    function abrirModal(element) {
+        const datos = element.dataset;
+
+        console.log("Datos recibidos:", datos); // Verifica el contenido real
+
+        document.getElementById("modal-id-liquidacion").innerText = datos.idLiquidacion || "(Sin ID)";
+        document.getElementById("modal-nombres").innerText = datos.nombres || "(Sin nombre)";
+        document.getElementById("modal-apellidos").innerText = datos.apellidos || "(Sin apellidos)";
+        document.getElementById("modal-documento").innerText = datos.documento || "(Sin documento)";
+        document.getElementById("modal-creador").innerText = datos.creador || "(Sin creador)";
+        document.getElementById("modal-fecha").innerText = datos.fecha || "(Sin fecha)";
+        document.getElementById("modal-salario").innerText = datos.salario || "(Sin salario)";
+        document.getElementById("modal-subtipo").innerText = datos.subtipo || "(Sin subtipo)";
+    }
+
+</script>
+  
 
 
   <!-- Script que maneja la sidebar y el contenedor -->
