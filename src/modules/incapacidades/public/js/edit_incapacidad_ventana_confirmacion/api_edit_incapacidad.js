@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const accidenteTransito = document.getElementById("accidente_laboral_transito")?.value || "";
     const fechaInicio = document.getElementById("fecha_inicio_incapacidad").value;
     const fechaFinal = document.getElementById("fecha_final_incapacidad").value;
+    const cantidad_dias = document.getElementById("cantidad_dias").value;
     const codigoEnfermedadGeneral = document.getElementById("codigo_enfermedad_general").value;
     const descripcionDiagnostico = document.getElementById("descripcion_diagnostico").value;
     const descripcionCategoria = document.getElementById("descripcion_categoria").value;
@@ -82,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       select_detalle_incapacidad_eps_arl: tipoIncapacidad === "EPS" ? enfermedadGeneral : accidenteTransito,
       input_fecha_inicio_incapacidad: fechaInicio,
       input_fecha_final_incapacidad: fechaFinal,
+      input_cantidad_dias_incapacidad: cantidad_dias,
       list_codigo_enfermedad_general: codigoEnfermedadGeneral,
       input_descripcion_diagnostico: descripcionDiagnostico,
       input_descripcion_categoria: descripcionCategoria,

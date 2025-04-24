@@ -92,15 +92,36 @@
                   <tr class="bg-gray-50 border-b border-gray-200 hover:bg-slate-200 py-0">
                     <td class="px-6 py-0 h-0 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-center">
                       <% if (liq.downloaded === 0) { %>
-                        <a href="#" id="alert_downloaded_false" class="py-0" data-modal-target="legalization_disability" data-modal-toggle="legalization_disability"
+                        <a href="#" id="alert_downloaded_false" class="py-0" 
+                       
+                        data-modal-target="legalization_disability" 
+                        data-modal-toggle="legalization_disability"
+
                         data-id-liquidacion="<%= liq.id_incapacidades_liquidacion %>" 
+                        data-id-historial="<%= liq.id_incapacidades_historial %>" 
                         data-creador="<%= liq.creador %>" 
                         data-nombres="<%= liq.nombres %>"
                         data-apellidos="<%= liq.apellidos %>"
                         data-documento="<%= liq.documento %>"
-                        data-fecha="<%= liq.fecha_registro_incapacidad %>"
+                        data-contacto="<%= liq.contacto %>"                     
                         data-salario="<%= liq.salario_empleado %>"
-                        data-subtipo="<%= liq.subtipo_incapacidad %>"
+                        data-valor-dia="<%= liq.valor_dia_empleado %>"
+                        data-fecha-contratacion="<%= liq.fecha_contratacion %>"
+                        data-cargo="<%= liq.cargo %>"
+                        data-lider="<%= liq.lider %>"
+                        data-registro-incapacidad="<%= liq.fecha_registro_incapacidad %>"
+                        data-tipo-incapacidad="<%= liq.tipo_incapacidad %>"
+                        data-subtipo-incapacidad="<%= liq.subtipo_incapacidad %>"
+                        data-inicio-incapacidad="<%= liq.fecha_inicio_incapacidad %>"
+                        data-final-incapacidad="<%= liq.fecha_final_incapacidad %>"
+                        data-n-dias="<%= liq.cantidad_dias %>"
+                        data-codigo-categoria="<%= liq.codigo_categoria %>"
+                        data-des-categoria="<%= liq.descripcion_categoria %>"
+                        data-codigo-subcategoria="<%= liq.codigo_subcategoria %>"
+                        data-des-subcategoria="<%= liq.descripcion_subcategoria %>"
+                        data-prorroga="<%= liq.prorroga == '1' ? 'Sí' : 'No' %>"
+                        data-estado="<%= liq.estado_incapacidad %>"
+
                         onclick="abrirModal(this)
                         
                         ">
@@ -173,36 +194,26 @@
 
       </div>
     </div>
-      <!-- MODALS -->
-      <%- include('./../partials/modals/modulos/incapacidades/confirmation_legalization_disability_settlement.ejs') %>
+     
   </div>
 
-  
 
-
-<!-- SCRIPT DE MODAL -->
-<script>
-    function abrirModal(element) {
-        const datos = element.dataset;
-
-        console.log("Datos recibidos:", datos); // Verifica el contenido real
-
-        document.getElementById("modal-id-liquidacion").innerText = datos.idLiquidacion || "(Sin ID)";
-        document.getElementById("modal-nombres").innerText = datos.nombres || "(Sin nombre)";
-        document.getElementById("modal-apellidos").innerText = datos.apellidos || "(Sin apellidos)";
-        document.getElementById("modal-documento").innerText = datos.documento || "(Sin documento)";
-        document.getElementById("modal-creador").innerText = datos.creador || "(Sin creador)";
-        document.getElementById("modal-fecha").innerText = datos.fecha || "(Sin fecha)";
-        document.getElementById("modal-salario").innerText = datos.salario || "(Sin salario)";
-        document.getElementById("modal-subtipo").innerText = datos.subtipo || "(Sin subtipo)";
-    }
-
-</script>
-  
+   <!-- MODALS -->
+  <%- include('./../partials/modals/modulos/incapacidades/confirmation_legalization_disability_settlement.ejs') %>
 
 
   <!-- Script que maneja la sidebar y el contenedor -->
   <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
+
+
+  <!-- SCRIPT DATOS DATA PARA LA MODAL -->
+  <script src="/incapacidades/js/user_disability_table/user_disability_table_download.js"> </script>
+
+
+  <!-- API PARA LIQUIDAR LA INCAPACIDAD -->
+  <script src="/incapacidades/js/user_disability_table/api_liquidate_disability.js"></script>
+  
+
 </body>
 
 </html>

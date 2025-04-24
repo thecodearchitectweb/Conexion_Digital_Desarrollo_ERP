@@ -5,7 +5,7 @@
 <div id="legalization_disability" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full ">
     <div class="relative w-full max-w-[85vw] max-h-full  rounded-3xl p-10">
         <!-- Modal content -->
-        <div class="relative bg-gray-500 rounded-2xl shadow-sm  p-7">
+        <div class="relative bg-gray-500/50 rounded-2xl shadow-sm  p-7">
             <!-- Modal header -->
             <div class="flex items-center justify-between w-full  md:p-1 border-b rounded-b  shadow-sm bg-slate-800 rounded-2xl z-10">
                
@@ -28,39 +28,179 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start">
   
 
-                <label id="info_empleado"  class="blockmb-1.5 text-xs font-bold font-serif text-slate-950">
+                <label   class="blockmb-4 text-xs font-bold font-serif text-slate-950">
                   <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
-                  ID:
-                  <small class="mb-1.5 ml-2 text-sm font-medium font-serif text-slate-700"">  
-                    
-                  </small>
+                  ID LIQUIDACION:
+                  <small id="modal-id-liquidacion" class="mb-2 ml-2 text-xs font-medium  text-slate-700""> </small>
                 </label>
   
 
-                <label   class="blockmb-1.5 text-xs font-bold font-serif text-slate-950">
+                <label   class="blockmb-4 text-xs font-bold font-serif text-slate-950">
                   <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
-                  ID:
-                  <small id="modal-id-liquidacion" class="mb-1.5 ml-2 text-sm font-medium font-serif text-slate-700"">  
-                      
-                  </small>
+                  ID HISTORIAL:
+                  <small id="modal-id-historial" class="mb-2 ml-2 text-xs font-medium  text-slate-700""> </small>
                 </label>
   
 
-                <label id="info_empleado" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
                   <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
                   Nombre:
-                  <small id="modal-nombres" class="mb-1.5 ml-2 text-sm font-medium font-serif text-slate-700">
-                    <!-- Aquí se mostrará dinámicamente el nombre del empleado -->
+                  <small id="modal-nombres" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700">
+
                   </small>
                 </label>
-                
-            
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  APELLIDOS:
+                  <small id="modal-apellidos" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  DOCUMENTO:
+                  <small id="modal-documento" class="mb-2 ml-2 text-xs font-medium  text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  CONTACTO:
+                  <small id="modal-contacto" class="mb-2 ml-2 text-xs font-medium  text-slate-700"></small>
+                </label>
+    
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  LIDER:
+                  <small id="modal-lider" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  REGISTRO INCAPACIDAD:
+                  <small id="modal-registro-incapacidad" class="mb-2 ml-2 text-xs font-medium  text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  TIPO INCAPACIDAD:
+                  <small id="modal-tipo-incapacidad" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  SUBTIPO INCAPACIDAD:
+                  <small id="modal-subtipo-incapacidad" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  INICIO INCAPACIDAD:
+                  <small id="modal-inicio-incapacidad" class="mb-2 ml-2 text-xs font-medium  text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  FINAL INCAPACIDAD:
+                  <small id="modal-final-incapacidad" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  N. DÍAS:
+                  <small id="modal-n-dias" class="mb-1.5 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  CATEGORIA:
+                  <small id="modal-codigo-categoria" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  DESCRIPCION:
+                  <small id="modal-des-categoria" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  SUBCATEGORIA:
+                  <small id="modal-codigo-subcategoria" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  DESCRIPCION:
+                  <small id="modal-des-subcategoria" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  PRORROGA:
+                  <small id="modal-prorroga" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  SALARIO:
+                  <small id="modal-salario" class="mb-2 ml-2 text-xs font-medium  text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  VALOR DÍA:
+                  <small id="modal-valor-dia" class="mb-2 ml-2 text-xs font-medium  text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  FECHA CONTRATACION:
+                  <small id="modal-fecha-contratacion" class="mb-2 ml-2 text-xs font-medium  text-slate-700"></small>
+                </label>
+  
+
+                <label id="" class="block mb-4 text-xs font-bold font-serif text-slate-950">
+                  <i class='bx bx-unite text-lg text-lime-600 pb-0 mb-0'></i>
+                  ESTADO INCAPACIDAD:
+                  <small id="modal-estado" class="mb-2 ml-2 text-sm font-medium font-serif text-slate-700"></small>
+                </label>
+  
                 </div>
+
+                <div class="flex justify-center mt-7">
+                  <button type="button" id="btnLiquidar" class="text-white bg-gray-800 hover:bg-gray-950 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2">
+                    <i class='bx bxs-download mr-5'></i>
+                    Liquidar incapacidad
+                  </button>
+                </div>
+                
+
+
               </div>    
 
-
-            
         </div>
     </div>
+    
+    
+
+
 </div
- 
+

@@ -107,6 +107,25 @@
 
       <div class="flex justify-end items-end w-full mt-4 pr-8 gap-0 ">
 
+<!-- Ver Detalles -->
+<div class="relative group me-2">
+  <button 
+    id="btn-ver-detalles"
+    type="button"
+    class="text-white bg-lime-700 hover:bg-lime-900 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M12 3a1 1 0 0 1 .78.375l4 5a1 1 0 1 1-1.56 1.25L13 6.85V14a1 1 0 1 1-2 0V6.85L8.78 9.626a1 1 0 1 1-1.56-1.25l4-5A1 1 0 0 1 12 3ZM9 14v-1H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-4v1a3 3 0 1 1-6 0Zm8 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
+    </svg>
+    
+    <span class="sr-only">Ver tabla</span>
+  </button>
+  <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg">
+    Liquidar Incapacidad
+  </div>
+</div>
+
+
+
         <!-- Editar -->
         <div class="relative group me-2">
           <button  data-modal-target="edit_incapacidad_vent_confirm" data-modal-toggle="edit_incapacidad_vent_confirm"  type="button" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
@@ -127,7 +146,7 @@
 
         <!-- Agregar -->
         <div class="relative group me-2">
-          <button type="button" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+          <button id="btn-agregar-incapacidad" type="button" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
               <path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path>
             </svg>
@@ -137,6 +156,8 @@
             Agregar Nueva Incapacidad
           </div>
         </div>
+
+
 
         <!-- Eliminar -->
         <div class="relative group me-2">
@@ -156,7 +177,7 @@
       </div>
 
     </div>
-    <script>
+<!--     <script>
       document.addEventListener("DOMContentLoaded", () => {
   const dataDiv = document.getElementById("datos-clave");
 
@@ -169,7 +190,16 @@
   console.log("📎 Archivos:", idFiles);
 });
 
-    </script>
+    </script> -->
+
+
+
+<!-- VISUALIZAR TABLA CON INCAPACIDADES DEL USUARIO -->
+<script src="/incapacidades/js/edit_incapacidad_ventana_confirmacion/see_user_disabilities_table.js"> </script>
+
+
+<!-- AGREGAR NUEVA INCAPACIDAD AL USUARIO -->
+<script  src="/incapacidades/js/edit_incapacidad_ventana_confirmacion/add_new_disability.js"> </script>
 
   </div>
 
