@@ -77,7 +77,8 @@ export const UserDisabilityTable = async (req, res) => {
                     AND is1.fecha_registro = is2.max_fecha
             ) iseg ON ih.id_incapacidades_historial = iseg.id_incapacidades_historial
             WHERE 
-                ih.id_empleado = ? AND ih.id_incapacidades_historial = ?`,
+                ih.id_empleado = ? AND ih.id_incapacidades_historial = ?
+                `,
             [id_empleado, id_incapacidad]
         );
 

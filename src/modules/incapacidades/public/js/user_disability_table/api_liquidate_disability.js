@@ -1,5 +1,4 @@
 // Asegúrate de que SweetAlert2 esté cargado en tu HTML
-// <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 document.addEventListener("DOMContentLoaded", function () {
     const btnLiquidar = document.getElementById("btnLiquidar");
