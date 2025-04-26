@@ -3,6 +3,7 @@ import express from 'express';
 import { format, differenceInDays } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { json } from "stream/consumers";
+import {getUltimasIncapacidades } from '../utils/api-download-user-disability/incapacidadesHelpers.js'
 
 
 
@@ -214,8 +215,9 @@ export const api_download_user_disability = async (req, res) => {
 /* ------------------------------------------------------------------------------------------------------------------------ */
 
         /* VARIABLES PARA LA LIQUIDACION  */
-        const Liq_empleador = data_politica
+        //const Liq_empleador = data_politica
         const Liq_entidad =   P_tipo_incapacidad
+        const Liq_cumplimiento = data_politica.cumplimiento
         const Liq_porcentaje_liquidacion_empleador = parseFloat(data_politica.porcentaje_liquidacion_empleador) || 0
 
         const Liq_porcentaje_liquidacion_eps = parseFloat(data_politica.porcentaje_liquidacion_eps) || 0
@@ -223,8 +225,9 @@ export const api_download_user_disability = async (req, res) => {
         const Liq_porcentaje_liquidacion_fondo_pensiones = parseFloat(data_politica.porcentaje_liquidacion_fondo_pensiones) || 0
         const Liq_porcentaje_liquidacion_eps_fondo_pensiones = parseFloat(data_politica.porcentaje_liquidacion_eps_fondo_pensiones) || 0
 
-        console.log("EMPLEADOR: ", Liq_empleador)
+        //console.log("EMPLEADOR Liq_empleador: ", Liq_empleador)
         console.log("ENTIDAD: ", Liq_entidad)
+        console.log("ENTICUMPLIMIENTO: ", Liq_cumplimiento)
         console.log("PORCENTAJE A LIQUIDAR EMPLEADOR: ", Liq_porcentaje_liquidacion_empleador)
         console.log("PORCENTAJE A LIQUIDAR EPS: ", Liq_porcentaje_liquidacion_eps)
         console.log("PORCENTAJE A LIQUIDAR ARL: ", Liq_porcentaje_liquidacion_arl)
@@ -239,57 +242,76 @@ export const api_download_user_disability = async (req, res) => {
 
 /* VARIABLE DE DÍAS A LIQUIDAR POR CADA ENTIDAD */
 
-const liq_dias_Incapacidad = parseInt(data.cantidad_dias); // total días de la incapacidad
-const liq_tipo_Incapacidad = P_tipo_incapacidad.toUpperCase();  // tipo de incapacidad
-const liq_prorroga = P_prorroga_texto_conversion.toUpperCase(); // "SI" o "NO"
+    const liq_dias_Incapacidad = parseInt(data.cantidad_dias); // total días de la incapacidad
+    const liq_tipo_Incapacidad = P_tipo_incapacidad.toUpperCase();  // tipo de incapacidad
+    const liq_prorroga = P_prorroga_texto_conversion.toUpperCase(); // "SI" o "NO"
 
-let liq_dias_empleador = 0;
-let liq_dias_eps = 0;
-let liq_dias_arl = 0;
-let liq_dias_fondo = 0;
-let liq_dias_eps_fondo = 0;
+    let liq_dias_empleador = 0;
+    let liq_dias_eps = 0;
+    let liq_dias_arl = 0;
+    let liq_dias_fondo = 0;
+    let liq_dias_eps_fondo = 0;
 
-if (liq_prorroga === 'SI') {
-   
-    switch (liq_tipo_Incapacidad) {
-        case 'EPS':
-            liq_dias_empleador = 0;
-            liq_dias_eps = liq_dias_Incapacidad;
-            break;
-        case 'ARL':
-            liq_dias_arl = liq_dias_Incapacidad;
-            break;
-        case 'FONDO':
-            liq_dias_fondo = liq_dias_Incapacidad;
-            break;
-        case 'EPS+FONDO':
-            liq_dias_eps_fondo = liq_dias_Incapacidad;
-            break;
-        default:
-            console.log(`Tipo de incapacidad con prórroga no reconocido: ${liq_tipo_Incapacidad}`);
-    }
-} else if (liq_prorroga === 'NO') {
+
+
+
+    /* VALDIACION PARA EJECUTAR CONSULTAS Y LIQUIDACION CORRECTA DE ENTIDADES */
+    if (Liq_cumplimiento === 'SI') {
+
+        if (liq_prorroga === 'SI') {
     
-    switch (liq_tipo_Incapacidad) {
-        case 'EPS':
-            liq_dias_empleador = liq_dias_Incapacidad >= 2 ? 2 : liq_dias_Incapacidad;
-            liq_dias_eps = Math.max(liq_dias_Incapacidad - 2, 0);
-            break;
-        case 'ARL':
-            liq_dias_arl = liq_dias_Incapacidad;
-            break;
-        case 'FONDO':
-            liq_dias_fondo = liq_dias_Incapacidad;
-            break;
-        case 'EPS+FONDO':
-            liq_dias_eps_fondo = liq_dias_Incapacidad;
-            break;
-        default:
-            console.log(`Tipo de incapacidad sin prórroga no reconocido: ${liq_tipo_Incapacidad}`);
+            /* SE LLAMA FUNCION PARA TRAER LAS ULTIMAS INCAPACIDADES DEL USER */
+            const data_incapacidades_liquidadas = await getUltimasIncapacidades(id_empleado);
+            const fecha_final_incapacidad_anterior = data_incapacidades_liquidadas.fecha_final_incapacidad  /* TRAER FECHA FINAL DE LA ULTIMA INCAPACIDAD Y FECHA INICIAL DE LA INCAPACIDAD A LIQUIDAR */
+            
+            
+            const fecha_inicial_incapacidad_liquidar = data.fecha_inicio_incapacidad  /* FECHA INICIAL DE INCAPAVCIDAD A LIQUIDAR */
+            
+console.log(fecha_final_incapacidad_anterior, fecha_inicial_incapacidad_liquidar)
+
+
+            switch (liq_tipo_Incapacidad) {
+                case 'EPS':
+
+                    liq_dias_empleador = 0;
+                    liq_dias_eps = liq_dias_Incapacidad;
+                    break;
+
+                case 'ARL':
+                    liq_dias_arl = liq_dias_Incapacidad;
+                    break;
+                default:
+                    console.log(`Tipo de incapacidad con prórroga no reconocido: ${liq_tipo_Incapacidad}`);
+            }
+    
+        } else if (liq_prorroga === 'NO') {
+    
+            switch (liq_tipo_Incapacidad) {
+                case 'EPS':
+                    liq_dias_empleador = liq_dias_Incapacidad >= 2 ? 2 : liq_dias_Incapacidad;
+                    liq_dias_eps = Math.max(liq_dias_Incapacidad - 2, 0);
+                    break;
+                case 'ARL':
+                    liq_dias_arl = liq_dias_Incapacidad;
+                    break;
+                case 'FONDO':
+                    liq_dias_fondo = liq_dias_Incapacidad;
+                    break;
+                case 'EPS+FONDO':
+                    liq_dias_eps_fondo = liq_dias_Incapacidad;
+                    break;
+                default:
+                    console.log(`Tipo de incapacidad sin prórroga no reconocido: ${liq_tipo_Incapacidad}`);
+            }
+    
+        } else {
+            console.error(`Valor inesperado de prórroga: ${liq_prorroga}`);
+        }
+    
+    } else {
+        console.error(`Cumplimiento no aprobado: ${liq_cumplimiento}`);
     }
-} else {
-    console.error(`Valor inesperado de prórroga: ${liq_prorroga}`);
-}
+    
 
 console.log({
     liq_dias_Incapacidad,
