@@ -3,7 +3,15 @@ import express from 'express';
 import { format, differenceInDays } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { json } from "stream/consumers";
-import {getUltimasIncapacidades } from '../utils/api-download-user-disability/incapacidadesHelpers.js'
+import {getUltimasIncapacidades } from '../repositories/api-download-user-disability/incapacidadesHelpers.js'
+import {getIdEmpleadoByHistorial} from '../repositories/api-download-user-disability/getIdEmpleadoByHistorial.js'
+import {getDisabilityDischargeHistory} from '../repositories/api-download-user-disability/getDisabilityDischargeHistory.js'
+import {updateLiquidacoinTableIncapacity, updateDownloadStatus} from '../repositories/api-download-user-disability/updateLiquidacoinTableIncapacity.js'
+import {getPoliticaByParametros} from '../repositories/api-download-user-disability/getPoliticaByParametros.js'
+import {formatDate, formatDate2, formatDateTime} from '../utils/formatDate/formatDate.js'
+import {validarProrroga } from '../utils/api-download-user-disability/validarProrroga.js'
+import {updateDisabilitySettlementExtensionLiq, updateDisabilitySettlementExtensionHis } from '../repositories/api-download-user-disability/updateDisabilitySettlementExtension.js'
+import { Console } from "console";
 
 
 
@@ -12,109 +20,59 @@ const app = express();
 export const api_download_user_disability = async (req, res) => {
     try {
         const { id_liquidacion, id_historial } = req.params;
-
         console.log(id_liquidacion, id_historial)
 
 
-        /* TRAER ID DEL EMPLEADO */
-        const [rows] = await pool.query(`
-            SELECT id_empleado
-            FROM incapacidades_historial
-            WHERE id_incapacidades_historial = ?
-        `, [id_historial]);
-        
 
-        /* OBTENER UNICAMENTE EL NUMERO ID */
-        const id_empleado = rows[0]?.id_empleado;
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
+        /* TRAER ID DEL EMPLEADO CONSULTA EN REPOSITORIES*/
+        const id_empleado = await getIdEmpleadoByHistorial(id_historial);
         
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
+
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
 
         /* VALIDACION SI HACE FALTA ALGUNO DE LOS DATOS */
         if (!id_liquidacion || !id_historial  || !id_empleado) {
             return res.status(400).json({ message: "Faltan parámetros en la solicitud." });
         }
 
-
-        /* OBTENER LOS ULTIMOS DATOS ACTUALIZADOS DE LA INCAPACIDAD */
-        const [disabilityDischargeHistory] = await pool.query(
-            `SELECT 
-                e.nombres, 
-                e.apellidos, 
-                e.documento, 
-                e.contacto, 
-                e.tipo_contrato, 
-                e.cargo, 
-                e.lider, 
-                e.salario AS salario_empleado, 
-                e.valor_dia AS valor_dia_empleado, 
-                e.fecha_contratacion,
-                ih.fecha_registro AS fecha_registro_incapacidad, 
-                ih.tipo_incapacidad, 
-                ih.subtipo_incapacidad,
-                ih.fecha_inicio_incapacidad, 
-                ih.fecha_final_incapacidad, 
-                ih.cantidad_dias, 
-                ih.codigo_categoria, 
-                ih.descripcion_categoria, 
-                ih.codigo_subcategoria, 
-                ih.descripcion_subcategoria,
-                ih.prorroga, 
-                ih.id_incapacidades_historial,
-                iseg.estado_incapacidad, 
-                iseg.observaciones
-            FROM incapacidades_historial ih
-            INNER JOIN empleado e ON ih.id_empleado = e.id_empleado
-            LEFT JOIN (
-                SELECT is1.*
-                FROM incapacidades_seguimiento is1
-                INNER JOIN (
-                    SELECT id_incapacidades_historial, MAX(fecha_registro) AS max_fecha
-                    FROM incapacidades_seguimiento
-                    GROUP BY id_incapacidades_historial
-                ) is2 ON is1.id_incapacidades_historial = is2.id_incapacidades_historial
-                    AND is1.fecha_registro = is2.max_fecha
-            ) iseg ON ih.id_incapacidades_historial = iseg.id_incapacidades_historial
-            WHERE ih.id_empleado = ? AND ih.id_incapacidades_historial = ?`,
-            [id_empleado, id_historial] 
-        );
+/* ------------------------------------------------------------------------------------------------------------------------- */
 
 
-        /* VALIDACION SI LA CONSULTA ESTA VACIA */
-        if (!disabilityDischargeHistory.length) {
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
+        // OBTENER DATOS ACTUALIZADOS DE LA INCAPACIDAD TABLA PRE-LIMINAR
+        const disabilityDischargeHistory = await getDisabilityDischargeHistory(id_empleado, id_historial);
+
+        // Validar si no encontró datos
+        if (!disabilityDischargeHistory) {
             return res.status(404).json({ message: "No se encontró la incapacidad con los datos proporcionados." });
         }
 
-
-        /* AGREGAMOS LOS DATOS RECIBIDOS A UN ARREGLO EN LA CONSTA DATA */
-        const data = disabilityDischargeHistory[0];
+        // Ya tienes el objeto listo
+        const data = disabilityDischargeHistory;
         console.log("🧾 Datos encontrados:", data);
 
+/* ------------------------------------------------------------------------------------------------------------------------- */
 
+
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
 
         /* ACTUALIZA LA INFORMACION A LA MAS ACTUAL */
-        if (disabilityDischargeHistory.length) {
+        const updateResult = await updateLiquidacoinTableIncapacity(data);
 
-            const updateValues = [
-                data.nombres, data.apellidos, data.documento, data.contacto, data.tipo_contrato,
-                data.cargo, data.lider, data.fecha_registro_incapacidad, data.tipo_incapacidad, data.subtipo_incapacidad,
-                data.fecha_inicio_incapacidad, data.fecha_final_incapacidad, data.cantidad_dias,
-                data.codigo_categoria, data.descripcion_categoria, data.codigo_subcategoria, data.descripcion_subcategoria,
-                data.prorroga, data.salario_empleado, data.valor_dia_empleado, data.fecha_contratacion, data.estado_incapacidad,
-                1, // downloaded
-                data.id_incapacidades_historial // para el WHERE
-            ];
-
-            await pool.query(
-                `UPDATE incapacidades_liquidacion SET
-                    nombres = ?, apellidos = ?, documento = ?, contacto = ?, tipo_contrato = ?,
-                    cargo = ?, lider = ?, fecha_registro_incapacidad = ?, tipo_incapacidad = ?, subtipo_incapacidad = ?,
-                    fecha_inicio_incapacidad = ?, fecha_final_incapacidad = ?, cantidad_dias = ?,
-                    codigo_categoria = ?, descripcion_categoria = ?, codigo_subcategoria = ?, descripcion_subcategoria = ?,
-                    prorroga = ?, salario_empleado = ?, valor_dia_empleado = ?, fecha_contratacion = ?, estado_incapacidad = ?,
-                    downloaded = ?
-                WHERE id_incapacidades_historial = ?`,
-                updateValues
-            );
+        if (updateResult.affectedRows > 0) {
+            return res.status(200).json({ message: "Información actualizada correctamente." });
         }
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
 
 
 /* ------------------------------------------------------------------------------------------------------------------------- */
@@ -168,44 +126,22 @@ export const api_download_user_disability = async (req, res) => {
 
 /* ------------------------------------------------------------------------------------------------------------------------ */
 
-        /* TRAER LA POLITICA SEGUN PARAMETROS REGISTRADOS */
-        const [calcular_politicas] = await pool.query(
-            `
-            SELECT * FROM 
-                politicas_incapacidades
-            WHERE 
-                TRIM(LOWER(prorroga)) = TRIM(LOWER(?))
-                AND TRIM(LOWER(dias_laborados)) = TRIM(LOWER(?))
-                AND TRIM(LOWER(salario)) = TRIM(LOWER(?))
-                AND TRIM(LOWER(tipo_incapacidad)) = TRIM(LOWER(?))
-                AND TRIM(LOWER(dias_incapacidad)) = TRIM(LOWER(?))
-            `,
-            [
-                P_prorroga_texto_conversion,       // "SI" o "NO"
-                diasLaborados_conversion,          // ">30" o "<30"
-                P_salario_conversion,              // salario (string)
-                P_tipo_incapacidad,      // tipo de incapacidad (string)<
-                P_N_dias_incapacidad_conversion      // tipo de incapacidad (string)
-            ]
+        /* TRAER POLITICA QUE APLICA A LA INCAPACIDAD */
+        const politicaAplicada = await getPoliticaByParametros(
+            P_prorroga_texto_conversion,
+            diasLaborados_conversion,
+            P_salario_conversion,
+            P_tipo_incapacidad,
+            P_N_dias_incapacidad_conversion
         );
 
-        console.log("politica que aplica: ", calcular_politicas)
-        
-        console.log("DATOS DEL FILTRO EN CONSULTA PRORROGA: ", P_prorroga_texto_conversion, P_prorroga_texto )
-        console.log("DATOS DEL FILTRO EN CONSULTA DIAS LABORADOS: ", diasLaborados_conversion, diasLaborados )
-        console.log("DATOS DEL FILTRO EN CONSULTA SALARIO: ", P_salario_conversion, P_salario )
-        console.log("DATOS DEL FILTRO EN CONSULTA N_INCAPACIDAD: ", P_N_dias_incapacidad_conversion, P_N_dias_incapacidad      // tipo de incapacidad (string)
-        )
-
-
-        /* SE REALIZA VALIDACION DE LA CONSULTA */
-        if(!calcular_politicas.length){
-            return res.status(404),json({message: "No sé encontro ninguna politica para liquidar la incapacidad"})
+        if (!politicaAplicada) {
+            return res.status(404).json({ message: "No se encontró ninguna política para liquidar la incapacidad." });
         }
 
+              
 
-        /* AGREGAMOS LOS DATOS EN UNA VARIABLE PARA LLAMAR LUEGO CADA DATO */
-        const data_politica = calcular_politicas[0]
+        console.log("📜 Política encontrada:", politicaAplicada);
         
 /* ------------------------------------------------------------------------------------------------------------------------ */
 
@@ -217,13 +153,13 @@ export const api_download_user_disability = async (req, res) => {
         /* VARIABLES PARA LA LIQUIDACION  */
         //const Liq_empleador = data_politica
         const Liq_entidad =   P_tipo_incapacidad
-        const Liq_cumplimiento = data_politica.cumplimiento
-        const Liq_porcentaje_liquidacion_empleador = parseFloat(data_politica.porcentaje_liquidacion_empleador) || 0
+        const Liq_cumplimiento = politicaAplicada.cumplimiento
+        const Liq_porcentaje_liquidacion_empleador = parseFloat(politicaAplicada.porcentaje_liquidacion_empleador) || 0
 
-        const Liq_porcentaje_liquidacion_eps = parseFloat(data_politica.porcentaje_liquidacion_eps) || 0
-        const Liq_porcentaje_liquidacion_arl = parseFloat(data_politica.porcentaje_liquidacion_arl) || 0
-        const Liq_porcentaje_liquidacion_fondo_pensiones = parseFloat(data_politica.porcentaje_liquidacion_fondo_pensiones) || 0
-        const Liq_porcentaje_liquidacion_eps_fondo_pensiones = parseFloat(data_politica.porcentaje_liquidacion_eps_fondo_pensiones) || 0
+        const Liq_porcentaje_liquidacion_eps = parseFloat(politicaAplicada.porcentaje_liquidacion_eps) || 0
+        const Liq_porcentaje_liquidacion_arl = parseFloat(politicaAplicada.porcentaje_liquidacion_arl) || 0
+        const Liq_porcentaje_liquidacion_fondo_pensiones = parseFloat(politicaAplicada.porcentaje_liquidacion_fondo_pensiones) || 0
+        const Liq_porcentaje_liquidacion_eps_fondo_pensiones = parseFloat(politicaAplicada.porcentaje_liquidacion_eps_fondo_pensiones) || 0
 
         //console.log("EMPLEADOR Liq_empleador: ", Liq_empleador)
         console.log("ENTIDAD: ", Liq_entidad)
@@ -234,11 +170,11 @@ export const api_download_user_disability = async (req, res) => {
         console.log("PORCENTAJE A LIQUIDAR F.PENSIONES: ", Liq_porcentaje_liquidacion_fondo_pensiones)
         console.log("PORCENTAJE A LIQUIDAR F.PENSIONES Y EPS: ", Liq_porcentaje_liquidacion_eps_fondo_pensiones)
 
+/* ------------------------------------------------------------------------------------------------------------------------ */
 
 
-        /* VARIABLE DE DÍAS A LIQUIDAR POR CADA ENTIDAD */
 
-        /* VARIABLE DE DÍAS A LIQUIDAR POR CADA ENTIDAD */
+/* ------------------------------------------------------------------------------------------------------------------------ */
 
 /* VARIABLE DE DÍAS A LIQUIDAR POR CADA ENTIDAD */
 
@@ -262,12 +198,42 @@ export const api_download_user_disability = async (req, res) => {
     
             /* SE LLAMA FUNCION PARA TRAER LAS ULTIMAS INCAPACIDADES DEL USER */
             const data_incapacidades_liquidadas = await getUltimasIncapacidades(id_empleado);
-            const fecha_final_incapacidad_anterior = data_incapacidades_liquidadas.fecha_final_incapacidad  /* TRAER FECHA FINAL DE LA ULTIMA INCAPACIDAD Y FECHA INICIAL DE LA INCAPACIDAD A LIQUIDAR */
             
             
-            const fecha_inicial_incapacidad_liquidar = data.fecha_inicio_incapacidad  /* FECHA INICIAL DE INCAPAVCIDAD A LIQUIDAR */
+            /* FECHAS FORMATEADAS */
+            const fecha_inicio_incapacidad_anterior = formatDate2(data_incapacidades_liquidadas.fecha_inicio_incapacidad);
+            const fecha_final_incapacidad_anterior = formatDate2(data_incapacidades_liquidadas.fecha_final_incapacidad); /* TRAER FECHA FINAL DE LA ULTIMA INCAPACIDAD Y FECHA INICIAL DE LA INCAPACIDAD A LIQUIDAR */
+            const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad)    /* FECHA INICIAL DE INCAPAVCIDAD A LIQUIDAR */
+            const fecha_final_incapacidad_liquidar = formatDate2(data.fecha_final_incapacidad)   /* FECHA FINAL DE INCAPACIDAD A LIQUIDAR  */
+            console.log("FECHA INICIAL ULTIMA INCAPACIDAD: ", fecha_inicio_incapacidad_anterior,"FECHA FINAL ULTIMA INCAPACIDAD: ", fecha_final_incapacidad_anterior, "FECHA INICIAL INCAPACIDAD A LIQUIDAR: ", fecha_inicial_incapacidad_liquidar, "FECHA FINAL INCAPACIDAD A LIQUIDAR: ", fecha_final_incapacidad_liquidar)
+
+
+            /* FUNCION PARA DETERMINAR SI APLICA O NO APLICA PRORROGA */
+            const prorrogaValida = validarProrroga(
+                fecha_inicio_incapacidad_anterior,
+                fecha_final_incapacidad_anterior,
+                fecha_inicial_incapacidad_liquidar,
+                fecha_final_incapacidad_liquidar
+            );
             
-console.log(fecha_final_incapacidad_anterior, fecha_inicial_incapacidad_liquidar)
+            if (prorrogaValida) {
+                console.log("Prórroga aplicada correctamente.");
+            } else {
+                const updateDisabilityExtensionliq = await updateDisabilitySettlementExtensionLiq(id_historial)  /*  ACTUALIZACION PRORROGA TABLA LIQUIDACION EN 0  */
+                const updateDisabilityExtensionHis = await updateDisabilitySettlementExtensionHis(id_historial) /*  ACTUALIZACION PRORROGA TABLA HISTORIAL EN 0 */
+
+                console.log("ACTUALIZACION PRORROGA LIQUIDACION: ", updateDisabilityExtensionliq)
+                console.log("ACTUALIZACION PRORROGA HISTORIAL: ", updateDisabilityExtensionHis)
+
+            }
+
+
+
+
+            /* ACTUALIZAR DOWNLOAD A 1 */
+            const updateDownloadStatusLiq = await updateDownloadStatus(id_historial)
+
+
 
 
             switch (liq_tipo_Incapacidad) {

@@ -23,6 +23,7 @@ export async function getUltimasIncapacidades(id_empleado) {
             INNER JOIN incapacidades_historial ih 
                 ON il.id_incapacidades_historial = ih.id_incapacidades_historial
             WHERE ih.id_empleado = ?
+              AND il.downloaded = 1
             ORDER BY il.fecha_registro_incapacidad DESC
             LIMIT 1
             `,
