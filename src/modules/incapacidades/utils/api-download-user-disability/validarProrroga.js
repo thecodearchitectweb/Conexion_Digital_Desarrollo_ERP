@@ -34,12 +34,12 @@ function validarFechaDentroDeRango(fechaInicioAnterior, fechaFinalAnterior, fech
 export function validarProrroga(fechaInicioAnterior, fechaFinalAnterior, fechaInicialLiquidar, fechaFinalLiquidar) {
     try {
         if (validarFechasSeguidas(fechaFinalAnterior, fechaInicialLiquidar)) {
-            console.log("✅ Aplica prórroga: Fechas seguidas.");
+            console.log("✅ Aplica prórroga: Fechas seguidas.------------------>", validarFechasSeguidas);
             return true;
         }
         
         if (validarFechaDentroDeRango(fechaInicioAnterior, fechaFinalAnterior, fechaInicialLiquidar)) {
-            console.log("✅ Aplica prórroga: Fecha inicial dentro del rango anterior.");
+            console.log("✅ Aplica prórroga: Fecha inicial dentro del rango anterior..------------------>", validarFechaDentroDeRango);
             return true;
         }
 

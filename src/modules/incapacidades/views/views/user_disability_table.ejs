@@ -125,7 +125,7 @@
                         onclick="abrirModal(this)
                         
                         ">
-                          <i class='bx bx-error text-[22px] text-amber-700 h-0 py-0'></i>
+                          <i class='bx bx-error text-[22px] text-red-800  h-0 py-0'></i>
                         </a>
                       <% } else { %>
                         <a href="#" class="py-0">
@@ -166,16 +166,16 @@
                       <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.codigo_subcategoria %></td>
                       <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs"><%= liq.descripcion_subcategoria %></td>
                       <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.prorroga %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_empleador %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_empleador %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_eps %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_eps %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_arl %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_arl %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_fp %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_fp %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_fp_eps %></td>
-                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.valor_fp_eps %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_liquidacion_empleador %></td>  
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.liquidacion_empleador %></td> 
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_liquidacion_eps %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.liquidacion_eps %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_liquidacion_arl %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.liquidacion_arl %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_liquidacion_fondo_pensiones %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.liquidacion_fondo_pensiones %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.dias_liquidacion_eps_fondo_pensiones %></td>
+                      <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.liquidacion_eps_fondo_pensiones %></td>
                       <td class="px-6 py-1.5 font-medium text-gray-900 whitespace-nowrap border border-white hover:bg-slate-300 text-xs text-center"><%= liq.estado_incapacidad %></td>
                     <% } %>
                   </tr>

@@ -139,7 +139,8 @@ export const UserDisabilityTable = async (req, res) => {
                     incapacidades_liquidacion il
                 JOIN 
                     incapacidades_historial ih ON il.id_incapacidades_historial = ih.id_incapacidades_historial
-                WHERE ih.id_empleado = ?;
+                WHERE ih.id_empleado = ?
+                ORDER BY fecha_inicio_incapacidad DESC;
             
             `,
             [id_empleado]
