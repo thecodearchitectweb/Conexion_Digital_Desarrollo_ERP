@@ -35,7 +35,7 @@ export async function updateLiquidacoinTableIncapacity(data) {
 
 
 
-/* ESTADO DEL SOWNLOAD */
+/* ESTADO DEL DOWNLOAD  == 1*/
 export async function updateDownloadStatus(id_incapacidades_historial) {
     try {
         const result = await pool.query(
