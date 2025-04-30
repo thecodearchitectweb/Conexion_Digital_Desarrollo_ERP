@@ -34,6 +34,8 @@ export function entityLiquidationEmpleador(salario, porcentaje_liquidacion_emple
             throw new Error("Faltan parámetros para calcular la liquidación.");
         }
 
+        console.log(salario, porcentaje_liquidacion_empleador, cant_dias_liq)
+
         // Salario diario con base en 30 días
         const salarioDiario = salario / 30;
 
