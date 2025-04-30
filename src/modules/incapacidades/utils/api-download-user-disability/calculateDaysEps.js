@@ -18,3 +18,5 @@ export function calculateDaysEps(fecha_final_incapacidad_anterior, fecha_final_i
         return null; // O podrías lanzar error si prefieres forzar manejo arriba
     }
 }
+
+
