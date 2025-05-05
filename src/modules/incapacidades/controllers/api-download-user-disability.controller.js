@@ -29,6 +29,7 @@ export const api_download_user_disability = async (req, res) => {
     }
 };
 
+
 // FUNCION INDEPENDIENTE
 const processDownloadUserDisability = async (id_liquidacion, id_historial, res) => {
     try {
