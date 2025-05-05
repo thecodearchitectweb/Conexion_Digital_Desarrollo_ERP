@@ -3,6 +3,7 @@
 
 export function entityLiquidation(salario, porcentaje_liquidacion_eps, cant_dias_liq) {
     try {
+        console.log("LIQUIDACION PARA EPS: ", salario, porcentaje_liquidacion_eps, cant_dias_liq)
         if (!salario || !porcentaje_liquidacion_eps || !cant_dias_liq) {
             throw new Error("Faltan parámetros para calcular la liquidación.");
         }
@@ -18,7 +19,8 @@ export function entityLiquidation(salario, porcentaje_liquidacion_eps, cant_dias
 
         return parseFloat(total.toFixed(2));
     } catch (error) {
-        console.error("Error al calcular la liquidación de la entidad:", error);
+        console.log("LIQUIDACION PARA EPS: ", salario, porcentaje_liquidacion_eps, cant_dias_liq)
+        console.error("Error al calcular la liquidación de la entidad EPS:", error);
         return 0;
     }
 }
@@ -30,6 +32,9 @@ export function entityLiquidation(salario, porcentaje_liquidacion_eps, cant_dias
 
 export function entityLiquidationEmpleador(salario, porcentaje_liquidacion_empleador, cant_dias_liq) {
     try {
+
+        console.log("LIQUIDACION PARA EMPLEADOR", salario, porcentaje_liquidacion_empleador, cant_dias_liq )
+
         if (!salario || !porcentaje_liquidacion_empleador || !cant_dias_liq) {
             throw new Error("Faltan parámetros para calcular la liquidación.");
         }
@@ -47,7 +52,8 @@ export function entityLiquidationEmpleador(salario, porcentaje_liquidacion_emple
 
         return parseFloat(total.toFixed(2));
     } catch (error) {
-        console.error("Error al calcular la liquidación de la entidad:", error);
+        console.log("LIQUIDACION PARA EMPLEADOR", salario, porcentaje_liquidacion_empleador, cant_dias_liq )
+        console.error("Error al calcular la liquidación de la entidad EMPLEADOR:", error);
         return 0;
     }
 }

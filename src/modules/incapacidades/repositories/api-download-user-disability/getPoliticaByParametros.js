@@ -33,3 +33,4 @@ export async function getPoliticaByParametros
         throw error;
     }
 }
+
