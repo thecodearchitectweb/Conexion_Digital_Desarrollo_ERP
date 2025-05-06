@@ -356,6 +356,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                             console.log("LIQUIDACION PORCENTAJE LIQUIDACION EPS: ", Liq_porcentaje_liquidacion_eps)
 
+                            
 
                             /* CALCULAR VALOR TOTAL A LIQUIDAR EPS */
                             liq_valor_eps = entityLiquidation(data.salario_empleado, politicaAplicada.porcentaje_liquidacion_eps, liq_dias_eps);
