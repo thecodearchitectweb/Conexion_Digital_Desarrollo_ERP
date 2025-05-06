@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de incapacidad, filtro I</title>
+
+  <link rel="stylesheet" href="/incapacidades/css/sidebar/style_sidebar_adaptacion_pantalla.css">
+
+
+
+  <%- include('./../partials/header/header.ejs') %>
+  <%-include('./../partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
+</head>
+
+
+
+<body class="bg-slate-200 ">
+
+
+  <!-- NAVBAR -->
+  <header>
+    <!-- NAVBAR SUPERIOR -->
+    <nav class="navbar">
+      <div class="navbar-left ">
+        <div class="navbar-left" style="gap: 0.5rem;">
+          <img src="/incapacidades/img/logo/LOGO_SPEED_NETWORKS_SAS-01.png" alt="Logo 1" style="height: 60px;" />
+          <img src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="Logo 2" style="height: 90px;" />
+        </div>
+      </div>
+
+      <div class="navbar-right">
+        <span class="navbar-user">Hola, Alex Alejandro Oviedo Gonzalez</span>
+        <i class='bx bx-user-circle text-2xl ml-4'></i>
+        <i class='bx bx-exit ml-4 text-xl cursor-pointer'></i>
+      </div>
+    </nav>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <!-- SIDEBAR (partial) -->
+    <div id="sidebar_principal_incapacidades" class="main-content">
+      <aside id="sidebar" class="sidebar">
+        <%- include('./../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
+      </aside>
+    </div>
+
+  </aside>
+
+
+  <div class="w-full">
+
+    <div class="flex w-full ">
+
+      <div id="container_seleccionar_empleado" class="  min-h-screen gap-6 mt-32 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 container-collapsed  bg-white rounded-xl">
+
+       
+
+        <div class=" w-full mx-auto text-center border-b border-gray-400 pb-2 mb-4 mt-4 drop-shadow-md">
+
+
+
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Script que maneja la sidebar y el contenedor -->
+  <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
+
+  <!-- Mostar formulario de ingreso de nueva incapacidad -->
+  <script src="/incapacidades/js/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
+
+
+  <!-- Mostar input file para cargar los archivos correspondientes -->
+  <script src="/incapacidades/js/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
+
+
+  <!-- calcula la cantidad de días de incapacidad -->
+  <script src="/incapacidades/js/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
+
+
+  <!-- VERIFICAR QUE SEA PDF, CALCULAR QUE TENGA MAXIMO UN PESO DE 5MB -->
+  <script src="/incapacidades/js/detalle_empleado/verificacion_pdf_peso.js"></script>
+
+
+  <!-- API FETCH PARA CONSULTAR CIE 10 -->
+  <script src="/incapacidades/js/detalle_empleado/api_fetch_cie_10.js"></script>
+
+
+  <!-- API FETCH PARA CONSULTAR SI HAY DUPLICIDAD CON LA INCAPACIDAD -->
+  <script  src="/incapacidades/js/detalle_empleado/api_fetch_duplicidad_incapacidad.js"></script>
+
+ 
+
+
+</body>
+
+</html>
+
+
+
+<!-- 
+flex flex-col gap-6 mt-28 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 bg-white rounded-xl filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] container-expanded
+
+flex flex-col gap-6 mt-28 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 bg-white rounded-xl filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] container-collapsed -->

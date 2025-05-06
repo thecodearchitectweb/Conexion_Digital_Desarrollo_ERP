@@ -15,6 +15,7 @@ import { calculateDaysEps } from '../utils/api-download-user-disability/calculat
 import { entityLiquidation, entityLiquidationEmpleador } from '../utils/api-download-user-disability/entityLiquidation.js'
 import { updateSettlementTable, updateSettlementTableEmpleador } from '../repositories/api-download-user-disability/updateSettlementTable.js'
 import { calcularDiasLiquidar } from '../utils/api-download-user-disability/calcularDiasLiquidarSinProrroga.js'
+import { transformarParametrosPolitica } from '../utils/api-download-user-disability/transformPolicyParameters.js'
 
 const app = express();
 
@@ -62,26 +63,39 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
         /* FILTRO PARA CARGAR INCAPACIDAD */
-        const fechaContratacionRaw = new Date(data.fecha_contratacion);
-        const hoy = new Date();
-        const diasLaborados = differenceInDays(hoy, fechaContratacionRaw) + 1;
-        const diasLaborados_conversion = diasLaborados >= 30 ? ">30" : "<30";
+        const parametros = transformarParametrosPolitica(data);
 
-        const SMMLV = 1423500;
-        const P_salario_conversion = data.salario_empleado > SMMLV ? ">SMLV" : "SMLV";
-        const P_tipo_incapacidad = data.tipo_incapacidad;
-        const P_N_dias_incapacidad = data.cantidad_dias
-        const P_N_dias_incapacidad_conversion = data.cantidad_dias > 2 ? ">2" : "<3";
-        const P_prorroga_texto_conversion = data.prorroga === 1 ? "SI" : "NO";
+
+        /* CONSTANTES PARA VALIDAR POLITICAS */
+        const tipo_incapacidad = parametros.tipo_incapacidad;
+        const cantidad_dias = parametros.dias_incapacidad; 
+        const cantidad_dias_conversion = parametros.dias_incapacidad_conversion;
+        const prorroga_conversion = parametros.prorroga;
+        const salario_conversion = parametros.salario;
+        const dias_laborados_conversion = parametros.dias_laborados_conversion;
+        const dias_laborados = parametros.dias_laborados
+
+
+        /*  */
+        console.log("tipo_incapacidad", tipo_incapacidad)
+        console.log("cantidad_dias", cantidad_dias)
+        console.log("cantidad_dias_conversion", cantidad_dias_conversion)
+        console.log("prorroga_conversion", prorroga_conversion)
+        console.log("salario_conversion", salario_conversion)
+        console.log("dias_laborados", dias_laborados_conversion)
+
 
 
         const politicaAplicada = await getPoliticaByParametros(
-            P_prorroga_texto_conversion,
-            diasLaborados_conversion,
-            P_salario_conversion,
-            P_tipo_incapacidad,
-            P_N_dias_incapacidad_conversion
+            prorroga_conversion,
+            dias_laborados,
+            salario_conversion,
+            tipo_incapacidad,
+            cantidad_dias_conversion
         );
+
+        
+
 
         if (!politicaAplicada) {
             return res.status(404).json({ message: "No se encontró ninguna política para liquidar la incapacidad." });
@@ -90,7 +104,8 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         console.log("📜 Política encontrada:", politicaAplicada);
 
         const Liq_cumplimiento = politicaAplicada.cumplimiento;
-        const liq_prorroga = P_prorroga_texto_conversion.toUpperCase();
+        const liq_prorroga = parametros.prorroga.toUpperCase();
+
 
 
         /* DIAS A LIQUIDAR */
@@ -117,10 +132,10 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         let Liq_porcentaje_liquidacion_eps_fondo_pensiones =  0;
 
 
-
+//parametros.tipo_incapacidad
 
         /* SELECCION DEL CASO */
-        switch (P_tipo_incapacidad) {
+        switch (parametros.tipo_incapacidad) {
             
             case 'EPS':
               
@@ -257,10 +272,10 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                     if (liq_prorroga === 'NO') {
 
                         /* validar N de dias de la incapacidad, si es menor a 3, unicamente paga el empleador */
-                        if (P_N_dias_incapacidad  < 3) {
+                        if (cantidad_dias  < 3) {
 
                             /* se calcula el numero de días que el empleador debe liquidar al empleado */
-                            liq_dias_empleador = P_N_dias_incapacidad
+                            liq_dias_empleador = cantidad_dias
                             
 
                             /* CALCULAR EL PORCENTAJE A LIQUIDAR POR EMPLEADOR */
@@ -302,7 +317,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         }
 
 
-                        if (P_N_dias_incapacidad > 2){
+                        if (cantidad_dias > 2){
 
 
                             /* se calcula el numero de días que el empleador debe liquidar al empleado */
@@ -378,7 +393,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             const upd_liq_valor_arl = liq_valor_arl
                             const upd_liq_valor_fondo_pensiones = liq_valor_fondo_pensiones
                             const upd_liq_valor_eps_fondo_pensiones = liq_valor_eps_fondo_pensiones
-                            const upd_dias_Laborados = diasLaborados
+                            const upd_dias_Laborados = dias_laborados
                             const upd_id_liquidacion = id_liquidacion
 
 
