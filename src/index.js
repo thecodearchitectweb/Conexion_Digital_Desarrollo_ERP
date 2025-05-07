@@ -106,6 +106,8 @@ import  api_fetch_duplicidad_incapacidad from './modules/incapacidades/routes/ap
 import  UserDisabilityTable from './modules/incapacidades/routes/user_disability_table.routes.js'
 import  api_download_user_disability from './modules/incapacidades/routes/api-download-user-disability.routes.js'
 import  getEntityLiquidationView from './modules/incapacidades/routes/entity_liquidation_view.routes.js'
+import  api_select_disability_date from './modules/incapacidades/routes/api-select-disability-date.routes.js'
+import  api_select_disability_extension from './modules/incapacidades/routes/api-select-disability-date.routes.js'
 
 
 // Usar rutas
@@ -120,6 +122,8 @@ app.use(api_fetch_duplicidad_incapacidad)
 app.use(UserDisabilityTable)
 app.use(api_download_user_disability)
 app.use(getEntityLiquidationView)
+app.use(api_select_disability_extension)
+app.use(api_select_disability_date)
 
 
 

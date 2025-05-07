@@ -67,7 +67,6 @@
           <!-- FORMULARIO PARA INGRESO DE NUEVA INCAPACIDAD -->
           <form action="/incapacidad/registro/nueva/incapacidad" method="POST" enctype="multipart/form-data">
 
-            <div class=" w-full mx-auto text-center border-b-1 border-gray-400 pb-2 mb-2 mt-2 "></div>
 
 
             <!-- SELECCIÒN DEL TIPO DE INCAPACIDAD -->
@@ -149,7 +148,7 @@
                   <path d="M12 15v3" />
                 </svg>
               </div>
-              <input id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-sm font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-1.5 shadow-md" placeholder="DD/MM/AAAA" required />
+              <input id="fecha_inicio_incapacidad" type="date" name="input_fecha_inicio_incapacidad" class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-xs font-medium text-center rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-12 p-2 shadow-md" placeholder="DD/MM/AAAA" required />
             </div>
           </div>
 
@@ -300,6 +299,23 @@
           </div>
 
 
+          <!-- Seleccionar incapacidad anterior para prorroga -->
+          <div class="col-span-1 " id=" ">
+            <label for="select_fecha_incapacidad" class="block mb-1.5 text-sm font-medium text-start text-slate-900">
+              Seleccione la incapacidad
+            </label>
+            <div class="relative">
+
+              <select id="select_fecha_incapacidad" name="select_fecha_incapacidad"
+                class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-xs font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-3 p-1.5 shadow-md">
+                <option value="">Seleccione</option>
+                <!-- Opciones dinámicas aquí -->
+              </select>
+            </div>
+          </div>
+          
+
+
         </div>
       </div>
     </div>
@@ -441,6 +457,7 @@
   <!-- API FETCH PARA CONSULTAR SI HAY DUPLICIDAD CON LA INCAPACIDAD -->
   <script  src="/incapacidades/js/detalle_empleado/api_fetch_duplicidad_incapacidad.js"></script>
 
+  <script src="/incapacidades/js/detalle_empleado/api_select_disability_date.js"></script>
  
 
 

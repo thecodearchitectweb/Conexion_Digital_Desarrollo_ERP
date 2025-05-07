@@ -66,14 +66,21 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         const parametros = transformarParametrosPolitica(data);
 
 
+
         /* CONSTANTES PARA VALIDAR POLITICAS */
-        const tipo_incapacidad = parametros.tipo_incapacidad;
-        const cantidad_dias = parametros.dias_incapacidad; 
-        const cantidad_dias_conversion = parametros.dias_incapacidad_conversion;
         const prorroga_conversion = parametros.prorroga;
-        const salario_conversion = parametros.salario;
+        
         const dias_laborados_conversion = parametros.dias_laborados_conversion;
         const dias_laborados = parametros.dias_laborados
+
+        const salario_conversion = parametros.salario;
+
+        const tipo_incapacidad = parametros.tipo_incapacidad;
+
+        const cantidad_dias = parametros.dias_incapacidad; 
+        const cantidad_dias_conversion = parametros.dias_incapacidad_conversion;
+        
+
 
 
         /*  */
@@ -83,12 +90,13 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         console.log("prorroga_conversion", prorroga_conversion)
         console.log("salario_conversion", salario_conversion)
         console.log("dias_laborados", dias_laborados_conversion)
+        console.log("dias_laborados", dias_laborados)
 
 
 
         const politicaAplicada = await getPoliticaByParametros(
             prorroga_conversion,
-            dias_laborados,
+            dias_laborados_conversion,
             salario_conversion,
             tipo_incapacidad,
             cantidad_dias_conversion

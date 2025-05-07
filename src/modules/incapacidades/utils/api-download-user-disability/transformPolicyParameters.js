@@ -19,10 +19,14 @@ export function transformarParametrosPolitica(data) {
 
   return {
     prorroga: prorroga_conversion,
+
     dias_laborados_conversion: diasLaborados_conversion,
     dias_laborados: diasLaborados,
+    
     salario: salario_conversion,
+
     tipo_incapacidad,
+    
     dias_incapacidad_conversion: dias_incapacidad_conversion,
     dias_incapacidad: dias_incapacidad
   };

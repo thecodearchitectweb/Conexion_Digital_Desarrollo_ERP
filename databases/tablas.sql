@@ -88,6 +88,7 @@ CREATE TABLE `incapacidades_historial` (
 
 CREATE TABLE `incapacidades_liquidacion` (
     `id_incapacidades_liquidacion` int NOT NULL AUTO_INCREMENT,
+    `id_empleado` int DEFAULT NULL COMMENT 'id del empleado',
     `nombres` varchar(100) DEFAULT NULL,
     `apellidos` varchar(100) DEFAULT NULL,
     `documento` bigint DEFAULT NULL,
@@ -126,16 +127,16 @@ CREATE TABLE `incapacidades_liquidacion` (
     `fecha_contratacion` date DEFAULT NULL,
     `dias_laborados` int DEFAULT NULL,
     `estado_incapacidad` varchar(300) DEFAULT NULL,
+    `downloaded` tinyint(1) DEFAULT '0',
     `id_incapacidades_historial` int DEFAULT NULL,
     `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `fecha_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `downloaded` tinyint(1) DEFAULT '0' COMMENT 'downloaded',
     PRIMARY KEY (
         `id_incapacidades_liquidacion`
     ),
     KEY `fk_incapacidades_liquidacion_incapacidades_historial` (`id_incapacidades_historial`),
     CONSTRAINT `fk_incapacidades_liquidacion_incapacidades_historial` FOREIGN KEY (`id_incapacidades_historial`) REFERENCES `incapacidades_historial` (`id_incapacidades_historial`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = utf8mb4 COLLATE = 
+) ENGINE = InnoDB AUTO_INCREMENT = 42 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
