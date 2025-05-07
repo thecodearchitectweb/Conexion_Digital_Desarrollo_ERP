@@ -50,6 +50,7 @@ export const registroNuevaIncapacidad = async(req, res) => {
             input_toggle_prorroga,
             input_file_incapacidad,
             textarea_observaciones,
+            select_fecha_incapacidad
         } = datos;
 
 
@@ -72,12 +73,14 @@ export const registroNuevaIncapacidad = async(req, res) => {
     }
 
 
+        /* SI, id_incapacidad_extension, NO TIENE DATOS, SE ENVIA UN NULL */
+        const id_extension = select_fecha_incapacidad || null;
 
 
         /* INSERTAR DATOS EN LA TABLA HISTORIAL DE INCAPACIDADES */
         const [data_insert_incapacidad] = await pool.query(
 
-            'INSERT INTO incapacidades_historial  (tipo_incapacidad, subtipo_incapacidad, fecha_inicio_incapacidad, fecha_final_incapacidad, cantidad_dias, codigo_categoria, descripcion_categoria,  codigo_subcategoria, descripcion_subcategoria,  prorroga, id_empleado ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            'INSERT INTO incapacidades_historial  (tipo_incapacidad, subtipo_incapacidad, fecha_inicio_incapacidad, fecha_final_incapacidad, cantidad_dias, codigo_categoria, descripcion_categoria,  codigo_subcategoria, descripcion_subcategoria,  prorroga, id_empleado, id_incapacidad_extension ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [
                 select_tipo_incapacidad,
                 select_detalle_incapacidad_eps_arl, 
@@ -89,7 +92,8 @@ export const registroNuevaIncapacidad = async(req, res) => {
                 list_codigo_enfermedad_general,
                 input_descripcion_diagnostico,
                 prorroga,
-                id_empleado
+                id_empleado,
+                id_extension  
                 
             ]
         );

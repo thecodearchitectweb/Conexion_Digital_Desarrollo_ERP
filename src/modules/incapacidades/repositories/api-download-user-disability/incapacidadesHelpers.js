@@ -1,41 +1,64 @@
 import { pool } from "../../../../models/db.js";
 
-export async function getUltimasIncapacidades(id_empleado) {
+export async function getUltimasIncapacidades(id_incapacidad_extension) {
     try {
         const [validacionIncapacidadesUser] = await pool.query(
             `
             SELECT 
-                il.id_incapacidades_liquidacion,
-                il.id_incapacidades_historial,
-                il.documento,
-                il.fecha_registro_incapacidad,
-                il.tipo_incapacidad,
-                il.subtipo_incapacidad,
-                il.codigo_categoria,
-                il.descripcion_categoria,
-                il.codigo_subcategoria,
-                il.descripcion_subcategoria,
-                il.cantidad_dias,
-                il.prorroga,
-                il.fecha_inicio_incapacidad,
-                il.fecha_final_incapacidad
-            FROM incapacidades_liquidacion il
-            INNER JOIN incapacidades_historial ih 
-                ON il.id_incapacidades_historial = ih.id_incapacidades_historial
-            WHERE ih.id_empleado = ?
-              AND il.downloaded = 1
-            ORDER BY il.fecha_registro_incapacidad DESC
-            LIMIT 1
+                fecha_inicio_incapacidad,
+                fecha_final_incapacidad
+            FROM 
+                incapacidades_liquidacion il
+            WHERE id_incapacidades_historial = ?              
             `,
-            [id_empleado]
+            [id_incapacidad_extension]
         );
 
+        console.log("DATOS ENCONTRADOS EN FUNCION PARA TRAER DATOS DE INCAPACIDAD: ",validacionIncapacidadesUser )
+
         if (validacionIncapacidadesUser.length === 0) {
-            console.warn("No se encontraron incapacidades para el empleado: ", id_empleado);
+            console.warn("No se encontraron incapacidades para el empleado: ", validacionIncapacidadesUser);
             return null;
         }
 
         return validacionIncapacidadesUser[0];
+    } catch (error) {
+        console.error("Error al obtener incapacidades:", error);
+        throw error;
+    }
+}
+
+
+
+
+/* TRAER LA ULTIMA INCAPACIDAD REGISTRADA DEL EMPLEADO */
+export async function getUltimasIncapacidadesIdEmpleado(id_empleado) {
+    try {
+        const [rows] = await pool.query(
+            `
+            SELECT 
+              fecha_inicio_incapacidad,
+              fecha_final_incapacidad
+            FROM 
+              incapacidades_liquidacion il
+            WHERE 
+              id_empleado = ? AND downloaded = 1
+            ORDER BY 
+              fecha_inicio_incapacidad DESC
+            LIMIT 1
+            `,
+            [id_empleado]
+          );
+          
+
+        console.log("DATOS ENCONTRADOS EN FUNCION PARA TRAER DATOS DE INCAPACIDAD: ",rows )
+
+        if (rows.length === 0) {
+            console.warn("No se encontraron incapacidades para el empleado: ", rows);
+            return null;
+        }
+
+        return rows[0];
     } catch (error) {
         console.error("Error al obtener incapacidades:", error);
         throw error;

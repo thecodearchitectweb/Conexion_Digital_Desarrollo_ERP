@@ -2,10 +2,11 @@
 
 import { pool } from "../../../../models/db.js";
 
+
 export async function updateLiquidacoinTableIncapacity(data) {
     try {
         const updateValues = [
-            data.nombres, data.apellidos, data.documento, data.contacto, data.tipo_contrato,
+            data.id_empleado, data.nombres, data.apellidos, data.documento, data.contacto, data.tipo_contrato,
             data.cargo, data.lider, data.fecha_registro_incapacidad, data.tipo_incapacidad, data.subtipo_incapacidad,
             data.fecha_inicio_incapacidad, data.fecha_final_incapacidad, data.cantidad_dias,
             data.codigo_categoria, data.descripcion_categoria, data.codigo_subcategoria, data.descripcion_subcategoria,
@@ -16,7 +17,7 @@ export async function updateLiquidacoinTableIncapacity(data) {
 
         const result = await pool.query(
             `UPDATE incapacidades_liquidacion SET
-                nombres = ?, apellidos = ?, documento = ?, contacto = ?, tipo_contrato = ?,
+                id_empleado = ?, nombres = ?, apellidos = ?, documento = ?, contacto = ?, tipo_contrato = ?,
                 cargo = ?, lider = ?, fecha_registro_incapacidad = ?, tipo_incapacidad = ?, subtipo_incapacidad = ?,
                 fecha_inicio_incapacidad = ?, fecha_final_incapacidad = ?, cantidad_dias = ?,
                 codigo_categoria = ?, descripcion_categoria = ?, codigo_subcategoria = ?, descripcion_subcategoria = ?,

@@ -26,7 +26,9 @@ export async function getDisabilityDischargeHistory(id_empleado, id_historial) {
                 ih.descripcion_categoria, 
                 ih.codigo_subcategoria, 
                 ih.descripcion_subcategoria,
-                ih.prorroga, 
+                ih.id_empleado,
+                ih.prorroga,
+                ih.id_incapacidad_extension, 
                 ih.id_incapacidades_historial,
                 iseg.estado_incapacidad, 
                 iseg.observaciones

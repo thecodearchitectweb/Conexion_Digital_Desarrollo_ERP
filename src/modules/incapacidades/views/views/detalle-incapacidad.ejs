@@ -307,16 +307,68 @@
             <div class="relative">
 
               <select id="select_fecha_incapacidad" name="select_fecha_incapacidad"
-                class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-xs font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-3 p-1.5 shadow-md">
+                class="bg-gray-50 border border-gray-300 border-b-lime-600 text-slate-800 text-xs font-medium rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full ps-3 p-2 shadow-md">
                 <option value="">Seleccione</option>
                 <!-- Opciones dinámicas aquí -->
               </select>
             </div>
           </div>
+    
+
+        </div>
+
+
+        <div id="container_data_incapacidad_prorroga" class="container mx-auto px-4 sm:px-6 lg:px-8 my-4 bg-white p-4 mt-10 w-full  border rounded-xl border-lime-600 hidden" >
           
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start mt-4">
+
+            <label  for="api_extension_incapacidad" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TIPO DE INCAPACIDAD:
+              <small id="api_extension_incapacidad" class="text-xs  font-semibold text-slate-500 ml-2">  </small>
+            </label>
+
+            <label  for="api_extension_enfermedad_general" class="block mb-1.5 text-xs font-bold  font-serif text-slate-950">ENFERMEDAD GENERAL:
+              <small id="api_extension_enfermedad_general" class="text-xs  font-semibold text-slate-500 ml-2"></small>
+            </label>
+
+            <label   for="api_extension_inicio" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
+              <small id="api_extension_inicio" class="text-xs  font-semibold text-slate-500 ml-2"> </small>
+            </label>
+
+            <label  for="api_extension_final" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FINAL INCAPACIDAD:
+              <small id="api_extension_final" class="text-xs  font-semibold text-slate-500 ml-2"> </small>
+            </label>
+
+            <label  for="api_extension_dias" class="block mb-1.5 text-xs font-bold font-serif  text-slate-950">DIAS INCAPACIDAD:
+              <small id="api_extension_dias" class="text-xs  font-semibold text-slate-500 ml-2">  </small>
+            </label>
+
+            <label  for="api_extension_categoria" class="block mb-1.5 text-xs font-bold font-serif  text-slate-950">CATEGORIA:
+              <small id="api_extension_categoria" class="text-xs  font-semibold text-slate-500 ml-2"> </small>
+            </label>
+
+            <label  for="api_extension_descripcion_categoria" class="block mb-1.5 text-xs font-bold font-serif  text-slate-950">DESCRIPCION:
+              <small id="api_extension_descripcion_categoria" class="text-xs  font-semibold text-slate-500 ml-2">  </small>
+            </label>
+
+            <label  for="api_extension_sub_categoria" class="block mb-1.5 text-xs font-bold font-serif  text-slate-950">SUB-CATEGORIA:
+              <small id="api_extension_sub_categoria" class="text-xs  font-semibold text-slate-500 ml-2"> </small>
+            </label>
+
+            <label  for="api_extension_descripcion_sub_categoria" class="block mb-1.5 text-xs font-bold font-serif  text-slate-950">DESCRIPCION:
+              <small id="api_extension_descripcion_sub_categoria" class="text-xs  font-semibold text-slate-500 ml-2">  </small>
+            </label>
+
+            <label for="api_extension_prorroga" class="block mb-1.5 text-xs font-bold font-serif  text-slate-950">PRORROGA:
+              <small id="api_extension_prorroga"  class="text-xs  font-semibold text-slate-500 ml-2">  </small>
+            </label>
+
+
+          </div>
 
 
         </div>
+
+
       </div>
     </div>
 
@@ -457,7 +509,12 @@
   <!-- API FETCH PARA CONSULTAR SI HAY DUPLICIDAD CON LA INCAPACIDAD -->
   <script  src="/incapacidades/js/detalle_empleado/api_fetch_duplicidad_incapacidad.js"></script>
 
+  <!-- api fetch consulta y trae las ultimas 5 fechas de las incapacidades anteriores ya liquidadas -->
   <script src="/incapacidades/js/detalle_empleado/api_select_disability_date.js"></script>
+
+
+  <!-- API FETCH QUE TRAE LA CONSULTA DE LA INCAPACIDAD SELECCIONADA -->
+  <script src="/incapacidades/js/detalle_empleado/api_select_disability_extension.js"></script>
  
 
 

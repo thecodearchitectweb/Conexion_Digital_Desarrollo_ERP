@@ -3,7 +3,7 @@ import { pool } from "../../../models/db.js";
 import express from 'express';
 import { format, differenceInDays } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { getUltimasIncapacidades } from '../repositories/api-download-user-disability/incapacidadesHelpers.js';
+import { getUltimasIncapacidades, getUltimasIncapacidadesIdEmpleado } from '../repositories/api-download-user-disability/incapacidadesHelpers.js';
 import { getIdEmpleadoByHistorial } from '../repositories/api-download-user-disability/getIdEmpleadoByHistorial.js';
 import { getDisabilityDischargeHistory } from '../repositories/api-download-user-disability/getDisabilityDischargeHistory.js';
 import { updateLiquidacoinTableIncapacity, updateDownloadStatus } from '../repositories/api-download-user-disability/updateLiquidacoinTableIncapacity.js';
@@ -31,6 +31,7 @@ export const api_download_user_disability = async (req, res) => {
 };
 
 
+
 // FUNCION INDEPENDIENTE
 const processDownloadUserDisability = async (id_liquidacion, id_historial, res) => {
     try {
@@ -41,19 +42,21 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         }
 
 
-        /* TRAER LA ULTIMA INCAPACIDAD DE TABLA HISTORIAL */
+        /* TRAER LA ULTIMA INCAPACIDAD DE TABLA HISTORIAL  PARA ACTUALIZAR TABLA LIQUIDACION*/
         const disabilityDischargeHistory = await getDisabilityDischargeHistory(id_empleado, id_historial);
         if (!disabilityDischargeHistory) {
             return res.status(404).json({ message: "No se encontró la incapacidad con los datos proporcionados." });
         }
 
 
-        /* DATA - PARA DATOS DE LA TABLA HISTORIAL */
+        /* DATA - GUARDA LOS DATOS DE LA TABLA HISTORIAL PARA ACTUALIZAR DATOS EN LA TABLA LIQUIDACION */
         const data = disabilityDischargeHistory;
-        console.log("🧾 Datos encontrados:", data);
+        console.log("🧾 Datos encontrados TABLA HISTORIAL:", data);
 
 
-        /* ACTUALIZAR LOS DATOS EN LA TABLA LIQUIDACION */
+        
+
+        /* ACTUALIZAR LOS DATOS EN LA TABLA LIQUIDACION CON DATA (ENCAPSULAMIENTO) */
         const updateResult = await updateLiquidacoinTableIncapacity(data);
         if (updateResult.affectedRows > 0) {
             return res.status(200).json({ message: "Información actualizada correctamente." });
@@ -61,13 +64,12 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
 
-
-        /* FILTRO PARA CARGAR INCAPACIDAD */
+        /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD*/
         const parametros = transformarParametrosPolitica(data);
 
 
 
-        /* CONSTANTES PARA VALIDAR POLITICAS */
+        /* CONSTANTES PARA VALIDAR POLITICAS  EN LOS DIFERENTES CASOS*/
         const prorroga_conversion = parametros.prorroga;
         
         const dias_laborados_conversion = parametros.dias_laborados_conversion;
@@ -82,18 +84,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         
 
 
-
-        /*  */
-        console.log("tipo_incapacidad", tipo_incapacidad)
-        console.log("cantidad_dias", cantidad_dias)
-        console.log("cantidad_dias_conversion", cantidad_dias_conversion)
-        console.log("prorroga_conversion", prorroga_conversion)
-        console.log("salario_conversion", salario_conversion)
-        console.log("dias_laborados", dias_laborados_conversion)
-        console.log("dias_laborados", dias_laborados)
-
-
-
+        /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
         const politicaAplicada = await getPoliticaByParametros(
             prorroga_conversion,
             dias_laborados_conversion,
@@ -103,13 +94,13 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         );
 
         
-
-
+        /* VALIDACION DE LA POLITICA */
         if (!politicaAplicada) {
             return res.status(404).json({ message: "No se encontró ninguna política para liquidar la incapacidad." });
         }
 
         console.log("📜 Política encontrada:", politicaAplicada);
+
 
         const Liq_cumplimiento = politicaAplicada.cumplimiento;
         const liq_prorroga = parametros.prorroga.toUpperCase();
@@ -153,19 +144,34 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                 
                 
                         /* SE LLAMA FUNCION PARA TRAER LAS ULTIMAS INCAPACIDADES DEL USER */
-                        const data_incapacidades_liquidadas = await getUltimasIncapacidades(id_empleado);
-                
+                        const data_incapacidades_liquidadas = await getUltimasIncapacidades(data.id_incapacidad_extension);
+                        console.log("PRUEBA INCAPACIDAD SELECICONADA POR EL AUXILIAR: ", data_incapacidades_liquidadas)
+
+
+                        /* VALIDACION, SI NO HAY FECHAS CORRESPONDIENTES PARA ACALUCLAR LA PRORROGA, CORTA EL FLUJO Y ACTUALIZA TABLA PRORROGA EN 0 */
+                        if(data_incapacidades_liquidadas.length  === 0){
+
+                             /* ACTUALIZA PRORROG A 0, Y LLAMA DE NUEVO LA FUNCION PARA EJECUTAR NUEVAMENTE EL ALGORITMO */
+                                const updateDisabilityExtensionliq = await updateDisabilitySettlementExtensionLiq(id_historial);   //Actualiza prorroga de tabla liquidacion a 0
+                                const updateDisabilityExtensionHis = await updateDisabilitySettlementExtensionHis(id_historial);   // Actualiza prorroga de tabla Historial a 0
+                    
+                    
+                                // 🔵 IMPORTANTE: Volver a iniciar la función después de actualizar
+                                console.log("Reiniciando proceso luego de actualizar prórroga y descarga...");
+                    
+                                
+                                // ⚡ Llamada recursiva para reiniciar el proceso
+                                return await processDownloadUserDisability(id_liquidacion, id_historial, res);
+                        }
+
                         
+
                         /* FECHA DE LA INCAPACIDAD ANTERIOR Y LA QUE ESTA LISTA PARA LIQUIDAR */
                         const fecha_inicio_incapacidad_anterior = formatDate2(data_incapacidades_liquidadas.fecha_inicio_incapacidad);
                         const fecha_final_incapacidad_anterior = formatDate2(data_incapacidades_liquidadas.fecha_final_incapacidad);
                         const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad);
                         const fecha_final_incapacidad_liquidar = formatDate2(data.fecha_final_incapacidad);
                 
-                        
-                        /* CODIGO DE CATEGORIA INCAPACIDAD ANTERIOR - INCAPACIDAD A LIQUIDAR */
-                        const codigo_categoria_liquidar = data_incapacidades_liquidadas.codigo_categoria;
-                        const codigo_categoria_anterior = data.codigo_categoria;
                 
                 
                         /* FUNCION PARA VALIDAR SI APLICA LA PRORROGA - VALIDACION DE FECHAS */
@@ -176,13 +182,9 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             fecha_final_incapacidad_liquidar
                         );
                 
-                
-                        // 🔸 Validar si el código de categoría coincide también
-                        const mismaCategoria = codigo_categoria_liquidar === codigo_categoria_anterior;
-                
-                
+
                             // LOGICA PARA ACTUALIZAR TABLAS Y EJECUTAR LOS CALCULOS SI SE CUMPLEN
-                            if (prorrogaValida && mismaCategoria) {
+                            if (prorrogaValida) {
                     
                                 
                                 /* DIAS A LIQUIDAR EMPLEADOR, ARL, FONDO DE PENSIONES, EPS - FONDO DE PENSIONES */
@@ -266,20 +268,20 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                                 /* ACTUALIZA PRORROG A 0, Y LLAMA DE NUEVO LA FUNCION PARA EJECUTAR NUEVAMENTE EL ALGORITMO */
                                 const updateDisabilityExtensionliq = await updateDisabilitySettlementExtensionLiq(id_historial);   //Actualiza prorroga de tabla liquidacion a 0
                                 const updateDisabilityExtensionHis = await updateDisabilitySettlementExtensionHis(id_historial);   // Actualiza prorroga de tabla Historial a 0
-                    
-                    
+                                        
                                 // 🔵 IMPORTANTE: Volver a iniciar la función después de actualizar
-                                console.log("Reiniciando proceso luego de actualizar prórroga y descarga...");
-                    
+                                console.log("Reiniciando proceso luego de actualizar prórroga y descarga...");                    
                                 
                                 // ⚡ Llamada recursiva para reiniciar el proceso
                                 return await processDownloadUserDisability(id_liquidacion, id_historial, res);
                             }
                     } 
                     
+
+                    /* LIQUIDACION SIN PRORROGA, Y MENOR A 3 DIAS */
                     if (liq_prorroga === 'NO') {
 
-                        /* validar N de dias de la incapacidad, si es menor a 3, unicamente paga el empleador */
+                        /* VALIDACION SIN PRORROGA, INCAPACIDAD MENOR A 3 DÍAS */
                         if (cantidad_dias  < 3) {
 
                             /* se calcula el numero de días que el empleador debe liquidar al empleado */
@@ -311,7 +313,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                                     liq_valor_arl,
                                     liq_valor_fondo_pensiones,
                                     liq_valor_eps_fondo_pensiones,
-                                    diasLaborados,
+                                    dias_laborados,
                                     id_liquidacion
                                 );
 
@@ -322,13 +324,19 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             console.log("PORCENTAJE A LIQUIDAR EMPLEADOR: ", Liq_porcentaje_liquidacion_empleador)
                             console.log("VALOR TOTAL A LIQUIDAR EMPLEADOR: ", liq_valor_empleador)
                             console.log("INCAPACIDAD ACTUALIZADA: ", updateSettlementTableLiqEmpleador)
+
+                            const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
+                            console.log("ACTUALIZADO, SIN PRORROGA");
+                            return res.json({ message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte del empleador: ${liq_dias_empleador}.` });
+
                         }
 
 
+                        /* VALIDACION SIN PRORROGA, INCAPACIDAD MAYOR A 3 DÍAS */
                         if (cantidad_dias > 2){
 
 
-                            /* se calcula el numero de días que el empleador debe liquidar al empleado */
+                            /* EMPLEAODR LIQUIDA 2 DÍA  OBLIGATORIAMENTE */
                             liq_dias_empleador = 2
                             console.log("liq_dias_empleador", liq_dias_empleador)
 
@@ -344,11 +352,11 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                             /* SE LLAMA FUNCION PARA TRAER LAS ULTIMAS INCAPACIDADES DEL USER */
-                            const data_incapacidades_liquidadas = await getUltimasIncapacidades(id_empleado);
+                            const data_incapacidades_liquidadas = await getUltimasIncapacidadesIdEmpleado(id_empleado);
                             console.log("data_incapacidades_liquidadas", data_incapacidades_liquidadas)
 
 
-
+                            /* SE GUARDAN LAS FECHAS EN CONSTANTES PARA LUEGO REALIZAR VALIDACIONES */
                             const fecha_inicio_incapacidad_anterior = data_incapacidades_liquidadas?.fecha_inicio_incapacidad
                             const fecha_final_incapacidad_anterior =  data_incapacidades_liquidadas?.fecha_final_incapacidad 
                             const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad);
@@ -405,6 +413,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             const upd_id_liquidacion = id_liquidacion
 
 
+                            console.log("")
                             console.log("upd_liq_dias_empleador", upd_liq_dias_empleador)
                             console.log("upd_liq_dias_eps", upd_liq_dias_eps)
                             console.log("upd_liq_dias_arl", upd_liq_dias_arl)
@@ -422,6 +431,8 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             console.log("upd_liq_valor_eps_fondo_pensiones", upd_liq_valor_eps_fondo_pensiones)
                             console.log("upd_dias_Laborados", upd_dias_Laborados)
                             console.log("upd_id_liquidacion", upd_id_liquidacion)
+                            console.log("")
+
 
 
 
@@ -449,15 +460,16 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                             console.log("DATOS ACTUALIZADOS, INCAPACIDAD LIQUIDADA: ", updateSettlementTableLiq);
 
+                            const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
+                            console.log("ACTUALIZADO, SIN PRORROGA");
+                            return res.json({ message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte del empleador: ${liq_dias_empleador}. Días a liquidar por parte de EPS: ${liq_dias_eps}` });
 
                             
                         }
-
-
-                        const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
-                        console.log("ACTUALIZADO, SIN PRORROGA");
-                        return res.json({ message: "ACTUALIZADO, SIN PRORROGA" });
+                        
                     }
+
+
               }
               break;
           

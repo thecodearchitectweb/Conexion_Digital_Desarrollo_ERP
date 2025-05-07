@@ -2045,6 +2045,9 @@
 .text-red-800 {
   color: var(--color-red-800);
 }
+.text-slate-500 {
+  color: var(--color-slate-500);
+}
 .text-slate-600 {
   color: var(--color-slate-600);
 }
@@ -3255,6 +3258,7 @@
     --color-slate-100: oklch(0.968 0.007 247.896);
     --color-slate-200: oklch(0.929 0.013 255.508);
     --color-slate-300: oklch(0.869 0.022 252.894);
+    --color-slate-500: oklch(0.554 0.046 257.417);
     --color-slate-600: oklch(0.446 0.043 257.281);
     --color-slate-700: oklch(0.372 0.044 257.287);
     --color-slate-800: oklch(0.279 0.041 260.031);
