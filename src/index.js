@@ -36,7 +36,9 @@ app.use("/incapacidades",  express.static(join(__dirname, "modules", "incapacida
 
 
 // Archivos estáticos de la carpeta "upload"
-app.use('/upload', express.static(path.join(process.cwd(), 'upload')));
+//app.use('/upload', express.static(path.join(process.cwd(), 'upload')));
+
+app.use('/upload', express.static(path.join(process.env.UPLOAD_PATH)));
 console.log("Ruta pública para archivos de upload:", path.join(process.cwd(), 'upload'));
 
 

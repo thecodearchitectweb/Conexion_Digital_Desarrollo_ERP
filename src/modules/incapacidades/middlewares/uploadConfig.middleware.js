@@ -4,10 +4,14 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { getEmpleadoById } from '../repositories/empleados.service.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 
 /* RUTA DONDE SE GARDARAN LAS CARPETAS Y SUBCARPETAS CON SUS ARCHIVOS CORRESPONDIENTES */
-const baseDir = path.join(process.cwd(), 'upload', 'empleados');
+//const baseDir = path.join(process.cwd(), 'upload', 'empleados');
+const baseDir = path.join(process.env.UPLOAD_PATH, 'empleados');
 
 
 

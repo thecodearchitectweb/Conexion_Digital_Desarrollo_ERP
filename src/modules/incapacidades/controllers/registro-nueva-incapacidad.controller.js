@@ -3,6 +3,12 @@ import { pool } from "../../../models/db.js";
 import path from 'path';
 import {SessionManager } from "../utils/sessionManager.js"
 
+// controllers/editIncapacidad.js
+import { getRutaRelativa } from '../utils/rutaRelativa.js';
+
+
+
+
 
 
 import express from 'express';
@@ -137,6 +143,8 @@ export const registroNuevaIncapacidad = async(req, res) => {
 
 
 
+
+
                 
         // Verificar si hay archivos en la solicitud
         if (req.files) {
@@ -145,12 +153,11 @@ export const registroNuevaIncapacidad = async(req, res) => {
             
             for (const campo in req.files) {
                 for (const file of req.files[campo]) {
-                    // Obtener la ruta relativa del archivo
-                    const rutaRelativa = path.join(
-                        file.destination.replace(path.join(process.cwd(), 'upload'), ''),
-                        file.filename
-                    );
+                   
 
+                    /* FUNCION EN UTILS, PERMITE TRAER LA RUTA RELATIVA */
+                    const rutaRelativa = getRutaRelativa(file);
+                   
                     // Insertar en la base de datos
                     const [data_insert_ruta] = await pool.query(
                         'INSERT INTO ruta_documentos (nombre, ruta, id_incapacidades_historial) VALUES (?, ?, ?)',
