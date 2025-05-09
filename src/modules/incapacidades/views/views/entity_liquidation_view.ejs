@@ -73,43 +73,42 @@
 
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
+              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
+              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %> </small>
+              <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %> </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRÓRROGA:
-              <small class="text-sm italic font-serif font-normal text-slate-600 ml-2">
+              <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %>
               </small>
             </label>
             
-
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_empleador || "Sin detalles"  %>  </small>
+              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_empleador || "Sin detalles"  %>  </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_empleador || "Sin detalles"  %>  </small>
+              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_empleador || "Sin detalles"  %>  </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_empleador) %>
+              <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_empleador) %>
               </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2">  <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
+              <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-sm italic font-serif font-normal text-slate-600 ml-2">
+              <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %>
               </small>
             </label>
@@ -514,51 +513,41 @@
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">OBSERVACIONES: </label>
             
             
-            <div class="mt-8 ">
+            <div class="mt-8">
               <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-xs text-left rtl:text-right text-gray-500 ">
-                    <thead class="text-xs text-gray-100  bg-slate-800  py-0 ">
-                      <tr>
-                        <th scope="col" class="px-6 py-2 w-1/8 border border-white">REGISTRO</th>
-                        <th scope="col" class="px-6 py-2 w-1/8 border border-white">ESTADO</th>
-                        <th scope="col" class="px-6 py-2 w-4/6 border border-white">DESCRIPCIÓN</th>
-                      </tr>
-                      
-                    </thead>
-                    <tbody>
-                        <tr class="odd:bg-slate-100  even:bg-gray-200  hover:bg-slate-300 border border-white">
-
-                            <td class="px-4 py-1 text-xs font-medium text-slate-700 ml-2 ">
-                                Silver
-                            </td>
-                            <td class="px-4 py-0 text-xs font-medium text-slate-700 ml-2">
-                                Silver
-                            </td>
-                            <td class="px-4 py-0 text-xs font-medium text-slate-700 ml-2">
-                                Silver
-                            </td>
-
-                            
-                        </tr>
-                        <tr class="odd:bg-slate-100  even:bg-gray-200  border-b  border-gray-200 hover:bg-slate-300">
-
-                            <td class="px-4 py-1 text-xs font-medium text-slate-700 ml-2">
-                                Silver
-                            </td>
-                            <td class="px-4 py-0 text-xs font-medium text-slate-700 ml-2">
-                                Silver
-                            </td>
-                            <td class="px-4 py-0 text-xs font-medium text-slate-700 ml-2">
-                                Silver
-                            </td>
-
-                            
-                        </tr>
-              
-                    </tbody>
+                <table class="w-full text-xs text-left rtl:text-right text-gray-500">
+                  <thead class="text-xs text-gray-100 bg-slate-800 py-0">
+                    <tr>
+                      <th scope="col" class="px-6 py-2 w-1/8 border border-white">REGISTRO</th>
+                      <th scope="col" class="px-6 py-2 w-1/8 border border-white">ESTADO</th>
+                      <th scope="col" class="px-6 py-2 w-4/6 border border-white">DESCRIPCIÓN</th>
+                    </tr>
+                  </thead>
                 </table>
+            
+                <!-- Scroll vertical aquí -->
+                <div class="max-h-60 overflow-y-auto">
+                  <table class="w-full text-xs text-left text-gray-500">
+                    <tbody>
+                      <% Seguimiento.forEach(observacion => { %>
+                        <tr class="odd:bg-slate-100 even:bg-gray-200 hover:bg-slate-300 border border-white">
+                          <td class="px-4 py-2 text-xs font-medium text-slate-700 ml-2 w-1/8">
+                            <%= observacion.fecha_registro %>
+                          </td>
+                          <td class="px-4 py-2 text-xs font-medium text-slate-700 ml-2 w-1/8">
+                            <%= observacion.estado %>
+                          </td>
+                          <td class="px-4 py-2 text-xs font-medium text-slate-700 ml-2 w-4/6">
+                            <%= observacion.observaciones %>
+                          </td>
+                        </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
+            
             
 
 

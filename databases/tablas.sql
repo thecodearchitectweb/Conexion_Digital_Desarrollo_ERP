@@ -221,3 +221,18 @@ CREATE TABLE `sessions` (
     `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     PRIMARY KEY (`session_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+
+CREATE TABLE seguimiento_incapacidad_liquidada (
+    id_seguimiento_incapacidad_liquidada INT NOT NULL AUTO_INCREMENT,
+    estado VARCHAR(100) DEFAULT NULL,
+    observaciones VARCHAR(600) DEFAULT NULL,
+    id_incapacidades_liquidacion INT NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_seguimiento_incapacidad_liquidada),
+    CONSTRAINT fk_seguimiento_liquidacion
+        FOREIGN KEY (id_incapacidades_liquidacion)
+        REFERENCES incapacidades_liquidacion(id_incapacidades_liquidacion)
+        ON DELETE CASCADE
+);
