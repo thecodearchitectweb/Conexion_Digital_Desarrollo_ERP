@@ -16,6 +16,9 @@ export const getEntityLiquidationView = async(req, res) => {
 
     try {
 
+
+        
+
         return res.render('entity_liquidation_view')
         
     } catch (error) {

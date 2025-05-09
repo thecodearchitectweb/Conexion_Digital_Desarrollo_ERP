@@ -233,7 +233,7 @@ export const incapacidadRecibida = async(req, res) =>{
 
         /* RENDERIZAR VISTA CON LOS DATOS */
         res.render('ventana_confirmacion_incapacidad_recibida', {
-            datos_empleado: datos_empleado,   // Antes pasabas "empleado" (que no existe), ahora pasas la variable correcta
+            datos_empleado: datos_empleado,   //DATOS DE EMPLEADO
             datos_incapacidad: datos_incapacidad,   
             datos_rutas_files,
             datos_observaciones_seguimiento
