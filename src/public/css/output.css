@@ -503,8 +503,17 @@
 .w-1\/2 {
   width: calc(1/2 * 100%);
 }
+.w-1\/4 {
+  width: calc(1/4 * 100%);
+}
 .w-1\/5 {
   width: calc(1/5 * 100%);
+}
+.w-1\/6 {
+  width: calc(1/6 * 100%);
+}
+.w-1\/8 {
+  width: calc(1/8 * 100%);
 }
 .w-2 {
   width: calc(var(--spacing) * 2);
@@ -523,6 +532,9 @@
 }
 .w-4\/5 {
   width: calc(4/5 * 100%);
+}
+.w-4\/6 {
+  width: calc(4/6 * 100%);
 }
 .w-5 {
   width: calc(var(--spacing) * 5);
@@ -1405,6 +1417,9 @@
 .border-lime-50 {
   border-color: var(--color-lime-50);
 }
+.border-lime-100 {
+  border-color: var(--color-lime-100);
+}
 .border-lime-500 {
   border-color: var(--color-lime-500);
 }
@@ -1413,6 +1428,9 @@
 }
 .border-red-400 {
   border-color: var(--color-red-400);
+}
+.border-red-500 {
+  border-color: var(--color-red-500);
 }
 .border-red-600 {
   border-color: var(--color-red-600);
@@ -1494,6 +1512,9 @@
 }
 .bg-slate-200 {
   background-color: var(--color-slate-200);
+}
+.bg-slate-500 {
+  background-color: var(--color-slate-500);
 }
 .bg-slate-700 {
   background-color: var(--color-slate-700);
@@ -1760,6 +1781,9 @@
 .py-3 {
   padding-block: calc(var(--spacing) * 3);
 }
+.py-4 {
+  padding-block: calc(var(--spacing) * 4);
+}
 .py-10 {
   padding-block: calc(var(--spacing) * 10);
 }
@@ -1840,6 +1864,9 @@
 }
 .font-\[Markazi\] {
   font-family: Markazi;
+}
+.font-sans {
+  font-family: var(--font-sans);
 }
 .font-serif {
   font-family: var(--font-serif);
@@ -2651,10 +2678,54 @@
     }
   }
 }
+.odd\:bg-slate-100 {
+  &:nth-child(odd) {
+    background-color: var(--color-slate-100);
+  }
+}
+.odd\:bg-white {
+  &:nth-child(odd) {
+    background-color: var(--color-white);
+  }
+}
+.even\:bg-gray-50 {
+  &:nth-child(even) {
+    background-color: var(--color-gray-50);
+  }
+}
+.even\:bg-gray-100 {
+  &:nth-child(even) {
+    background-color: var(--color-gray-100);
+  }
+}
+.even\:bg-gray-200 {
+  &:nth-child(even) {
+    background-color: var(--color-gray-200);
+  }
+}
+.even\:bg-gray-500 {
+  &:nth-child(even) {
+    background-color: var(--color-gray-500);
+  }
+}
 .hover\:border-gray-300 {
   &:hover {
     @media (hover: hover) {
       border-color: var(--color-gray-300);
+    }
+  }
+}
+.hover\:bg-amber-300 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-amber-300);
+    }
+  }
+}
+.hover\:bg-amber-500 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-amber-500);
     }
   }
 }
@@ -2728,6 +2799,13 @@
     }
   }
 }
+.hover\:bg-slate-500 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-slate-500);
+    }
+  }
+}
 .hover\:bg-slate-800 {
   &:hover {
     @media (hover: hover) {
@@ -2782,6 +2860,13 @@
   &:hover {
     @media (hover: hover) {
       color: var(--color-lime-600);
+    }
+  }
+}
+.hover\:underline {
+  &:hover {
+    @media (hover: hover) {
+      text-decoration-line: underline;
     }
   }
 }
@@ -3134,6 +3219,20 @@
     color: var(--color-white);
   }
 }
+.odd\:dark\:bg-gray-900 {
+  &:nth-child(odd) {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-gray-900);
+    }
+  }
+}
+.even\:dark\:bg-gray-800 {
+  &:nth-child(even) {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-gray-800);
+    }
+  }
+}
 .dark\:hover\:bg-blue-700 {
   @media (prefers-color-scheme: dark) {
     &:hover {
@@ -3224,9 +3323,12 @@
     --color-red-700: oklch(0.505 0.213 27.518);
     --color-red-800: oklch(0.444 0.177 26.899);
     --color-amber-200: oklch(0.924 0.12 95.746);
+    --color-amber-300: oklch(0.879 0.169 91.605);
+    --color-amber-500: oklch(0.769 0.188 70.08);
     --color-amber-600: oklch(0.666 0.179 58.318);
     --color-amber-700: oklch(0.555 0.163 48.998);
     --color-lime-50: oklch(0.986 0.031 120.757);
+    --color-lime-100: oklch(0.967 0.067 122.328);
     --color-lime-300: oklch(0.897 0.196 126.665);
     --color-lime-500: oklch(0.768 0.233 130.85);
     --color-lime-600: oklch(0.648 0.2 131.684);
@@ -3243,6 +3345,7 @@
     --color-blue-800: oklch(0.424 0.199 265.638);
     --color-purple-100: oklch(0.946 0.033 307.174);
     --color-purple-800: oklch(0.438 0.218 303.724);
+    --color-slate-100: oklch(0.968 0.007 247.896);
     --color-slate-200: oklch(0.929 0.013 255.508);
     --color-slate-300: oklch(0.869 0.022 252.894);
     --color-slate-500: oklch(0.554 0.046 257.417);

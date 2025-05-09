@@ -43,6 +43,9 @@ document.addEventListener("DOMContentLoaded", function () {
             icon: "success",
             title: "Liquidación completada",
             text: result.message || "La incapacidad fue liquidada correctamente."
+          }).then(() => {
+            // Redireccionar a la nueva vista al confirmar el mensaje
+            window.location.href = `/incapacidad/vista/liquidacion/entidades/${idLiquidacion}`;
           });
         } else {
           Swal.fire({
