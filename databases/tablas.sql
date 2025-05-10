@@ -223,6 +223,7 @@ CREATE TABLE `sessions` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
+
 CREATE TABLE seguimiento_incapacidad_liquidada (
     id_seguimiento_incapacidad_liquidada INT NOT NULL AUTO_INCREMENT,
     estado VARCHAR(100) DEFAULT NULL,
@@ -236,3 +237,23 @@ CREATE TABLE seguimiento_incapacidad_liquidada (
         REFERENCES incapacidades_liquidacion(id_incapacidades_liquidacion)
         ON DELETE CASCADE
 );
+
+
+
+CREATE TABLE `files_upload` (
+    `id_ruta_documentos` int NOT NULL AUTO_INCREMENT,
+    `nombre` varchar(100) DEFAULT NULL,
+    `ruta` varchar(600) DEFAULT NULL,
+    `id_incapacidades_liquidacion` int DEFAULT NULL,
+    `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    `fecha_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_ruta_documentos`),
+    KEY `fk_files_upload` (
+        `id_incapacidades_liquidacion`
+    ),
+    CONSTRAINT `fk_files_upload` FOREIGN KEY (
+        `id_incapacidades_liquidacion`
+    ) REFERENCES `incapacidades_liquidacion` (
+        `id_incapacidades_liquidacion`
+    ) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci

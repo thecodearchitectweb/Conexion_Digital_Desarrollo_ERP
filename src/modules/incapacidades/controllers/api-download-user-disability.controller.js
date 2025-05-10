@@ -16,6 +16,7 @@ import { entityLiquidation, entityLiquidationEmpleador } from '../utils/api-down
 import { updateSettlementTable, updateSettlementTableEmpleador } from '../repositories/api-download-user-disability/updateSettlementTable.js'
 import { calcularDiasLiquidar } from '../utils/api-download-user-disability/calcularDiasLiquidarSinProrroga.js'
 import { transformarParametrosPolitica } from '../utils/api-download-user-disability/transformPolicyParameters.js'
+import { uploadFilesroutes } from '../repositories/api-download-user-disability/uploadFilesroutes.js'
 
 const app = express();
 
@@ -54,6 +55,8 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         console.log("🧾 Datos encontrados TABLA HISTORIAL:", data);
 
 
+        /* SE CARGAN LAS RUTAS DONDE SE ALOJAN LOS FILES EN UPLOAD, SE TOMAN DE LA TABLA ruta_documentos */
+        const uploadFiles = await uploadFilesroutes(id_historial, id_liquidacion)
         
 
         /* ACTUALIZAR LOS DATOS EN LA TABLA LIQUIDACION CON DATA (ENCAPSULAMIENTO) */

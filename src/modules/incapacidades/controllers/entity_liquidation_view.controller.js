@@ -7,6 +7,7 @@ import { getEmployeeData } from "../repositories/entity-liquidation-view/get_emp
 import { getDataLiquidation } from "../repositories/entity-liquidation-view/get_liquidation_data.js"
 import { updateMensajeSeguimiento } from "../repositories/entity-liquidation-view/updateMensajeSeguimiento.js"
 import { getTablaObservaciones } from "../repositories/entity-liquidation-view/get_tabla_observaciones.js"
+import { getTablaFiles } from '../repositories/entity-liquidation-view/get_tabla_files.js'
 
 
 
@@ -47,6 +48,11 @@ export const getEntityLiquidationView = async(req, res) => {
         console.log("Estas son todas las observaciones realizadas a esta incapacidad: ", tablaObservaciones)
 
         
+        /* TRAEMOS TODOS LOS DOCUMENTOS A LA VISTA */
+        const tablaFiles = await getTablaFiles(id_liquidacion)
+        console.log("ESTOS SON LOS FILES: ", tablaFiles)
+
+
         /* FORMATEAMOS FECHAS */
         dataEmployee.fecha_contratacion = formatDate2(dataEmployee.fecha_contratacion);
         incapacidadLiquidada.fecha_inicio_incapacidad = formatDate2(incapacidadLiquidada.fecha_inicio_incapacidad)
@@ -57,6 +63,15 @@ export const getEntityLiquidationView = async(req, res) => {
         tablaObservaciones.forEach(obs => {
             obs.fecha_registro = formatDateTime(obs.fecha_registro);
         });
+
+        /* ARRAY PARA FORMATEAR LAS FECHAS DEL ARRAY */
+        /* ARRAY PARA FORMATEAR LAS FECHAS DEL ARRAY */
+        tablaFiles.forEach(file => {
+            if (file.fecha_registro) {
+                file.fecha_registro = formatDateTime(file.fecha_registro);
+            }
+        });
+
         
 
         /* RENDER A LA VISTA  */
@@ -64,7 +79,8 @@ export const getEntityLiquidationView = async(req, res) => {
             {
                 datos_empleado: dataEmployee,
                 datos_incapacidad_liquidad: incapacidadLiquidada,
-                Seguimiento: tablaObservaciones
+                Seguimiento: tablaObservaciones,
+                files: tablaFiles
             }
         )
         

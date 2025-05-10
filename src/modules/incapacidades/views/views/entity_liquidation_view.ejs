@@ -548,12 +548,7 @@
               </div>
             </div>
             
-            
-
-
-
-
-
+ 
           </div>
 
         </div>
@@ -565,42 +560,51 @@
 
         <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+          <div class="grid grid-cols-1">
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DOCUMENTOS: </label>
+            
+            
+            <div class="mt-8">
+              <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-xs text-left rtl:text-right text-gray-500">
+                  <thead class="text-xs text-gray-100 bg-slate-800 py-0">
+                    <tr>
+                      <th scope="col" class="px-6 py-2 w-1/3 border border-white">REGISTRO</th>
+                      <th scope="col" class="px-6 py-2 w-1/3 border border-white">NOMBRE</th>
+                      <th scope="col" class="px-6 py-2 w-1/3 border border-white">DOWNLOADS</th>
+                    </tr>
+                  </thead>
+                </table>
+            
+                <!-- Scroll vertical aquí -->
+                <div class="max-h-60 overflow-y-auto">
+                  <table class="w-full text-xs text-left text-gray-500">
+                    <tbody>
+                      <% files.forEach(file => { %>
+                        <tr class="odd:bg-slate-100 even:bg-gray-200 hover:bg-slate-300 border border-white">
 
+                          <td class="px-4 py-2 text-xs font-medium text-slate-700 ml-2 w-1/3">
+                            <%= file.fecha_registro %>
+                          </td>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+                          <td class="px-4 py-2 text-xs font-medium text-slate-700 ml-2 w-1/3">
+                            <%= file.nombre %>
+                          </td>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+                          <td class="px-4 py-2 text-xs font-medium text-slate-700 ml-2 w-1/3">
+                            <a href="<%= file.ruta %>" download="<%= file.nombre %>">Descargar</a>
+                        </td>
+                        
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
-
-
+                        </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+ 
           </div>
 
         </div>
