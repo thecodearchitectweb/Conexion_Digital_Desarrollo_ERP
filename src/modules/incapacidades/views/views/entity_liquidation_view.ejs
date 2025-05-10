@@ -437,13 +437,13 @@
           <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
         </h1>
 
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+        <div class="relative shadow-md max-w-full overflow-x-auto py-8 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CODIGO LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.id_incapacidades_liquidacion || "Sin detalles"  %> </small>
+              <small id="id_incapacidad_liquidada" class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.id_incapacidades_liquidacion || "Sin detalles"  %> </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CODIGO EMPLEADO:
@@ -508,12 +508,15 @@
             </label>
 
           </div>
+                  <!-- Editar -->
 
-          <div class="grid grid-cols-1">
+
+
+          <div class="grid grid-cols-1 mt-10">
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">OBSERVACIONES: </label>
             
             
-            <div class="mt-8">
+            <div class="mt-2">
               <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-xs text-left rtl:text-right text-gray-500">
                   <thead class="text-xs text-gray-100 bg-slate-800 py-0">
@@ -547,9 +550,26 @@
                 </div>
               </div>
             </div>
-            
- 
+
+
           </div>
+
+          <!-- BOTON PARA AGREGAR NUEVA INCAPACIDAD, LLAMA A UNA MODAL, LA CUAL PERMITE AGREGAR UNA NUEVA OBSERVACION Y CAMBIAR DE ESTADO -->
+          <div class="flex justify-end items-end w-full mt-2 pr-8 gap-0 pb-0">
+            <div class="relative group me-2 mt-4">
+              <button  data-modal-target="addNewObservation" data-modal-toggle="addNewObservation"  type="button" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);">
+                  <path d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z"></path>
+                  <path d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"></path>
+                </svg>
+                <span class="sr-only">Nueva observacion</span>
+              </button>
+              <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg">
+                Nueva Observacion
+              </div>
+            </div>
+          </div>
+          
 
         </div>
 
@@ -618,32 +638,18 @@
 
 
 
+  <!-- MODALS -->
+  <%-include('./../partials/modals/ventana_liquidacion_observaciones/add_new_observation.ejs') %>
+
+  
+
   <!-- Script que maneja la sidebar y el contenedor -->
   <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
 
-  <!-- Mostar formulario de ingreso de nueva incapacidad -->
-  <script src="/incapacidades/js/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
+  <script src="/incapacidades/js/ventana_liquidacion_observaciones/api_add_new_observation.js"></script>
 
 
-  <!-- Mostar input file para cargar los archivos correspondientes -->
-  <script src="/incapacidades/js/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
-
-
-  <!-- calcula la cantidad de días de incapacidad -->
-  <script src="/incapacidades/js/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
-
-
-  <!-- VERIFICAR QUE SEA PDF, CALCULAR QUE TENGA MAXIMO UN PESO DE 5MB -->
-  <script src="/incapacidades/js/detalle_empleado/verificacion_pdf_peso.js"></script>
-
-
-  <!-- API FETCH PARA CONSULTAR CIE 10 -->
-  <script src="/incapacidades/js/detalle_empleado/api_fetch_cie_10.js"></script>
-
-
-  <!-- API FETCH PARA CONSULTAR SI HAY DUPLICIDAD CON LA INCAPACIDAD -->
-  <script src="/incapacidades/js/detalle_empleado/api_fetch_duplicidad_incapacidad.js"></script>
-
+  <!-- Conexion_Digital_Desarrollo_ERP\src\modules\incapacidades\public\js\ventana_liquidacion_observaciones\api_add_new_observation.js -->
 
 
 

@@ -7,6 +7,7 @@ export async function uploadFilesroutes(id_historial, id_incapacidades_liquidaci
         const [rows] = await pool.query(
             `
                 SELECT 
+                    id_ruta_documentos,
                     nombre, 
                     ruta 
                 FROM 
@@ -22,11 +23,11 @@ export async function uploadFilesroutes(id_historial, id_incapacidades_liquidaci
         }
 
         // Preparar los valores para la inserción
-        const values = rows.map(row => [row.nombre, row.ruta, id_incapacidades_liquidacion]);
+        const values = rows.map(row => [row.id_ruta_documentos, row.nombre, row.ruta, id_incapacidades_liquidacion]);
 
         // Insertar todos los documentos en files_upload
         const [result] = await pool.query(
-            `INSERT INTO files_upload (nombre, ruta, id_incapacidades_liquidacion) VALUES ?`,
+            `INSERT INTO files_upload (id_ruta_documentos_tabla_historial, nombre, ruta, id_incapacidades_liquidacion) VALUES ?`,
             [values]
         );
 
