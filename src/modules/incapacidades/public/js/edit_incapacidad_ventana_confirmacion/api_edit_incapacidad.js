@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const descripcionDiagnostico = document.getElementById("descripcion_diagnostico").value;
     const descripcionCategoria = document.getElementById("descripcion_categoria").value;
     const codigoCategoria = document.getElementById("codigo_categoria").value;
-    const estadoIncapacidad = document.getElementById("select_estado_incapacidad").value;
-    const observaciones = document.getElementById("message").value;
+    //const estadoIncapacidad = document.getElementById("select_estado_incapacidad").value;
+    //const observaciones = document.getElementById("message").value;
     const prorroga = document.getElementById("input_toggle_prorroga").checked ? 1 : 0; // ✔ Capturamos el estado del toggle
 
     // Validación de campos obligatorios
@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "descripcion_diagnostico",
       "descripcion_categoria",
       "codigo_categoria",
-      "select_estado_incapacidad",
-      "message"
+      "select_estado_incapacidad"
+      //"message"
     ];
 
     let isValid = true;
@@ -88,8 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
       input_descripcion_diagnostico: descripcionDiagnostico,
       input_descripcion_categoria: descripcionCategoria,
       input_codigo_categoria: codigoCategoria,
-      select_estado_incapacidad: estadoIncapacidad,
-      input_observaciones: observaciones,
+      //select_estado_incapacidad: estadoIncapacidad,
+      //input_observaciones: observaciones,
       input_toggle_prorroga: prorroga // ✔ Se agrega la prorrogra al payload
     };
 

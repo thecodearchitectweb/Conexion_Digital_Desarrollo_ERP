@@ -8,6 +8,7 @@ import session from "express-session";
 import MySQLStore from "express-mysql-session";
 import { pool } from './models/db.js'; // Importa la conexión a la base de datos
 
+import  rutasDeIncapacidades  from './modules/rutas/rutas-incapacidades/incapacidades_index.routes.js'
 
 
 // Cargar variables de entorno
@@ -97,37 +98,10 @@ app.use(sessionMiddleware); // Middleware de sesión
 
 
 // Importar y configurar rutas
-import seleccionarEmpleado  from './modules/incapacidades/routes/seleccionar-empleado.routes.js'
-import detalleIncapacidadEmpleado  from './modules/incapacidades/routes/detalle-incapacidad.routes.js'
-import  registroNuevaIncapacidad from './modules/incapacidades/routes/registro-nueva-incapacidad.routes.js'
-import  tablaIncapacidades from './modules/incapacidades/routes/tabla-incapacidades.routes.js'
-import  appi_Cie10 from './modules/incapacidades/routes/appi-cie-10.routes.js'
-import  ventanaIncapacidadRecibida from './modules/incapacidades/routes/ventana_confirmacion_incapacidad_recibida.routes.js'
-import  edit_incapacidad_ventana from './modules/incapacidades/routes/appi-edit-incapacidad.routes.js'
-import  api_fetch_duplicidad_incapacidad from './modules/incapacidades/routes/api_fetch_duplicidad_incapacidad.routes.js'
-import  UserDisabilityTable from './modules/incapacidades/routes/user_disability_table.routes.js'
-import  api_download_user_disability from './modules/incapacidades/routes/api-download-user-disability.routes.js'
-import  getEntityLiquidationView from './modules/incapacidades/routes/entity_liquidation_view.routes.js'
-import  api_select_disability_date from './modules/incapacidades/routes/api-select-disability-date.routes.js'
-import  api_select_disability_extension from './modules/incapacidades/routes/api-select-disability-date.routes.js'
-import  api_add_new_observation from './modules/incapacidades/routes/api-add-new-observation.routes.js'
-
 
 // Usar rutas
-app.use(seleccionarEmpleado)
-app.use(detalleIncapacidadEmpleado)
-app.use(registroNuevaIncapacidad)
-app.use(tablaIncapacidades)
-app.use(appi_Cie10)
-app.use(ventanaIncapacidadRecibida)
-app.use(edit_incapacidad_ventana)
-app.use(api_fetch_duplicidad_incapacidad)
-app.use(UserDisabilityTable)
-app.use(api_download_user_disability)
-app.use(getEntityLiquidationView)
-app.use(api_select_disability_extension)
-app.use(api_select_disability_date)
-app.use(api_add_new_observation)
+
+[...rutasDeIncapacidades].forEach(route => app.use(route));
 
 
 

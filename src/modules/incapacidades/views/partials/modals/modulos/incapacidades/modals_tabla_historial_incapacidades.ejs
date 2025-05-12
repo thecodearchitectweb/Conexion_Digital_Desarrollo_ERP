@@ -2,18 +2,18 @@
 
 
 <!-- Extra Large Modal -->
-<div id="extralarge-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full ">
-    <div class="relative w-full max-w-[90vw] max-h-full  rounded-3xl">
+<div id="extralarge-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-[90vw] max-h-full  rounded-3xl ">
         <!-- Modal content -->
         <div class="relative bg-gray-50 rounded-2xl shadow-sm  z-10 ">
             <!-- Modal header -->
-            <div class="flex items-center justify-between w-full p-1 md:p-3 border-b rounded-b border-gray-50 shadow-sm bg-slate-800 rounded-2xl">
+            <div class="flex items-center justify-between w-full p-1 md:p-3 border-b rounded-b border-gray-50 shadow-sm bg-slate-800 rounded-2xl ">
                
-                <h3 class="text-lg font-medium text-gray-100 w-full text-center">
+                <h3 class="text-sm  font-medium text-gray-100 w-full text-center">
                     Historial de Incapacidades
                 </h3>
                
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="extralarge-modal">
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-2 ms-auto inline-flex justify-center items-center " data-modal-hide="extralarge-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -23,79 +23,94 @@
 
 
 
-            <div class="p-4 md:p-10 space-y-16 overflow-auto max-h-[70vh]">
-                <div class="relative overflow-x-auto drop-shadow-xl rounded-b-2xl">
-                    <table class="w-full text-xs text-center rtl:text-right text-slate-700">
-                        <thead class="text-xs text-white uppercase bg-slate-700">
-                            <tr>
-                                <th scope="col" class="px-3 py-3 border border-white rounded-tl-xl">
-                                    <div class="w-full flex justify-center items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-white">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                            <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                            <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                            <path d="M8 11h4" />
-                                            <path d="M8 15h3" />
-                                            <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                            <path d="M18.5 19.5l2.5 2.5" />
-                                        </svg>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-3 py-3 border border-white">DOCUMENTO</th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">FECHA REGISTRO</th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">INICIO INCAPACIDAD</th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">FINAL INCAPACIDAD</th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">DÍAS INCAPACIDAD</th>
-                                <th scope="col" class="px-3 py-3 border border-white">CATEGORIA</th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">DESC. CATEGORIA</th>
-                                <th scope="col" class="px-3 py-3 border border-white">SUBCATEGORIA</th>
-                                <th scope="col" class="px-3 py-3 border border-white whitespace-nowrap">DESC. SUBCATEGORIA</th>
-                                <th scope="col" class="px-3 py-3 border border-white">PRORROGA</th>
-                                <th scope="col" class="px-3 py-3 border border-white rounded-tr-xl">ESTADO</th>
-                            </tr>
+                <div class="grid grid-cols-1 mt-0 p-4 shadow-2xl">
+
+              
+                  <div class="my-4">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                      <table class="w-full text-xs text-left rtl:text-right text-gray-500">
+                        <thead class="text-xs text-gray-100 bg-slate-800 py-0">
+                          <tr>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">ACCESO</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">C. INCAPACIDAD</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">C. EMPLEADO</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DOCUMENTO</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">T. INCAPACIDAD</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">ORIGEN</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">INICIO INCAPACIDAD</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">FINAL INCAPACIDAD</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">T. DÍAS</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">CATEGORIA</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">SUB-CATEGORIA</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">PRORROGA</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS EMPLEADOR</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% EMPLEADOR</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. EMPLEADOR</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS EPS</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% EPS</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. EPS</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS ARL</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% ARL</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. ARL</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS F. PENSIONES</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% F. PENSIONES</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. F. PENSIONES</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS EPS / F. PENSIONES</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% EPS / F. PENSIONES</th>
+                            <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. EPS / F. PENSIONES</th>
+                          </tr>
                         </thead>
                         <tbody>
-                            <!-- Aquí iteramos sobre los datos de incapacidades -->
-                            <% datos_historial_incapacidades.forEach(incapacidad => { %>
-                                <tr class="bg-white border-b   border-gray-200 hover:bg-gray-50 ">
-                                    <td class="px-3 py-1 text-center cursor-pointer flex justify-center items-center">
-                                        <a href="/incapacidad/tabla/incapacidades" target="_blank">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-report-search text-cyan-800">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                                <path d="M18 12v-5a2 2 0 0 0 -2 -2h-2" />
-                                                <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                                <path d="M8 11h4" />
-                                                <path d="M8 15h3" />
-                                                <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-                                                <path d="M18.5 19.5l2.5 2.5" />
-                                            </svg>
-                                        </a>
-                                    </td>
-                                    <td class="px-3 py-1"><%= incapacidad.documento %></td>
-                                    <td class="px-3 py-1"><%= incapacidad.fecha_registro %></td>
-                                    <td class="px-3 py-1"><%= incapacidad.inicio_incapacidad %></td>
-                                    <td class="px-3 py-1"><%= incapacidad.final_incapacidad %></td>
-                                    <td class="px-3 py-1 text-center"><%= incapacidad.dias_incapacidad %></td>
-                                    <td class="px-3 py-1"><%= incapacidad.categoria %></td>
-                                    <td class="px-3 py-1"><%= incapacidad.desc_subcategoria %></td>
-                                    <td class="px-3 py-1"><%= incapacidad.subcategoria %></td>
-                                    <td class="px-3 py-1"><%= incapacidad.desc_subcategoria %></td>
-                                    <td class="px-3 py-1 text-center"><%= incapacidad.prorroga ? 'Sí' : 'No' %></td>
-                                    <td class="px-3 py-1 text-center">
-                                        <span class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full ">
-                                            <%= incapacidad.estado %>
-                                        </span>
-                                    </td>
-                                </tr>
-                            <% }); %>
+      
+      
+                          <% tabla_incapacidades.forEach(function(fila) { %>
+                          
+                              <tr class="odd:bg-slate-100 even:bg-gray-200 hover:bg-slate-300 border border-white">
+                                <td class="px-4 py-0.5 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> 
+                                  <a href="/incapacidad/vista/liquidacion/entidades/<%= fila.id_incapacidades_liquidacion %>">
+                                    <i class='bx bxs-binoculars text-xl text-yellow-700'></i>
+                                  </a>
+                                </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.id_incapacidades_liquidacion %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.id_empleado %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.documento %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.tipo_incapacidad %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap"> <%= fila.subtipo_incapacidad %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.fecha_inicio_incapacidad %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.fecha_final_incapacidad %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.cantidad_dias %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.codigo_categoria %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.codigo_subcategoria %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.prorroga === 1 ? "Sí" : "No" %></td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.dias_liquidacion_empleador %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.porcentaje_liquidacion_empleador %> %</td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(fila.liquidacion_empleador) %> </td> 
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.dias_liquidacion_eps %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.porcentaje_liquidacion_eps %> %</td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-start"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(fila.liquidacion_eps) %></td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.dias_liquidacion_arl %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.porcentaje_liquidacion_arl %> %</td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(fila.liquidacion_arl) %></td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.dias_liquidacion_fondo_pensiones %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.porcentaje_liquidacion_fondo_pensiones %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(fila.liquidacion_fondo_pensiones) %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.dias_liquidacion_eps_fondo_pensiones %> </td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= fila.porcentaje_liquidacion_eps_fondo_pensiones %> %</td>
+                                <td class="px-4 py-1 text-xs font-medium text-slate-700 whitespace-nowrap text-center"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(fila.liquidacion_eps_fondo_pensiones) %> </td>
+                              </tr>
+      
+                          <% }); %>
+      
+      
+                          
                         </tbody>
-                    </table>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-            </div>
+             
+            
+
             
         </div>
     </div>

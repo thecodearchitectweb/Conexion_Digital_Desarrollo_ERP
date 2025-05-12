@@ -1,9 +1,5 @@
 import { pool } from "../../../models/db.js";
-import express from 'express';
 
-
-
-const app = express();
 
 export const api_validacion_incapacidad_duplicada = async (req, res) => {
     try {
@@ -16,11 +12,23 @@ export const api_validacion_incapacidad_duplicada = async (req, res) => {
             return res.status(400).json({ success: false, message: "Faltan datos obligatorios." });
         }
 
-        // Validar si ya existe una incapacidad con la misma fecha de inicio para ese empleado
+
+
+        // Validar si ya existe una incapacidad con la misma fecha de inicio y que ya haya sido descargada
         const [validacion_duplicado_incapacidad] = await pool.query(
-            `SELECT fecha_inicio_incapacidad FROM incapacidades_historial WHERE id_empleado = ? AND fecha_inicio_incapacidad = ?`,
+            `
+                SELECT 
+                    fecha_inicio_incapacidad 
+                FROM 
+                    incapacidades_liquidacion 
+                WHERE 
+                    id_empleado = ? 
+                AND fecha_inicio_incapacidad = ? 
+                AND downloaded = 1
+            `,
             [id_empleado, fecha]
         );
+
 
         console.log("Esta es la consulta por duplicidad:", validacion_duplicado_incapacidad)
 

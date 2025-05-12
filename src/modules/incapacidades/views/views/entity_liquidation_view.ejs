@@ -67,7 +67,7 @@
           <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
         </h1>
 
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+        <div id="container-liquidacion-EMPLEADOR" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
@@ -95,7 +95,7 @@
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_empleador || "Sin detalles"  %>  </small>
+              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_empleador || "Sin detalles"  %>  %</small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
@@ -118,326 +118,268 @@
 
         </div>
 
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD EPS N.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
-        </h1>
 
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+        <% if (datos_incapacidad_liquidad.dias_liquidacion_eps > 0) { %>
+          <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD EPS N.
+            <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          </h1>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+          <div id="container-liquidacion-EPS" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles"  %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps || "Sin detalles"  %> % </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_eps) %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
-            </label>
-
-          </div>
-
-        </div>
-
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD ARL N.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
-        </h1>
-
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_arl || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_arl || "Sin detalles"  %> % </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps || "Sin detalles"  %> % </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_arl) %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_eps) %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
+                <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
+              </label>
+
+            </div>
 
           </div>
-        </div>
-
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD FONDO DE PENSIONES N.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
-        </h1>
-
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+        <% } %>
 
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
-            </label>
+        <% if (datos_incapacidad_liquidad.dias_liquidacion_arl > 0) { %>
+          <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD ARL N.
+            <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          </h1>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
-            </label>
+          <div id="container-liquidacion-ARL" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
-            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
-            </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_fondo_pensiones || "0"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_fondo_pensiones || "Sin detalles"  %> % </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_fondo_pensiones) %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_arl || "Sin detalles"  %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_arl || "Sin detalles"  %> % </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_arl) %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
+                <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
+              </label>
+
+            </div>
+          </div>
+        <% } %>
+
+
+        <% if (datos_incapacidad_liquidad.dias_liquidacion_fondo_pensiones > 0) { %>
+          <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD FONDO DE PENSIONES N.
+            <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          </h1>
+
+          <div id="container-liquidacion-F-PENSIONES" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_fondo_pensiones || "0"  %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_fondo_pensiones || "Sin detalles"  %> % </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_fondo_pensiones) %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
+                <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
+              </label>
+
+            </div>
 
           </div>
-
-        </div>
-
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD FONDO DE PENSIONES Y EPS N.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
-        </h1>
-
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+        <% } %>
 
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
-            </label>
+        <% if (datos_incapacidad_liquidad.dias_liquidacion_eps_fondo_pensiones > 0) { %>
+          <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD FONDO DE PENSIONES Y EPS N.
+            <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          </h1>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
-            </label>
+          <div id="container-liquidacion-EPS-F-PENSIONES" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps_fondo_pensiones || "0"  %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps_fondo_pensiones || "Sin detalles"  %> % </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_eps_fondo_pensiones) %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
-            </label>
-
-          </div>
-
-        </div>
-
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">PRORROGA - INCAPACIDAD CONTINUA.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
-        </h1>
-
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps_fondo_pensiones || "0"  %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps_fondo_pensiones || "Sin detalles"  %> % </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_eps_fondo_pensiones) %> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
-              <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
+              </label>
 
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
+                <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
+              </label>
+
+            </div>
 
           </div>
-
-        </div>
-
-<!--         <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">RESUMEN LIQUIDACION INCAPACIDAD:
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
-        </h1>
-
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+        <% } %>
 
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles"  %> </small>
-            </label>
+        <% if (datos_incapacidad_liquidad.prorroga > 0) { %>
+          <h1  class="mt-12 ml-2 font-semibold font-serif text-sm">PRORROGA - INCAPACIDAD CONTINUA.
+            <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          </h1>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles"  %> </small>
-            </label>
+          <div id="container-liquidacion-PRORROGA" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles"  %>  </small>
-            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.prorroga === 1 ? "Sí" : "No" %> </small>
-            </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS A LIQUIDAR EMPLEADOR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles"  %> </small>
-            </label>
-            
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR EMPLEADOR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps || "Sin detalles"  %> % </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION EMPLEADOR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_eps) %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS A LIQUIDAR EPS:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS A LIQUIDAR ARL:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS A LIQUIDAR F. PENSION:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS A LIQUIDAR F. PENSIONES / EPS:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles"  %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps || "Sin detalles"  %> % </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(datos_incapacidad_liquidad.liquidacion_eps) %> </small>
-            </label>
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">NOMBRES:
+                <small class="text-sm font-style: italic font-serif font-normal text-slate-600 ml-2"> </small>
+              </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2"> <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles"  %> </small>
-            </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-xs font-medium text-slate-700 ml-2">  <%= datos_incapacidad_liquidad.downloaded === 1 ? "Sí" : "No" %> </small>
-            </label>
-
+            </div>
 
           </div>
+        <% } %>
 
-        </div> -->
 
         <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">OBSERVACIONES:
           <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
         </h1>
 
-        <div class="relative shadow-md max-w-full overflow-x-auto py-8 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+        <div id="container-liquidacion-OBSERVACIONES" class="relative shadow-md max-w-full overflow-x-auto py-8 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
@@ -578,7 +520,7 @@
           <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
         </h1>
 
-        <div class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+        <div  id="container-liquidacion-FILES" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
           <div class="grid grid-cols-1">
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DOCUMENTOS: </label>
