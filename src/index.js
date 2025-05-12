@@ -110,6 +110,7 @@ import  api_download_user_disability from './modules/incapacidades/routes/api-do
 import  getEntityLiquidationView from './modules/incapacidades/routes/entity_liquidation_view.routes.js'
 import  api_select_disability_date from './modules/incapacidades/routes/api-select-disability-date.routes.js'
 import  api_select_disability_extension from './modules/incapacidades/routes/api-select-disability-date.routes.js'
+import  api_add_new_observation from './modules/incapacidades/routes/api-add-new-observation.routes.js'
 
 
 // Usar rutas
@@ -126,6 +127,7 @@ app.use(api_download_user_disability)
 app.use(getEntityLiquidationView)
 app.use(api_select_disability_extension)
 app.use(api_select_disability_date)
+app.use(api_add_new_observation)
 
 
 

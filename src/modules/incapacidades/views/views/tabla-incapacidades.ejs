@@ -4,19 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tabla de incapacidades</title>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/incapacidades/css/sidebar/style_sidebar_adaptacion_pantalla.css">
- 
-  <%- include('./../partials/header/header.ejs') %>
+  <title>Detalle de incapacidad, filtro I</title>
 
+  <link rel="stylesheet" href="/incapacidades/css/sidebar/style_sidebar_adaptacion_pantalla.css">
+
+
+
+  <%- include('./../partials/header/header.ejs') %>
+  <%-include('./../partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
 </head>
 
 
-<body class="bg-slate-200">
- 
-    
-    <!-- NAVBAR -->
+
+<body class="bg-slate-200 ">
+
+
+  <!-- NAVBAR -->
   <header>
     <!-- NAVBAR SUPERIOR -->
     <nav class="navbar">
@@ -46,16 +49,130 @@
 
   </aside>
 
-  <div class="flex">
 
+  <div class="w-full">
 
+    <div class="flex w-full ">
 
-    <!-- CONTENEDOR PRINCIPAL -->
-    <div id="container_seleccionar_empleado" class="flex flex-col min-h-screen gap-6 mt-32 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 container-collapsed border bg-white">
-    
-        <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati vero maiores facere atque debitis libero asperiores quasi mollitia non incidunt totam repudiandae error, necessitatibus quis dignissimos explicabo fugit recusandae eius inventore eveniet iste odio ex harum. Mollitia beatae alias accusantium, quos eius temporibus incidunt cupiditate veniam nobis vero sit nostrum totam saepe adipisci, consectetur dolorem ratione numquam placeat, harum amet asperiores! Optio ullam velit nesciunt quos ipsa ea pariatur architecto harum vel rerum? Voluptatem magni veniam magnam perspiciatis quod sit, nemo expedita asperiores nisi, repudiandae labore minima neque quae accusantium non dolor eveniet quasi minus. Temporibus deserunt saepe nulla dolorum dolor mollitia possimus tenetur molestiae doloremque, voluptatibus voluptates ratione sapiente delectus accusamus eveniet hic magnam dignissimos? Sunt culpa esse quibusdam magni repellat similique pariatur quod odio, reprehenderit aliquam consectetur facere voluptas obcaecati laboriosam molestiae. Veniam officia nobis praesentium eius quasi maxime placeat numquam repellat officiis quidem fuga sit similique, et accusamus at quia, illo voluptates aperiam consequatur beatae totam minus voluptatem? A veniam id voluptates quisquam eius, consequatur commodi! Similique dolorem minus culpa fugit impedit corporis, sunt accusantium natus libero sed? Quod vel, saepe iusto, voluptate quis ea eum error non accusantium natus dignissimos rerum maiores ut velit repudiandae ducimus!</P>
+      <div id="container_seleccionar_empleado" class="  min-h-screen gap-6 mt-32 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 container-collapsed  bg-white rounded-xl">
+
+       
+
+        <div class="w-full mx-auto text-center border-b border-gray-400 pb-2 mb-4 mt-2 drop-shadow-md">
+          <div class="grid grid-cols-1 mt-4">
+            <h1 class="mt-2 ml-2 font-semibold font-serif text-sm text-start">
+              TABLA LIQUIDACIÓN (NOMBRE EMPLEADO)
+              <div class="w-full mx-auto text-center border-b border-gray-400 pb-1 mt-1 drop-shadow-md"></div>
+            </h1>
+        
+            <div class="mt-8">
+              <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-xs text-left rtl:text-right text-gray-500">
+                  <thead class="text-xs text-gray-100 bg-slate-800 py-0">
+                    <tr>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">C. INCAPACIDAD</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">C. EMPLEADO</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DOCUMENTO</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">T. INCAPACIDAD</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">ORIGEN</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">INICIO INCAPACIDAD</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">FINAL INCAPACIDAD</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">T. DÍAS</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">CATEGORIA</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">SUB-CATEGORIA</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">PRORROGA</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">PRORROGA</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS EMPLEADOR</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% EMPLEADOR</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. EMPLEADOR</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS EPS</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% EPS</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. EPS</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS ARL</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% ARL</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. ARL</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS F. PENSIONES</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% F. PENSIONES</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. F. PENSIONES</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">DIAS EPS / F. PENSIONES</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">% EPS / F. PENSIONES</th>
+                      <th scope="col" class="px-4 py-2 border border-white w-auto whitespace-nowrap">V. EPS / F. PENSIONES</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="odd:bg-slate-100 even:bg-gray-200 hover:bg-slate-300 border border-white">
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                    </tr>
+                    <tr class="odd:bg-slate-100 even:bg-gray-200 hover:bg-slate-300 border border-white">
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                      <td class="px-4 py-2 text-xs font-medium text-slate-700">prueba</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        
+
+      </div>
+
 
     </div>
+
   </div>
 
 
@@ -63,9 +180,39 @@
   <!-- Script que maneja la sidebar y el contenedor -->
   <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
 
+  <!-- Mostar formulario de ingreso de nueva incapacidad -->
+  <script src="/incapacidades/js/detalle_empleado/mostrar_form_ingreso_nueva_incapacidad.js"></script>
 
+
+  <!-- Mostar input file para cargar los archivos correspondientes -->
+  <script src="/incapacidades/js/detalle_empleado/mostrar_files_nueva_incapacidad.js"></script>
+
+
+  <!-- calcula la cantidad de días de incapacidad -->
+  <script src="/incapacidades/js/detalle_empleado/calcular_cantidad_dias_incapacidad.js"></script>
+
+
+  <!-- VERIFICAR QUE SEA PDF, CALCULAR QUE TENGA MAXIMO UN PESO DE 5MB -->
+  <script src="/incapacidades/js/detalle_empleado/verificacion_pdf_peso.js"></script>
+
+
+  <!-- API FETCH PARA CONSULTAR CIE 10 -->
+  <script src="/incapacidades/js/detalle_empleado/api_fetch_cie_10.js"></script>
+
+
+  <!-- API FETCH PARA CONSULTAR SI HAY DUPLICIDAD CON LA INCAPACIDAD -->
+  <script  src="/incapacidades/js/detalle_empleado/api_fetch_duplicidad_incapacidad.js"></script>
+
+ 
 
 
 </body>
 
 </html>
+
+
+
+<!-- 
+flex flex-col gap-6 mt-28 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 bg-white rounded-xl filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] container-expanded
+
+flex flex-col gap-6 mt-28 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 bg-white rounded-xl filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] container-collapsed -->

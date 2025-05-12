@@ -31,7 +31,7 @@
                        
                         <div>
                             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Estado</label>
-                            <select id="estado_incapacidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 " required>
+                            <select id="estado_incapacidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 " >
                               <option selected>Seleccione un estado</option>
                               <option value="REGISTRADA">Registrada</option>
                               <option value="EN REVISION">En Revision</option>
@@ -46,11 +46,11 @@
 
                         <div class="mt-10">
                             <label for="message" class="block mb-2 text-sm font-medium text-gray-900 ">Observacion</label>
-                            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500 " maxlength="1000" required placeholder="Nueva observacion."></textarea>
+                            <textarea id="observaciones" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500 " maxlength="1000"  placeholder="Nueva observacion."></textarea>
                         </div>
 
                         <div class="flex items-center justify-center mt-5 ">
-                            <button type="submit" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none  w-full">Guardar
+                            <button id="buttonUpdate" type="submit" class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none  w-full">Guardar
                             </button>
                         </div>
 
