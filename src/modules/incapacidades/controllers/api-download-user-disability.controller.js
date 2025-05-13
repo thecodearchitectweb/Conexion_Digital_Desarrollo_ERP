@@ -17,6 +17,9 @@ import { updateSettlementTable, updateSettlementTableEmpleador } from '../reposi
 import { calcularDiasLiquidar } from '../utils/api-download-user-disability/calcularDiasLiquidarSinProrroga.js'
 import { transformarParametrosPolitica } from '../utils/api-download-user-disability/transformPolicyParameters.js'
 import { uploadFilesroutes } from '../repositories/api-download-user-disability/uploadFilesroutes.js'
+import { obtenerDiasNoRepetidos, obtenerDiasEntreFechas } from '../utils/api-download-user-disability/calcularDiasLiquidar.js'
+import { getDatosIncapacidadProrroga } from '../repositories/api-download-user-disability/get_incapacidad_prorroga.js'
+import { obtenerDiasNoRepetidosProrroga } from '../services/api-download-user-disability/obtenerDiasNoRepetidos.js'
 
 const app = express();
 
@@ -57,7 +60,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
         /* SE CARGAN LAS RUTAS DONDE SE ALOJAN LOS FILES EN UPLOAD, SE TOMAN DE LA TABLA ruta_documentos */
         const uploadFiles = await uploadFilesroutes(id_historial, id_liquidacion)
-        
+
 
         /* ACTUALIZAR LOS DATOS EN LA TABLA LIQUIDACION CON DATA (ENCAPSULAMIENTO) */
         const updateResult = await updateLiquidacoinTableIncapacity(data);
@@ -74,7 +77,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
         /* CONSTANTES PARA VALIDAR POLITICAS  EN LOS DIFERENTES CASOS*/
         const prorroga_conversion = parametros.prorroga;
-        
+
         const dias_laborados_conversion = parametros.dias_laborados_conversion;
         const dias_laborados = parametros.dias_laborados
 
@@ -82,9 +85,9 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
         const tipo_incapacidad = parametros.tipo_incapacidad;
 
-        const cantidad_dias = parametros.dias_incapacidad; 
+        const cantidad_dias = parametros.dias_incapacidad;
         const cantidad_dias_conversion = parametros.dias_incapacidad_conversion;
-        
+
 
 
         /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
@@ -96,7 +99,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
             cantidad_dias_conversion
         );
 
-        
+
         /* VALIDACION DE LA POLITICA */
         if (!politicaAplicada) {
             return res.status(404).json({ message: "No se encontró ninguna política para liquidar la incapacidad." });
@@ -116,6 +119,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         let liq_dias_arl = 0;
         let liq_dias_fondo = 0;
         let liq_dias_eps_fondo = 0;
+        let total_dias_liquidar = 0;
 
 
         /* VALOR TOTAL A LIQUIDAR POR ENTIDAD */
@@ -125,367 +129,282 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
         let liq_valor_fondo_pensiones = 0;
         let liq_valor_eps_fondo_pensiones = 0; // <- CAMBIAR DE const A let
 
-        
+
         /* PORCENTAJE A LIQUIDAR EMPLEADOR, EPS, ARL, FONDO DE PENSIONES, EPS - FONDO DE PENSIONES */
-        let Liq_porcentaje_liquidacion_empleador =  0;
+        let Liq_porcentaje_liquidacion_empleador = 0;
         let Liq_porcentaje_liquidacion_eps = 0;
         let Liq_porcentaje_liquidacion_arl = 0;
-        let Liq_porcentaje_liquidacion_fondo_pensiones =  0;
-        let Liq_porcentaje_liquidacion_eps_fondo_pensiones =  0;
+        let Liq_porcentaje_liquidacion_fondo_pensiones = 0;
+        let Liq_porcentaje_liquidacion_eps_fondo_pensiones = 0;
 
 
-//parametros.tipo_incapacidad
+        //parametros.tipo_incapacidad
 
-        /* SELECCION DEL CASO */
-        switch (parametros.tipo_incapacidad) {
-            
-            case 'EPS':
-              
-                if (Liq_cumplimiento === 'SI') {
-                    
+        /* VALIDACION DE CUMPLEIMIENTO */
+        if(Liq_cumplimiento === 'SI'){
+                    /* SELECCION DEL CASO */
+            switch (parametros.tipo_incapacidad) {
+
+                /* EPS */
+                case 'EPS':
+
+
+                    /* VALIDACION PRORROGA == SI */
                     if (liq_prorroga === 'SI') {
-                
-                
-                        /* SE LLAMA FUNCION PARA TRAER LAS ULTIMAS INCAPACIDADES DEL USER */
-                        const data_incapacidades_liquidadas = await getUltimasIncapacidades(data.id_incapacidad_extension);
-                        console.log("PRUEBA INCAPACIDAD SELECICONADA POR EL AUXILIAR: ", data_incapacidades_liquidadas)
 
 
-                        /* VALIDACION, SI NO HAY FECHAS CORRESPONDIENTES PARA ACALUCLAR LA PRORROGA, CORTA EL FLUJO Y ACTUALIZA TABLA PRORROGA EN 0 */
-                        if(data_incapacidades_liquidadas.length  === 0){
+                        /* TRAEMOS EL ID DE LA INCAPACIDAD EXTENSION QUE NOS DA LA TABLAHISTORIAL */
+                        const id_incapacidad_prorroga = data.id_incapacidad_extension
+                        console.log("ID INCAPACIDAD EXTENSION: ", id_incapacidad_prorroga)
 
-                             /* ACTUALIZA PRORROG A 0, Y LLAMA DE NUEVO LA FUNCION PARA EJECUTAR NUEVAMENTE EL ALGORITMO */
-                                const updateDisabilityExtensionliq = await updateDisabilitySettlementExtensionLiq(id_historial);   //Actualiza prorroga de tabla liquidacion a 0
-                                const updateDisabilityExtensionHis = await updateDisabilitySettlementExtensionHis(id_historial);   // Actualiza prorroga de tabla Historial a 0
-                    
-                    
-                                // 🔵 IMPORTANTE: Volver a iniciar la función después de actualizar
-                                console.log("Reiniciando proceso luego de actualizar prórroga y descarga...");
-                    
-                                
-                                // ⚡ Llamada recursiva para reiniciar el proceso
-                                return await processDownloadUserDisability(id_liquidacion, id_historial, res);
-                        }
 
-                        
+                        /* SE GENERA LA CONSULTA A LA BASE DE DATOS PARA TRAER DATOS DE LA INCAPACIDAD PRORROGA */
+                        const datosIncapacidadProrroga = await getDatosIncapacidadProrroga (id_incapacidad_prorroga)
+                        console.log("DATOS DE LA INCAPACIDAD PRORROGA: ", datosIncapacidadProrroga)
 
-                        /* FECHA DE LA INCAPACIDAD ANTERIOR Y LA QUE ESTA LISTA PARA LIQUIDAR */
-                        const fecha_inicio_incapacidad_anterior = formatDate2(data_incapacidades_liquidadas.fecha_inicio_incapacidad);
-                        const fecha_final_incapacidad_anterior = formatDate2(data_incapacidades_liquidadas.fecha_final_incapacidad);
+
+                        /* FORMATEAMOS FECHAS */
+                        const fecha_inicio_incapacidad_anterior = formatDate2(datosIncapacidadProrroga.fecha_inicio_incapacidad)
+                        const fecha_final_incapacidad_anterior = formatDate2(datosIncapacidadProrroga.fecha_final_incapacidad)
                         const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad);
                         const fecha_final_incapacidad_liquidar = formatDate2(data.fecha_final_incapacidad);
-                
-                
-                
-                        /* FUNCION PARA VALIDAR SI APLICA LA PRORROGA - VALIDACION DE FECHAS */
-                        const prorrogaValida = validarProrroga(
-                            fecha_inicio_incapacidad_anterior,
-                            fecha_final_incapacidad_anterior,
-                            fecha_inicial_incapacidad_liquidar,
-                            fecha_final_incapacidad_liquidar
-                        );
-                
+                       
+                        console.log("FECHAS FORMATEADAS: ", fecha_inicio_incapacidad_anterior, " ", fecha_final_incapacidad_anterior)
+                        console.log("FECHAS FORMATEADAS: ", fecha_inicial_incapacidad_liquidar, " ", fecha_final_incapacidad_liquidar)
 
-                            // LOGICA PARA ACTUALIZAR TABLAS Y EJECUTAR LOS CALCULOS SI SE CUMPLEN
-                            if (prorrogaValida) {
+
+                         /* CONSTRUCCION DEL OBJETO PARA VALIDAR DIAS  */
+                         const incapacidadAnterior = {
+                            fecha_inicio_incapacidad: fecha_inicio_incapacidad_anterior,
+                            fecha_final_incapacidad: fecha_final_incapacidad_anterior
+                        };
                     
-                                
-                                /* DIAS A LIQUIDAR EMPLEADOR, ARL, FONDO DE PENSIONES, EPS - FONDO DE PENSIONES */
-                                liq_dias_empleador = 0;
-                                liq_dias_arl = 0;
-                                liq_dias_fondo = 0;
-                                liq_dias_eps_fondo = 0;
-                    
-                                
-                                /* DIAS A LIQUIDAR LA EPS - FUNCION QUE CALCULA LIQUIDACION */
-                                liq_dias_eps = calculateDaysEps(fecha_final_incapacidad_anterior, fecha_final_incapacidad_liquidar);
-                    
-                    
-                                /* PORCENTAJE A LIQUIDAR EMPLEADOR, EPS, ARL, FONDO DE PENSIONES, EPS - FONDO DE PENSIONES */
-                                Liq_porcentaje_liquidacion_empleador = parseFloat(politicaAplicada.porcentaje_liquidacion_empleador) || 0;
-                                Liq_porcentaje_liquidacion_eps = parseFloat(politicaAplicada.porcentaje_liquidacion_eps) || 0;
-                                Liq_porcentaje_liquidacion_arl = parseFloat(politicaAplicada.porcentaje_liquidacion_arl) || 0;
-                                Liq_porcentaje_liquidacion_fondo_pensiones = parseFloat(politicaAplicada.porcentaje_liquidacion_fondo_pensiones) || 0;
-                                Liq_porcentaje_liquidacion_eps_fondo_pensiones = parseFloat(politicaAplicada.porcentaje_liquidacion_eps_fondo_pensiones) || 0;
-                    
-                    
-                                /* LIQUIDACION TOTAL EPS ARL, FONDO DE PENSIONES, EPS - FONDO DE PENSIONES*/
-                                liq_valor_eps = entityLiquidation(data.salario_empleado, Liq_porcentaje_liquidacion_eps, liq_dias_eps);
-                                liq_valor_empleador = 0;
-                                liq_valor_arl = 0;
-                                liq_valor_fondo_pensiones = 0;
-                                liq_valor_eps_fondo_pensiones = 0;
-                    
-                    
-                                /* RESULTADOS:  */
-                                console.log(": ");
-                                console.log("FECHA INICIO INCAPACIDAD ANTERIROR: ", fecha_inicio_incapacidad_anterior);
-                                console.log("FECHA FINAL INCAPACIDAD ANTERIROR: ", fecha_final_incapacidad_anterior);
-                                console.log("FECHA INICIAL INCAPACIDAD A LIQUIDAR: ", fecha_inicial_incapacidad_liquidar);
-                                console.log("FECHA FINAL INCAPACIDAD A LIQUIDAR: ", fecha_final_incapacidad_liquidar);
-                                console.log("CATEGORIA INCAPACIDAD ANTERIOR: ", codigo_categoria_anterior);
-                                console.log("CATEGORIA INCAPACIDAD A LIQUIDAR: ", codigo_categoria_liquidar);
-                                console.log("¿APLICA PRORROGA? - FUNCION: ", prorrogaValida);
-                                console.log("COINCIDENCIA EN CATEGORIA?: ", mismaCategoria);
-                                console.log("CANTIDAD DE DIAS A LIQUIDAR EPS: ", liq_dias_eps);
-                                console.log("PORCENTAJE A LIQUIDAR EMPLEADOR: ", Liq_porcentaje_liquidacion_empleador);
-                                console.log("PORCENTAJE A LIQUIDAR: EPS", Liq_porcentaje_liquidacion_eps);
-                                console.log("PORCENTAJE A LIQUIDAR: ARL", Liq_porcentaje_liquidacion_arl);
-                                console.log("PORCENTAJE A LIQUIDAR: FONDO PENSIONES", Liq_porcentaje_liquidacion_fondo_pensiones);
-                                console.log("PORCENTAJE A LIQUIDAR: F.P Y EPS", Liq_porcentaje_liquidacion_eps_fondo_pensiones);
-                                console.log("TOTAL LIQUIDACION:  ", liq_valor_eps);
-                                console.log(": ");
-                    
-                    
-                                /* ACTUALIZAR TABLA LIQUIDACION CON DATOS OBTENIDOS DE PRORROGA */
-                                const updateSettlementTableLiq = await updateSettlementTable(
-                                liq_dias_empleador,
-                                liq_dias_eps,
-                                liq_dias_arl,
-                                liq_dias_fondo,
-                                liq_dias_eps_fondo,
-                                Liq_porcentaje_liquidacion_empleador,
-                                Liq_porcentaje_liquidacion_eps,
-                                Liq_porcentaje_liquidacion_arl,
-                                Liq_porcentaje_liquidacion_fondo_pensiones,
-                                Liq_porcentaje_liquidacion_eps_fondo_pensiones,
-                                liq_valor_empleador,
-                                liq_valor_eps,
-                                liq_valor_arl,
-                                liq_valor_fondo_pensiones,
-                                liq_valor_eps_fondo_pensiones,
-                                diasLaborados,
-                                id_liquidacion
-                                );
-                    
-                                console.log("DATOS ACTUALIZADOS, INCAPACIDAD LIQUIDADA: ", updateSettlementTableLiq);
-                    
-                    
-                                /* ACTUALIZA LA TABLA LIQUIDACION EN downloaded = 1 */
-                                const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);
-                                console.log("Prórroga aplicada correctamente, DOWNLOAD:", updateDownloadStatusLiq);
-                                return res.json({ message: "ACTUALIZADO, PRORROGA APLICADA CORRECTAMENTE" });
-                
-                            } else {
-                    
-                                /* ACTUALIZA PRORROG A 0, Y LLAMA DE NUEVO LA FUNCION PARA EJECUTAR NUEVAMENTE EL ALGORITMO */
-                                const updateDisabilityExtensionliq = await updateDisabilitySettlementExtensionLiq(id_historial);   //Actualiza prorroga de tabla liquidacion a 0
-                                const updateDisabilityExtensionHis = await updateDisabilitySettlementExtensionHis(id_historial);   // Actualiza prorroga de tabla Historial a 0
-                                        
-                                // 🔵 IMPORTANTE: Volver a iniciar la función después de actualizar
-                                console.log("Reiniciando proceso luego de actualizar prórroga y descarga...");                    
-                                
-                                // ⚡ Llamada recursiva para reiniciar el proceso
-                                return await processDownloadUserDisability(id_liquidacion, id_historial, res);
-                            }
-                    } 
+                        const incapacidadNueva = {
+                            fecha_inicio_incapacidad: fecha_inicial_incapacidad_liquidar,
+                            fecha_final_incapacidad: fecha_final_incapacidad_liquidar
+                        }; 
+
+
+                        /* SE CALCULA CANTIDAD DE DÍAS A LIQUIDAR CON LAS FECHAS DE LA PRORROGA */
+                        const diasNoRepetidos = obtenerDiasNoRepetidosProrroga(incapacidadAnterior, incapacidadNueva);
+                        console.log("Días no repetidos a liquidar por prórroga:", diasNoRepetidos.length);
                     
 
-                    /* LIQUIDACION SIN PRORROGA, Y MENOR A 3 DIAS */
-                    if (liq_prorroga === 'NO') {
+                        /* SE GUARDA LOS DÍAS REALES A LIQUIDAR */
+                        total_dias_liquidar = diasNoRepetidos.length
+                        console.log("DÍAS REALES A LIQUIDAR: ", total_dias_liquidar)
 
-                        /* VALIDACION SIN PRORROGA, INCAPACIDAD MENOR A 3 DÍAS */
-                        if (cantidad_dias  < 3) {
-
-                            /* se calcula el numero de días que el empleador debe liquidar al empleado */
-                            liq_dias_empleador = cantidad_dias
-                            
-
-                            /* CALCULAR EL PORCENTAJE A LIQUIDAR POR EMPLEADOR */
-                            Liq_porcentaje_liquidacion_empleador = parseFloat(politicaAplicada.porcentaje_liquidacion_empleador) || 0;                            
-
-
-                            /* CALCULAR VALOR TOTAL A LIQUIDAR EMPLEADOR */
-                            liq_valor_empleador = entityLiquidationEmpleador(data.salario_empleado, Liq_porcentaje_liquidacion_empleador, liq_dias_empleador);
-                            
-
-                            /* ACTUALIZAR TABLA LIQUIDACION */
-                            const updateSettlementTableLiqEmpleador = await updateSettlementTableEmpleador(
-                                    liq_dias_empleador,
-                                    liq_dias_eps,
-                                    liq_dias_arl,
-                                    liq_dias_fondo,
-                                    liq_dias_eps_fondo,
-                                    Liq_porcentaje_liquidacion_empleador,
-                                    Liq_porcentaje_liquidacion_eps,
-                                    Liq_porcentaje_liquidacion_arl,
-                                    Liq_porcentaje_liquidacion_fondo_pensiones,
-                                    Liq_porcentaje_liquidacion_eps_fondo_pensiones,
-                                    liq_valor_empleador,
-                                    liq_valor_eps,
-                                    liq_valor_arl,
-                                    liq_valor_fondo_pensiones,
-                                    liq_valor_eps_fondo_pensiones,
-                                    dias_laborados,
-                                    id_liquidacion
-                                );
-
-
-
-                            console.log("SALARIO:  ", data.salario_empleado)
-                            console.log("NUMERO DE DÍAS A LIQUIDAR: ", liq_dias_empleador)
-                            console.log("PORCENTAJE A LIQUIDAR EMPLEADOR: ", Liq_porcentaje_liquidacion_empleador)
-                            console.log("VALOR TOTAL A LIQUIDAR EMPLEADOR: ", liq_valor_empleador)
-                            console.log("INCAPACIDAD ACTUALIZADA: ", updateSettlementTableLiqEmpleador)
-
-                            const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
-                            console.log("ACTUALIZADO, SIN PRORROGA");
-                            return res.json({ message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte del empleador: ${liq_dias_empleador}.` });
-
-                        }
-
-
-                        /* VALIDACION SIN PRORROGA, INCAPACIDAD MAYOR A 3 DÍAS */
-                        if (cantidad_dias > 2){
-
-
-                            /* EMPLEAODR LIQUIDA 2 DÍA  OBLIGATORIAMENTE */
-                            liq_dias_empleador = 2
-                            console.log("liq_dias_empleador", liq_dias_empleador)
-
-
-                            /* CALCULAR EL PORCENTAJE A LIQUIDAR POR EMPLEADOR */
-                            Liq_porcentaje_liquidacion_empleador = parseFloat(politicaAplicada.porcentaje_liquidacion_empleador) || 0;   
-                            console.log("Liq_porcentaje_liquidacion_empleador", Liq_porcentaje_liquidacion_empleador)
-
-
-                            /* CALCULAR VALOR TOTAL A LIQUIDAR EMPLEADOR */
-                            liq_valor_empleador = entityLiquidationEmpleador(data.salario_empleado, Liq_porcentaje_liquidacion_empleador, liq_dias_empleador);
-                            console.log("liq_valor_empleador", liq_valor_empleador)
-
-
-                            /* SE LLAMA FUNCION PARA TRAER LAS ULTIMAS INCAPACIDADES DEL USER */
-                            const data_incapacidades_liquidadas = await getUltimasIncapacidadesIdEmpleado(id_empleado);
-                            console.log("data_incapacidades_liquidadas", data_incapacidades_liquidadas)
-
-
-                            /* SE GUARDAN LAS FECHAS EN CONSTANTES PARA LUEGO REALIZAR VALIDACIONES */
-                            const fecha_inicio_incapacidad_anterior = data_incapacidades_liquidadas?.fecha_inicio_incapacidad
-                            const fecha_final_incapacidad_anterior =  data_incapacidades_liquidadas?.fecha_final_incapacidad 
-                            const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad);
-                            const fecha_final_incapacidad_liquidar = formatDate2(data.fecha_final_incapacidad);
-
-                            console.log("fecha_inicio_incapacidad_anterior", fecha_inicio_incapacidad_anterior)
-                            console.log("fecha_final_incapacidad_anterior", fecha_final_incapacidad_anterior)
-                            console.log("fecha_inicial_incapacidad_liquidar", fecha_inicial_incapacidad_liquidar)
-                            console.log("fecha_final_incapacidad_liquidar", fecha_final_incapacidad_liquidar)
-
-
-
-                             /* FUNCION PARA  VALIDACION DE FECHAS - CALCULAR NUMERO DE DÍAS A LIQUIDAR */
-                            const diasALiquidar = calcularDiasLiquidar(
-                                fecha_inicio_incapacidad_anterior,
-                                fecha_final_incapacidad_anterior,
-                                fecha_inicial_incapacidad_liquidar,
-                                fecha_final_incapacidad_liquidar
-                            );
-
-                            console.log("Calculo de dias a liquidar: ", diasALiquidar)
-                
-
-
-                            /* DIAS A LIQUIDAR EPS  */
-                            liq_dias_eps = diasALiquidar - liq_dias_empleador
-                            console.log("Días a liquidar EPS",liq_dias_eps )
-
-                            console.log("LIQUIDACION PORCENTAJE LIQUIDACION EPS: ", Liq_porcentaje_liquidacion_eps)
-
-                            
-
-                            /* CALCULAR VALOR TOTAL A LIQUIDAR EPS */
-                            liq_valor_eps = entityLiquidation(data.salario_empleado, politicaAplicada.porcentaje_liquidacion_eps, liq_dias_eps);
-
-
-                            /* CONSTANTES PARA ACTUALIZAR LA BASE DE DATOS */
-                            const upd_liq_dias_empleador = liq_dias_empleador
-                            const upd_liq_dias_eps = liq_dias_eps
-                            const upd_liq_dias_arl = liq_dias_arl
-                            const upd_liq_dias_fondo_pensiones = liq_dias_fondo
-                            const upd_liq_dias_eps_fondo_pensiones = liq_dias_eps_fondo
-                            const upd_Liq_porcentaje_liquidacion_empleador = Liq_porcentaje_liquidacion_empleador
-                            const upd_Liq_porcentaje_liquidacion_eps = politicaAplicada.porcentaje_liquidacion_eps
-                            const upd_Liq_porcentaje_liquidacion_arl = Liq_porcentaje_liquidacion_arl
-                            const upd_Liq_porcentaje_liquidacion_fondo_pensiones = Liq_porcentaje_liquidacion_fondo_pensiones
-                            const upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones = Liq_porcentaje_liquidacion_eps_fondo_pensiones
-                            const upd_liq_valor_empleador = liq_valor_empleador
-                            const upd_liq_valor_eps = liq_valor_eps
-                            const upd_liq_valor_arl = liq_valor_arl
-                            const upd_liq_valor_fondo_pensiones = liq_valor_fondo_pensiones
-                            const upd_liq_valor_eps_fondo_pensiones = liq_valor_eps_fondo_pensiones
-                            const upd_dias_Laborados = dias_laborados
-                            const upd_id_liquidacion = id_liquidacion
-
-
-                            console.log("")
-                            console.log("upd_liq_dias_empleador", upd_liq_dias_empleador)
-                            console.log("upd_liq_dias_eps", upd_liq_dias_eps)
-                            console.log("upd_liq_dias_arl", upd_liq_dias_arl)
-                            console.log("upd_liq_dias_fondo_pensiones", upd_liq_dias_fondo_pensiones)
-                            console.log("upd_liq_dias_eps_fondo_pensiones", upd_liq_dias_eps_fondo_pensiones)
-                            console.log("upd_Liq_porcentaje_liquidacion_empleador", upd_Liq_porcentaje_liquidacion_empleador)
-                            console.log("upd_Liq_porcentaje_liquidacion_eps", upd_Liq_porcentaje_liquidacion_eps)
-                            console.log("upd_Liq_porcentaje_liquidacion_arl", upd_Liq_porcentaje_liquidacion_arl)
-                            console.log("upd_Liq_porcentaje_liquidacion_fondo_pensiones", upd_Liq_porcentaje_liquidacion_fondo_pensiones)
-                            console.log("upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones", upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones)
-                            console.log("upd_liq_valor_empleador", upd_liq_valor_empleador)
-                            console.log("upd_liq_valor_eps", upd_liq_valor_eps)
-                            console.log("upd_liq_valor_arl", upd_liq_valor_arl)
-                            console.log("upd_liq_valor_fondo_pensiones", upd_liq_valor_fondo_pensiones)
-                            console.log("upd_liq_valor_eps_fondo_pensiones", upd_liq_valor_eps_fondo_pensiones)
-                            console.log("upd_dias_Laborados", upd_dias_Laborados)
-                            console.log("upd_id_liquidacion", upd_id_liquidacion)
-                            console.log("")
-
-
-
-
-                            /* ACTUALIZAR TABLA LIQUIDACION CON DATOS OBTENIDOS DE PRORROGA */
-                            const updateSettlementTableLiq = await updateSettlementTable(
-                                upd_liq_dias_empleador,
-                                upd_liq_dias_eps,
-                                upd_liq_dias_arl,
-                                upd_liq_dias_fondo_pensiones,
-                                upd_liq_dias_eps_fondo_pensiones,
-                                upd_Liq_porcentaje_liquidacion_empleador,
-                                upd_Liq_porcentaje_liquidacion_eps,
-                                upd_Liq_porcentaje_liquidacion_arl,
-                                upd_Liq_porcentaje_liquidacion_fondo_pensiones,
-                                upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,
-                                upd_liq_valor_empleador,
-                                upd_liq_valor_eps,
-                                upd_liq_valor_arl,
-                                upd_liq_valor_fondo_pensiones,
-                                upd_liq_valor_eps_fondo_pensiones,
-                                upd_dias_Laborados,
-                                upd_id_liquidacion
-                                );
-
-
-                            console.log("DATOS ACTUALIZADOS, INCAPACIDAD LIQUIDADA: ", updateSettlementTableLiq);
-
-                            const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
-                            console.log("ACTUALIZADO, SIN PRORROGA");
-                            return res.json({ message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte del empleador: ${liq_dias_empleador}. Días a liquidar por parte de EPS: ${liq_dias_eps}` });
-
-                            
-                        }
                         
+                        /* DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIROR */
+                        console.log("DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIROR", datosIncapacidadProrroga.dias_liquidables_totales)
+
+                        /* SE REALIZA LA SUMATORIA DE LOS DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIOR CON LOS DÍAS LIQUIDABLE DE LA NUEVA INCAPACIDAD */
+                        const sumatoria_incapacidades = total_dias_liquidar + datosIncapacidadProrroga.dias_liquidables_totales
+                        console.log("ESTA ES LA SUMATORIA TOTAL DE LAS INCAPACIDADES ANTERIROR Y POSTERIROR ->:  ", sumatoria_incapacidades)
+
                     }
 
 
-              }
-              break;
-          
-            case 'ARL':
-            // Podrías duplicar o ajustar el bloque según lo que cambie con ARL
-            break;
+                    /* LIQUIDACION SIN PRORROGA */
+                    if (liq_prorroga === 'NO') {
 
 
-            default:
-              // otros casos
-              break;
-          }
-          
+                        /* PORCENTAJE A LIQUIDAR DEL EMPLEADOR SEGUN POLITICAS */
+                        Liq_porcentaje_liquidacion_empleador = parseFloat(politicaAplicada.porcentaje_liquidacion_empleador) || 0;
+
+                        console.log("Liq_porcentaje_liquidacion_empleador", Liq_porcentaje_liquidacion_empleador);
+
+
+                        /* FUNCION QUE TRAAE LA ULTIMA INCAPACIDAD DEL EMPLEADO */
+                        const data_incapacidades_liquidadas = await getUltimasIncapacidadesIdEmpleado(id_empleado);
+                        console.log("data_incapacidades_liquidadas", data_incapacidades_liquidadas);
+
+
+                        /* TRAER LAS FECHAS DE LA INCAPACIDAD ANTERIOR Y LA NUEVA INCAPACIDAD */
+                        const fecha_inicio_incapacidad_anterior = data_incapacidades_liquidadas?.fecha_inicio_incapacidad;
+                        const fecha_final_incapacidad_anterior = data_incapacidades_liquidadas?.fecha_final_incapacidad;
+                        const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad);
+                        const fecha_final_incapacidad_liquidar = formatDate2(data.fecha_final_incapacidad);
+
+                        console.log("fecha_inicio_incapacidad_anterior", fecha_inicio_incapacidad_anterior);
+                        console.log("fecha_final_incapacidad_anterior", fecha_final_incapacidad_anterior);
+                        console.log("fecha_inicial_incapacidad_liquidar", fecha_inicial_incapacidad_liquidar);
+                        console.log("fecha_final_incapacidad_liquidar", fecha_final_incapacidad_liquidar);
+
+
+                        /* CONSTRUCCION DEL OBJETO PARA VALIDAR DIAS */
+                        const incapacidadA = {
+                            fecha_inicio_incapacidad: fecha_inicio_incapacidad_anterior,
+                            fecha_final_incapacidad: fecha_final_incapacidad_anterior
+                        };
+                        const incapacidadB = {
+                            fecha_inicio_incapacidad: fecha_inicial_incapacidad_liquidar,
+                            fecha_final_incapacidad: fecha_final_incapacidad_liquidar
+                        };
+
+
+                        /* CALCULAR LOS DÍAS UNICOS NO REPETIDOS*/
+                        const diasNoRepetidos = obtenerDiasNoRepetidos(incapacidadA, incapacidadB);
+                        console.log("FUNCION DIAS NO REPETIDOS:", diasNoRepetidos);
+
+
+                        /* CALCULA EL NUMERO DE DÁIS ALIQUIDAR POR PARTE DEL EMPLEADOR */
+                        const liq_dias_empleador = Math.min(diasNoRepetidos.length, 2);
+                        console.log("liq_dias_empleador", liq_dias_empleador);
+
+
+                        /* CALCULA EL NUMERO DE DIAS A LIQUIDAR POR PARTE DE LA EPS SIN DÍAS NEGATIVOS */
+                        const liq_dias_eps = Math.max(0, diasNoRepetidos.length - liq_dias_empleador);
+                        console.log("liq_dias_eps", liq_dias_eps);
+
+                        
+                        /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
+                        Liq_porcentaje_liquidacion_eps = parseFloat( politicaAplicada.porcentaje_liquidacion_eps  ) || 0;
+                        console.log("Liq_porcentaje_liquidacion_eps", Liq_porcentaje_liquidacion_eps);
+
+
+                        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EMPLEADOR */
+                        const liq_valor_empleador = entityLiquidationEmpleador(
+                            data.salario_empleado,
+                            Liq_porcentaje_liquidacion_empleador,
+                            liq_dias_empleador
+                        );
+                        console.log("liq_valor_empleador", liq_valor_empleador);
+
+
+                        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS  */
+                        const liq_valor_eps = entityLiquidation(
+                            data.salario_empleado,
+                            Liq_porcentaje_liquidacion_eps,
+                            liq_dias_eps
+                        );
+                        console.log("liq_valor_eps", liq_valor_eps);
+
+                        total_dias_liquidar = liq_dias_empleador + liq_dias_eps
+                        console.log("LOS DÍAS TOTALES A LIQUIDAR SON: ", total_dias_liquidar)
+
+                        /* SE RECUPERAN DATOS PARA INGRESAR A LA EPS */
+                        const upd_liq_dias_empleador = liq_dias_empleador;
+                        const upd_liq_dias_eps = liq_dias_eps;
+                        const upd_liq_dias_arl = liq_dias_arl;
+                        const upd_liq_dias_fondo_pensiones = liq_dias_fondo;
+                        const upd_liq_dias_eps_fondo_pensiones = liq_dias_eps_fondo;
+                        const upd_Liq_porcentaje_liquidacion_empleador = Liq_porcentaje_liquidacion_empleador;
+                        const upd_Liq_porcentaje_liquidacion_eps = Liq_porcentaje_liquidacion_eps;
+                        const upd_Liq_porcentaje_liquidacion_arl = Liq_porcentaje_liquidacion_arl;
+                        const upd_Liq_porcentaje_liquidacion_fondo_pensiones = Liq_porcentaje_liquidacion_fondo_pensiones;
+                        const upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones = Liq_porcentaje_liquidacion_eps_fondo_pensiones;
+                        const upd_liq_valor_empleador = liq_valor_empleador;
+                        const upd_liq_valor_eps = liq_valor_eps;
+                        const upd_liq_valor_arl = liq_valor_arl;
+                        const upd_liq_valor_fondo_pensiones = liq_valor_fondo_pensiones;
+                        const upd_liq_valor_eps_fondo_pensiones = liq_valor_eps_fondo_pensiones;
+                        const upd_dias_Laborados = dias_laborados;
+                        const upd_id_liquidacion = id_liquidacion;
+                        const upd_dias_liquidables_totales = total_dias_liquidar
+
+                        /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
+                        const updateSettlementTableLiq = await updateSettlementTable(
+                            upd_liq_dias_empleador,
+                            upd_liq_dias_eps,
+                            upd_liq_dias_arl,
+                            upd_liq_dias_fondo_pensiones,
+                            upd_liq_dias_eps_fondo_pensiones,
+                            upd_Liq_porcentaje_liquidacion_empleador,
+                            upd_Liq_porcentaje_liquidacion_eps,
+                            upd_Liq_porcentaje_liquidacion_arl,
+                            upd_Liq_porcentaje_liquidacion_fondo_pensiones,
+                            upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+                            upd_liq_valor_empleador,
+                            upd_liq_valor_eps,
+                            upd_liq_valor_arl,
+                            upd_liq_valor_fondo_pensiones,
+                            upd_liq_valor_eps_fondo_pensiones,
+                            upd_dias_Laborados,
+                            upd_id_liquidacion,
+                            upd_dias_liquidables_totales
+                        );
+                        console.log("DATOS ACTUALIZADOS, INCAPACIDAD LIQUIDADA:", updateSettlementTableLiq);
+
+                        await updateDownloadStatus(id_historial);
+                        console.log("ACTUALIZADO, SIN PRORROGA");
+
+                        return res.json({
+                            message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte del empleador: ${liq_dias_empleador}. Días a liquidar por parte de EPS: ${liq_dias_eps}`
+                        });
+                        
+
+                    }
+
+
+                break;
+
+
+                /* ARL */
+                case 'ARL':
+                    
+                    if(liq_prorroga === 'NO'){
+
+                        /* SE CALCULA LA CANTIDAD DE DIAS A LIQUIDAR POR PARTE DE ARL */
+                        liq_dias_arl = cantidad_dias
+                        console.log("DIAS A LIQUIDAR ARL: ", liq_dias_arl)
+
+
+                        /* CALCULAR EL PORCENTAJE A LIQUIDAR */
+                        Liq_porcentaje_liquidacion_arl = parseFloat(politicaAplicada.porcentaje_liquidacion_arl) || 0;
+                        console.log("PORCENTAJE A LIQUIDAR ARL: ", Liq_porcentaje_liquidacion_arl)
+
+
+                        /* CALCULAR VALOR TOTAL A LIQUIDAR ARL */
+                        liq_valor_arl = entityLiquidationEmpleador(data.salario_empleado, Liq_porcentaje_liquidacion_arl, liq_dias_arl);
+
+
+                        /* ACTUALIZAR TABLA LIQUIDACION */
+                        const updateSettlementTableLiqEmpleador = await updateSettlementTableEmpleador(
+                            liq_dias_empleador,
+                            liq_dias_eps,
+                            liq_dias_arl,
+                            liq_dias_fondo,
+                            liq_dias_eps_fondo,
+                            Liq_porcentaje_liquidacion_empleador,
+                            Liq_porcentaje_liquidacion_eps,
+                            Liq_porcentaje_liquidacion_arl,
+                            Liq_porcentaje_liquidacion_fondo_pensiones,
+                            Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+                            liq_valor_empleador,
+                            liq_valor_eps,
+                            liq_valor_arl,
+                            liq_valor_fondo_pensiones,
+                            liq_valor_eps_fondo_pensiones,
+                            dias_laborados,
+                            id_liquidacion
+                        );
+
+
+                        console.log("SALARIO:  ", data.salario_empleado)
+                        console.log("NUMERO DE DÍAS A LIQUIDAR ARL: ", liq_dias_arl)
+                        console.log("PORCENTAJE A LIQUIDAR ARL: ", Liq_porcentaje_liquidacion_arl)
+                        console.log("VALOR TOTAL A LIQUIDAR ARL: ", liq_valor_arl)
+                        console.log("INCAPACIDAD ACTUALIZADA: ", updateSettlementTableLiqEmpleador)
+
+                        const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
+
+                        console.log("ACTUALIZADO, SIN PRORROGA");
+                        return res.json({ message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte de ARL : ${liq_dias_arl}.` });
+
+                    }
+                    
+                break;
+
+
+                default:
+                    // otros casos
+                    break;
+            }
+        }
+
+
+
 
 
     } catch (error) {

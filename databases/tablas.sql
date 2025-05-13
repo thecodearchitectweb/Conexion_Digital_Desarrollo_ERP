@@ -75,13 +75,14 @@ CREATE TABLE `incapacidades_historial` (
     `descripcion_subcategoria` varchar(300) DEFAULT NULL,
     `prorroga` tinyint(1) DEFAULT NULL,
     `id_empleado` int DEFAULT NULL,
+    `id_incapacidad_extension` int DEFAULT '0' COMMENT 'id de la incapacidad liquidada anterior',
     `downloaded` tinyint(1) DEFAULT '0',
     `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `fecha_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_incapacidades_historial`),
     KEY `fk_incapacidades_historial_empleado` (`id_empleado`),
     CONSTRAINT `fk_incapacidades_historial_empleado` FOREIGN KEY (`id_empleado`) REFERENCES `empleado` (`id_empleado`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+) ENGINE = InnoDB AUTO_INCREMENT = 103 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -102,6 +103,7 @@ CREATE TABLE `incapacidades_liquidacion` (
     `fecha_inicio_incapacidad` date DEFAULT NULL,
     `fecha_final_incapacidad` date DEFAULT NULL,
     `cantidad_dias` int DEFAULT NULL,
+    `dias_liquidables_totales` int DEFAULT '0',
     `codigo_categoria` varchar(300) DEFAULT NULL,
     `descripcion_categoria` varchar(300) DEFAULT NULL,
     `codigo_subcategoria` varchar(300) DEFAULT NULL,
@@ -127,19 +129,16 @@ CREATE TABLE `incapacidades_liquidacion` (
     `fecha_contratacion` date DEFAULT NULL,
     `dias_laborados` int DEFAULT NULL,
     `estado_incapacidad` varchar(300) DEFAULT NULL,
-    `downloaded` tinyint(1) DEFAULT '0',
     `id_incapacidades_historial` int DEFAULT NULL,
     `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `fecha_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `downloaded` tinyint(1) DEFAULT '0' COMMENT 'downloaded',
     PRIMARY KEY (
         `id_incapacidades_liquidacion`
     ),
     KEY `fk_incapacidades_liquidacion_incapacidades_historial` (`id_incapacidades_historial`),
     CONSTRAINT `fk_incapacidades_liquidacion_incapacidades_historial` FOREIGN KEY (`id_incapacidades_historial`) REFERENCES `incapacidades_historial` (`id_incapacidades_historial`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 42 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
-
-
-
+) ENGINE = InnoDB AUTO_INCREMENT = 91 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -155,7 +154,7 @@ CREATE TABLE `incapacidades_seguimiento` (
     ),
     KEY `fk_incapacidades_seguimiento_incapacidades_historial` (`id_incapacidades_historial`),
     CONSTRAINT `fk_incapacidades_seguimiento_incapacidades_historial` FOREIGN KEY (`id_incapacidades_historial`) REFERENCES `incapacidades_historial` (`id_incapacidades_historial`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+) ENGINE = InnoDB AUTO_INCREMENT = 107 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -256,4 +255,31 @@ CREATE TABLE `files_upload` (
     ) REFERENCES `incapacidades_liquidacion` (
         `id_incapacidades_liquidacion`
     ) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+
+
+CREATE TABLE `prorroga` (
+    `id_prorroga` int NOT NULL AUTO_INCREMENT,
+    `id_empleado` int DEFAULT NULL,
+    `id_incapacidad_prorroga` int DEFAULT NULL,
+    `fecha_inicio_prorroga` date DEFAULT NULL,
+    `fecha_final_prorroga` date DEFAULT NULL,
+    `dias_incapacidad_prorroga` int DEFAULT NULL,
+    `dias_liquidados_prorroga` int DEFAULT NULL,
+    `id_incapacidades_liquidacion` int NOT NULL,
+    `fecha_inicio` date DEFAULT NULL,
+    `fecha_final` date DEFAULT NULL,
+    `dias_incapacidad` int DEFAULT NULL,
+    `dias_liquidados` int DEFAULT NULL,
+    `sumatoria_incapacidades` bigint DEFAULT NULL,
+    PRIMARY KEY (`id_prorroga`),
+    KEY `fk_prorroga_incapacidad` (
+        `id_incapacidades_liquidacion`
+    ),
+    CONSTRAINT `fk_prorroga_incapacidad` FOREIGN KEY (
+        `id_incapacidades_liquidacion`
+    ) REFERENCES `incapacidades_liquidacion` (
+        `id_incapacidades_liquidacion`
+    ) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci

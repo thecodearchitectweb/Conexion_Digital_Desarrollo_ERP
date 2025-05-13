@@ -7,10 +7,6 @@ import {SessionManager } from "../utils/sessionManager.js"
 import { getRutaRelativa } from '../utils/rutaRelativa.js';
 
 
-
-
-
-
 import express from 'express';
 
 const app = express();

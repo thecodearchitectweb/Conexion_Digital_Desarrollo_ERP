@@ -19,7 +19,8 @@ export async function updateSettlementTable(
     liquidacion_fondo_pensiones,
     liquidacion_eps_fondo_pensiones,
     dias_laborados,
-    id_incapacidades_liquidacion
+    id_incapacidades_liquidacion,
+    dias_liquidables_totales
 ) {
     try {
         const [updateValues] = await pool.query(
@@ -41,7 +42,8 @@ export async function updateSettlementTable(
                 liquidacion_arl = ?,
                 liquidacion_fondo_pensiones = ?,
                 liquidacion_eps_fondo_pensiones = ?,
-                dias_laborados = ?
+                dias_laborados = ?,
+                dias_liquidables_totales = ?
             WHERE id_incapacidades_liquidacion = ?
             `,
             [
@@ -61,6 +63,7 @@ export async function updateSettlementTable(
                 liquidacion_fondo_pensiones,
                 liquidacion_eps_fondo_pensiones,
                 dias_laborados,
+                dias_liquidables_totales,
                 id_incapacidades_liquidacion
             ]
         );
