@@ -257,3 +257,27 @@ CREATE TABLE `files_upload` (
         `id_incapacidades_liquidacion`
     ) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+
+
+CREATE TABLE prorroga (
+    id_prorroga INT PRIMARY KEY AUTO_INCREMENT,
+    id_empleado INT DEFAULT NULL,
+    id_incapacidad_prorroga INT DEFAULT NULL,  -- ID de la incapacidad anterior (referencia opcional)
+    fecha_inicio_prorroga DATE DEFAULT NULL,
+    fecha_final_prorroga DATE DEFAULT NULL,
+    dias_incapacidad_prorroga INT DEFAULT NULL,
+    dias_liquidados_prorroga INT DEFAULT NULL,
+    id_incapacidades_liquidacion INT NOT NULL,  -- FK a incapacidad principal
+    fecha_inicio DATE DEFAULT NULL,
+    fecha_final DATE DEFAULT NULL,
+    dias_incapacidad INT DEFAULT NULL,
+    dias_liquidados INT DEFAULT NULL,
+    sumatoria_incapacidades BIGINT DEFAULT NULL,
+
+    CONSTRAINT fk_prorroga_incapacidad
+        FOREIGN KEY (id_incapacidades_liquidacion)
+        REFERENCES incapacidades_liquidacion(id_incapacidades_liquidacion)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
