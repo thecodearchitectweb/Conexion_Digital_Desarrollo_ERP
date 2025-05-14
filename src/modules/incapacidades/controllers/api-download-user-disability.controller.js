@@ -198,9 +198,23 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         /* DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIROR */
                         console.log("DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIROR", datosIncapacidadProrroga.dias_liquidables_totales)
 
+                        
                         /* SE REALIZA LA SUMATORIA DE LOS DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIOR CON LOS DÍAS LIQUIDABLE DE LA NUEVA INCAPACIDAD */
                         const sumatoria_incapacidades = total_dias_liquidar + datosIncapacidadProrroga.dias_liquidables_totales
                         console.log("ESTA ES LA SUMATORIA TOTAL DE LAS INCAPACIDADES ANTERIROR Y POSTERIROR ->:  ", sumatoria_incapacidades)
+
+
+                        /* VALIDAR POLITICAS */
+
+
+                        /* REALIZAR VALIDACION SEGUN POLITICA */
+
+
+                        /* GUARDAR DATOS EN BASE DE DATOS LIQUIDACION */
+
+
+                        /* GUARDAR DATOS EN TABLA PRORROGA */
+
 
                     }
 
