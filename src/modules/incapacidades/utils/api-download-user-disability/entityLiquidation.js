@@ -17,13 +17,16 @@ export function entityLiquidation(salario, porcentaje_liquidacion_eps, cant_dias
         // Total liquidación para la entidad (EPS)
         const total = valorPorDia * cant_dias_liq;
 
+        console.log("LIQUIDACION PARA EPS: ", "SALARIO: ",salario, "% LIQUIDACION: ", porcentaje_liquidacion_eps, "CANTIDAD DE DÍAS: ", cant_dias_liq)
+
         return parseFloat(total.toFixed(2));
     } catch (error) {
-        console.log("LIQUIDACION PARA EPS: ", salario, porcentaje_liquidacion_eps, cant_dias_liq)
+       
         console.error("Error al calcular la liquidación de la entidad EPS:", error);
         return 0;
     }
 }
+
 
 
 
