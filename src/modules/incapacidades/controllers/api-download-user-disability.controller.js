@@ -388,12 +388,12 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                             /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
                             let dias_grupo_181a540 = 0
-                            let Liq_porcentaje_liquidacion_eps_grupoC = 0
+                            let Liq_porcentaje_liquidacion_f_pension_grupoC = 0
                             let liq_valor_eps_grupoC = 0
                             let PoliticaGrupoC = 0  
 
 
-                            /* GRUPO C - 181 - 540 EPS 50% */
+                            /* GRUPO C - 181 - 540 FONDO DE PENSION 50% */
                             if(resultado.diasTramo_181a540 > 0){
 
                                 
@@ -420,17 +420,17 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                                 console.log("PoliticaGrupoC: ", PoliticaGrupoC)
                                 
                                 /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE FONDO DE PENSIONES */
-                                Liq_porcentaje_liquidacion_eps_grupoC = parseFloat( PoliticaGrupoC.porcentaje_liquidacion_fondo_pensiones  ) || 0;
-                                console.log("Liq_porcentaje_liquidacion_eps_grupoC", Liq_porcentaje_liquidacion_eps_grupoC);
+                                Liq_porcentaje_liquidacion_f_pension_grupoC = parseFloat( PoliticaGrupoC.porcentaje_liquidacion_fondo_pensiones  ) || 0;
+                                console.log("Liq_porcentaje_liquidacion_eps_grupoC", Liq_porcentaje_liquidacion_f_pension_grupoC);
 
 
                                 /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE FONDO DE PENSIONES  */
                                 liq_valor_eps_grupoC = entityLiquidation(
                                     data.salario_empleado,
-                                    Liq_porcentaje_liquidacion_eps_grupoC,
+                                    Liq_porcentaje_liquidacion_f_pension_grupoC,
                                     dias_grupo_181a540
                                 );
-                                console.log("VALOR A LIQUIDAR POR PARTE DE EPS: ", liq_valor_eps_grupoC);
+                                console.log("VALOR A LIQUIDAR POR PARTE DE FONDO DE PENSION: ", liq_valor_eps_grupoC);
 
                             }
 
@@ -445,7 +445,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                                 /* POLITICA PARA APLICAR A MAYOR 90 */ 
-                                dias_grupo_541 = resultado.diasTramo_181a540   // CONST que guarda los días reales a liquidar al 50%  
+                                dias_grupo_541 = resultado.diasTramo_541plus   // CONST que guarda los días reales a liquidar al 50%  
                                 console.log("DIAS A LIQUIDAR CON EL 50.00 %: ", dias_grupo_541)
 
 
@@ -468,7 +468,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                                 /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
-                                Liq_porcentaje_liquidacion_eps_grupoD = parseFloat( PoliticaGrupoD.porcentaje_liquidacion_eps  ) || 0;
+                                Liq_porcentaje_liquidacion_eps_grupoD = parseFloat( PoliticaGrupoD.porcentaje_liquidacion_eps_fondo_pensiones  ) || 0;
                                 console.log("Liq_porcentaje_liquidacion_eps_grupoD", Liq_porcentaje_liquidacion_eps_grupoD);
 
 
@@ -478,7 +478,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                                     Liq_porcentaje_liquidacion_eps_grupoD,
                                     dias_grupo_541
                                 );
-                                console.log("VALOR A LIQUIDAR POR PARTE DE EPS: ", liq_valor_eps_grupoC);
+                                console.log("VALOR A LIQUIDAR POR PARTE DE EPS + 540: ", liq_valor_eps_grupoD);
 
                             }
 
@@ -495,7 +495,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                             console.log("TOTAL DIAS A LIQUIDAR GRUPO C: ", dias_grupo_181a540)
-                            console.log("PORCENTAJE A LIQUIDAR GRUPO C: ", Liq_porcentaje_liquidacion_eps_grupoC)
+                            console.log("PORCENTAJE A LIQUIDAR GRUPO C: ", Liq_porcentaje_liquidacion_f_pension_grupoC)
                             console.log("VALOR TOTAL A LIQUIDAR GRUPO C: ", liq_valor_eps_grupoC)
                             console.log("ENTIDAD LIQUIDADORA: ", PoliticaGrupoC.entidad_liquidadora)
 
@@ -507,7 +507,79 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
 
-                            /* SE CALCULA EL TOTAL A LIQUIDAR POR PARTE DE LA ENTIDAD */
+                            /* GUARDAR LOS DATOS EN LA BASE DE DATOS VTABLA LIQUIDACION */
+                            /* SE MONTAN CONST PARA QUE NO VARIE LA INFORMACION Y SE ENVIA A UNA FUNCION PARA ACTUALIZAR LA INFORMACION */
+                            const upd_liq_dias_empleador = 0;
+                            const upd_liq_dias_eps = liquidacion_dias_grupo_menor_90 + dias_grupo_91a180;
+                            const upd_liq_dias_arl = 0;
+                            const upd_liq_dias_fondo_pensiones = dias_grupo_181a540;
+                            const upd_liq_dias_eps_fondo_pensiones = dias_grupo_541;
+
+                            const upd_Liq_porcentaje_liquidacion_empleador = 0;
+                            const upd_Liq_porcentaje_liquidacion_eps = Liq_porcentaje_liquidacion_eps_grupoA || 50;
+                            const upd_Liq_porcentaje_liquidacion_arl = 0;
+                            const upd_Liq_porcentaje_liquidacion_fondo_pensiones = Liq_porcentaje_liquidacion_f_pension_grupoC;
+                            const upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones = Liq_porcentaje_liquidacion_eps_grupoD;
+
+                            const upd_liq_valor_empleador = 0;
+                            const upd_liq_valor_eps = liq_valor_eps_grupoA +liq_valor_eps_grupoB;
+                            const upd_liq_valor_arl = 0;
+                            const upd_liq_valor_fondo_pensiones = liq_valor_eps_grupoC;
+                            const upd_liq_valor_eps_fondo_pensiones = liq_valor_eps_grupoD;
+
+                            const upd_dias_Laborados = parametroGrupoA.dias_laborados;
+                            const upd_id_liquidacion = id_liquidacion;
+                            const upd_dias_liquidables_totales = diasNoRepetidos.length;
+
+
+
+                            console.log("  ", )
+                            console.log(" upd_liq_dias_empleador ", upd_liq_dias_empleador)
+                            console.log(" upd_liq_dias_eps ", upd_liq_dias_eps)
+                            console.log(" upd_liq_dias_arl ", upd_liq_dias_arl)
+                            console.log(" upd_liq_dias_fondo_pensiones ", upd_liq_dias_fondo_pensiones)
+                            console.log(" upd_liq_dias_eps_fondo_pensiones ", upd_liq_dias_eps_fondo_pensiones)
+                            console.log("  ", )
+                            console.log(" upd_Liq_porcentaje_liquidacion_empleador ", upd_Liq_porcentaje_liquidacion_empleador)
+                            console.log(" upd_Liq_porcentaje_liquidacion_eps ",upd_Liq_porcentaje_liquidacion_eps )
+                            console.log(" upd_Liq_porcentaje_liquidacion_arl ",upd_Liq_porcentaje_liquidacion_arl )
+                            console.log(" upd_Liq_porcentaje_liquidacion_fondo_pensiones ", upd_Liq_porcentaje_liquidacion_fondo_pensiones)
+                            console.log(" upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones ", upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones)
+                            console.log("  ", )
+                            console.log(" upd_liq_valor_empleador ", upd_liq_valor_empleador)
+                            console.log(" upd_liq_valor_eps ", upd_liq_valor_eps)
+                            console.log(" upd_liq_valor_arl ",upd_liq_valor_arl )
+                            console.log(" upd_liq_valor_fondo_pensiones ",upd_liq_valor_fondo_pensiones )
+                            console.log(" upd_liq_valor_eps_fondo_pensiones ", upd_liq_valor_eps_fondo_pensiones)
+                            console.log("  ", )
+                            console.log(" upd_dias_Laborados ",upd_dias_Laborados )
+                            console.log(" upd_id_liquidacion ", upd_id_liquidacion)
+                            console.log(" upd_dias_liquidables_totales ", upd_dias_liquidables_totales)
+                            console.log("  ", )
+
+                            /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
+                            const updateSettlementTableLiq = await updateSettlementTable(
+                                upd_liq_dias_empleador,
+                                upd_liq_dias_eps,
+                                upd_liq_dias_arl,
+                                upd_liq_dias_fondo_pensiones,
+                                upd_liq_dias_eps_fondo_pensiones,
+                                upd_Liq_porcentaje_liquidacion_empleador,
+                                upd_Liq_porcentaje_liquidacion_eps,
+                                upd_Liq_porcentaje_liquidacion_arl,
+                                upd_Liq_porcentaje_liquidacion_fondo_pensiones,
+                                upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+                                upd_liq_valor_empleador,
+                                upd_liq_valor_eps,
+                                upd_liq_valor_arl,
+                                upd_liq_valor_fondo_pensiones,
+                                upd_liq_valor_eps_fondo_pensiones,
+                                upd_dias_Laborados,
+                                upd_id_liquidacion,
+                                upd_dias_liquidables_totales
+                            );
+                            console.log("DATOS ACTUALIZADOS, INCAPACIDAD LIQUIDADA CON PRORROGA:", updateSettlementTableLiq);
+
 
 
 
