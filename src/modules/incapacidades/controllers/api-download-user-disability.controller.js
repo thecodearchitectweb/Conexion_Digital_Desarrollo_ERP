@@ -7,7 +7,7 @@ import { getUltimasIncapacidades, getUltimasIncapacidadesIdEmpleado } from '../r
 import { getIdEmpleadoByHistorial } from '../repositories/api-download-user-disability/getIdEmpleadoByHistorial.js';
 import { getDisabilityDischargeHistory } from '../repositories/api-download-user-disability/getDisabilityDischargeHistory.js';
 import { updateLiquidacoinTableIncapacity, updateDownloadStatus } from '../repositories/api-download-user-disability/updateLiquidacoinTableIncapacity.js';
-import { getPoliticaByParametros, getPoliticaByParametrosProrroga, getPoliticaGrupoA, getPoliticaGrupoB } from '../repositories/api-download-user-disability/getPoliticaByParametros.js';
+import { getPoliticaByParametros, getPoliticaByParametrosProrroga, getPoliticaGrupoA, getPoliticaGrupoB, getPoliticaGrupoC, getPoliticaGrupoD } from '../repositories/api-download-user-disability/getPoliticaByParametros.js';
 import { formatDate, formatDate2 } from '../utils/formatDate/formatDate.js';
 import { validarProrroga } from '../utils/api-download-user-disability/validarProrroga.js';
 import { updateDisabilitySettlementExtensionLiq, updateDisabilitySettlementExtensionHis } from '../repositories/api-download-user-disability/updateDisabilitySettlementExtension.js';
@@ -233,6 +233,29 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         let liquidacion_dias_grupoB  = 0
                         let tipo_incapacidad_grupoB = parametroGrupoB.tipo_incapacidad
 
+                        /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD GRUPO B*/
+                        const parametroGrupoC = transformarParametrosPolitica(data);
+
+                        let cumplimiento_politica_grupoC = 'SI'
+                        let prorroga_grupoC = 'SI'
+                        let dias_laborados_conversion_grupoC = parametroGrupoC.dias_laborados_conversion
+                        let salario_conversion_grupoC = parametroGrupoC.salario
+                        let liquidacion_dias_grupoC  = 0
+                        let tipo_incapacidad_grupoC = parametroGrupoC.tipo_incapacidad
+
+
+                        /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD GRUPO B*/
+                        const parametroGrupoD = transformarParametrosPolitica(data);
+
+                        let cumplimiento_politica_grupoD = 'SI'
+                        let prorroga_grupoD = 'SI'
+                        let dias_laborados_conversion_grupoD = parametroGrupoD.dias_laborados_conversion
+                        let salario_conversion_grupoD = parametroGrupoD.salario
+                        let liquidacion_dias_grupoD  = 0
+                        let tipo_incapacidad_grupoD = parametroGrupoD.tipo_incapacidad
+
+
+
 
 
                         /* VALIDACION PARA VERIFICAR SI HAY PRORROGA CONTINUA, EN CASO DE HABER PRORROGA TRAER LOS DATOS Y PROCESARLOS. */
@@ -250,21 +273,29 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             console.log("RESULTADO: ", resultado)
 
 
-                            /* DIVIDIR EL GRUPO EN GRUPO < 90 - GRUPO A*/
-                            if(resultado.agregadosEnMenor90 > 0 ){
+
+
+                            /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
+                            let liquidacion_dias_grupo_menor_90 = 0
+                            let Liq_porcentaje_liquidacion_eps_grupoA = 0
+                            let liq_valor_eps_grupoA = 0
+                            let PoliticaGrupoA = 0
+
+                            /* GRUPO A -  3 - 90  EPS 66.67%*/
+                            if(resultado.diasTramo_1a90 > 0 ){
 
                                 /* POLITICA PARA APLICAR A MENOR 90 */ 
-                                const liquidacion_dias_grupo_menor_90 = resultado.agregadosEnMenor90   // CONST que guarda los días reales a liquidar al 66%  
+                                liquidacion_dias_grupo_menor_90 = resultado.diasTramo_1a90   // CONST que guarda los días reales a liquidar al 66%  
                                 console.log("DIAS A LIQUIDAR CON EL 66.66 %: ", liquidacion_dias_grupo_menor_90)
 
 
 
                                 /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
-                                const PoliticaGrupoA = await getPoliticaGrupoA(
+                                PoliticaGrupoA = await getPoliticaGrupoA(
                                     prorroga,
                                     dias_laborados_conversion_grupoA,
                                     salario_conversion_grupoA,
-                                    liquidacion_dias_grupoA = resultado.agregadosEnMenor90,
+                                    liquidacion_dias_grupoA = resultado.diasTramo_1a90,
                                     tipo_incapacidad
                                 );
 
@@ -281,12 +312,12 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                                 /* CALCULOS PARA LA LIQUIDACION CORRESPONDIENTE DE GRUPO A */
 
                                 /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
-                                let Liq_porcentaje_liquidacion_eps_grupoA = parseFloat( PoliticaGrupoA.porcentaje_liquidacion_eps  ) || 0;
+                                Liq_porcentaje_liquidacion_eps_grupoA = parseFloat( PoliticaGrupoA.porcentaje_liquidacion_eps  ) || 0;
                                 console.log("Liq_porcentaje_liquidacion_eps", Liq_porcentaje_liquidacion_eps);
 
 
                                 /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS  */
-                                const liq_valor_eps_grupoA = entityLiquidation(
+                                liq_valor_eps_grupoA = entityLiquidation(
                                     data.salario_empleado,
                                     Liq_porcentaje_liquidacion_eps_grupoA,
                                     liquidacion_dias_grupo_menor_90
@@ -297,87 +328,190 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             }
 
 
-                            /* DIVIDIR EL GRUPO EN GRUPO > 90 - GRUPO B */
-                            if(resultado.diasEnMayor90 > 0){
+                            /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
+                            let dias_grupo_91a180  = 0
+                            let Liq_porcentaje_liquidacion_eps_grupoB = 0
+                            let liq_valor_eps_grupoB = 0
+                            let PoliticaGrupoB = 0
+
+                            /* GRUPO B -  91 - 180 EPS 50% */
+                            if(resultado.diasTramo_91a180 > 0){
                                 
                                 /* POLITICA PARA APLICAR A MAYOR 90 */ 
-                                const liquidacion_dias_grupo_mayor_90 = resultado.diasEnMayor90   // CONST que guarda los días reales a liquidar al 50%  
-                                console.log("DIAS A LIQUIDAR CON EL 50.00 %: ", liquidacion_dias_grupo_mayor_90)
+                                dias_grupo_91a180 = resultado.diasTramo_91a180   // CONST que guarda los días reales a liquidar al 50%  
+                                console.log("DIAS A LIQUIDAR CON EL 50.00 %: ", dias_grupo_91a180)
+
+
+                                /* CALCULAR DIAS PARA VERIFICAR POLITICAS CON MÁS PRECISION */
+                                liquidacion_dias_grupoB = resultado.sumatoriaPrevia + resultado.diasTramo_1a90
 
 
                                 /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
-                                const PoliticaGrupoB = await getPoliticaGrupoB(
+                                PoliticaGrupoB = await getPoliticaGrupoB(
                                     prorroga_grupoB,
                                     dias_laborados_conversion_grupoB,
                                     salario_conversion_grupoB,
-                                    liquidacion_dias_grupoB = resultado.sumatoriaTotal,  // SE PSA EL TOTAL DE LOS DÍAS A SUMADOS A LIQUIDAR PARA VERIFICAR LA POLITICA CORRECTA
+                                    liquidacion_dias_grupoB,
                                     tipo_incapacidad_grupoB
                                 );
 
+                                console.log("POLITICA SELECCIONADA  ---------> :" ,PoliticaGrupoB )
                                 console.log("cumplimiento_politica_grupoB", cumplimiento_politica_grupoB )
                                 console.log("prorroga_grupoB", prorroga_grupoB)
                                 console.log("dias_laborados_conversion_grupoB",dias_laborados_conversion_grupoB )
                                 console.log("salario_conversion_grupoB",salario_conversion_grupoB )
                                 console.log("liquidacion_dias_grupoB", liquidacion_dias_grupoB)
                                 console.log("tipo_incapacidad_grupoB", tipo_incapacidad_grupoB)
+                                console.log("PoliticaGrupoB.entidad_liquidadora", PoliticaGrupoB.entidad_liquidadora)
                                 console.log("RESULTADO DE LA CONSULTA A LA BASE DE LA POLITICA GRUPO B: ", PoliticaGrupoB)
 
 
-                                /* SE REALIZA VERIFICACION PARA SABER QUE ENTIDAD ES LA QUE FACTURA DEPENDIENDO LA CANTIDAD DE DÍAS */
-                                switch(PoliticaGrupoB.entidad_liquidadora){
-                                   
-                                    case 'EPS':
-
-                                        /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE LA ENTIDAD ENCARGADA */
-                                        let Liq_porcentaje_liquidacion_eps_grupoB = parseFloat( PoliticaGrupoB.porcentaje_liquidacion_eps) || 0;
-                                        console.log("Liq_porcentaje_liquidacion_eps", Liq_porcentaje_liquidacion_eps_grupoB);
+                                /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
+                                Liq_porcentaje_liquidacion_eps_grupoB = parseFloat( PoliticaGrupoB.porcentaje_liquidacion_eps  ) || 0;
+                                console.log("Liq_porcentaje_liquidacion_eps_grupoB", Liq_porcentaje_liquidacion_eps_grupoB);
 
 
-                                        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS GRUPO B */
-                                        const liq_valor_eps_grupoB = entityLiquidation(
-                                            data.salario_empleado,
-                                            Liq_porcentaje_liquidacion_eps_grupoB,
-                                            liquidacion_dias_grupo_mayor_90
-                                        );
-                                        console.log("VALOR A LIQUIDAR POR PARTE DE EPS GRUPO B: ", liq_valor_eps_grupoB);
+                                /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS  */
+                                liq_valor_eps_grupoB = entityLiquidation(
+                                    data.salario_empleado,
+                                    Liq_porcentaje_liquidacion_eps_grupoB,
+                                    dias_grupo_91a180
+                                );
+                                console.log("VALOR A LIQUIDAR POR PARTE DE EPS 50%: ", liq_valor_eps_grupoB);
 
 
-
-                                    break;
-
-                                    case 'FONDO_PENSIONES':
-
-                                        /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE LA ENTIDAD ENCARGADA */
-                                        let Liq_porcentaje_liquidacion_fondo_pensione_grupoB = parseFloat( PoliticaGrupoB.porcentaje_liquidacion_eps) || 0;
-                                        console.log("Liq_porcentaje_liquidacion_eps", Liq_porcentaje_liquidacion_fondo_pensione_grupoB);
-
-
-                                        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS GRUPO B */
-                                        const liq_valor_fondo_pensione_grupoB = entityLiquidation(
-                                            data.salario_empleado,
-                                            Liq_porcentaje_liquidacion_eps_grupoB,
-                                            liquidacion_dias_grupo_mayor_90
-                                        );
-                                        console.log("VALOR A LIQUIDAR POR PARTE DE FONDO DE PENSIONES GRUPO B: ", liq_valor_fondo_pensione_grupoB);
-
-                                    break;
-                                }
-
-
-                                const sumaTotalLiquidacionEntidadLiquidadora = 
+                                const sumaTotalLiquidacionEntidadLiquidadora = 0
                                 
-
-
-
                                 
                             }
+
+
+                            /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
+                            let dias_grupo_181a540 = 0
+                            let Liq_porcentaje_liquidacion_eps_grupoC = 0
+                            let liq_valor_eps_grupoC = 0
+                            let PoliticaGrupoC = 0  
+
+
+                            /* GRUPO C - 181 - 540 EPS 50% */
+                            if(resultado.diasTramo_181a540 > 0){
+
+                                
+                                /* POLITICA PARA APLICAR A MAYOR 90 */ 
+                                dias_grupo_181a540 = resultado.diasTramo_181a540   // CONST que guarda los días reales a liquidar al 50%  
+                                console.log("DIAS A LIQUIDAR CON EL 50.00 %: ", dias_grupo_181a540)
+
+
+                                /* CALCULAR DIAS PARA VERIFICAR POLITICAS CON MÁS PRECISION */
+                                liquidacion_dias_grupoC = resultado.sumatoriaPrevia + resultado.diasTramo_1a90 + resultado.diasTramo_91a180 + resultado.diasTramo_181a540
+                                console.log("LIQUIDACION DIAS GRUPO C: ", liquidacion_dias_grupoC)
+
+
+                                /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+                                PoliticaGrupoC = await getPoliticaGrupoC(
+                                    prorroga_grupoC,
+                                    dias_laborados_conversion_grupoC,
+                                    salario_conversion_grupoC,
+                                    liquidacion_dias_grupoC,
+                                    tipo_incapacidad_grupoC
+                                );
+
+
+                                console.log("PoliticaGrupoC: ", PoliticaGrupoC)
+                                
+                                /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE FONDO DE PENSIONES */
+                                Liq_porcentaje_liquidacion_eps_grupoC = parseFloat( PoliticaGrupoC.porcentaje_liquidacion_fondo_pensiones  ) || 0;
+                                console.log("Liq_porcentaje_liquidacion_eps_grupoC", Liq_porcentaje_liquidacion_eps_grupoC);
+
+
+                                /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE FONDO DE PENSIONES  */
+                                liq_valor_eps_grupoC = entityLiquidation(
+                                    data.salario_empleado,
+                                    Liq_porcentaje_liquidacion_eps_grupoC,
+                                    dias_grupo_181a540
+                                );
+                                console.log("VALOR A LIQUIDAR POR PARTE DE EPS: ", liq_valor_eps_grupoC);
+
+                            }
+
+
+                            let dias_grupo_541 = 0
+                            let Liq_porcentaje_liquidacion_eps_grupoD = 0
+                            let liq_valor_eps_grupoD = 0
+                            let PoliticaGrupoD = 0  
+
+                            /* GRUPO D - 541 +  50%*/
+                            if(resultado.diasTramo_541plus > 0){
+
+
+                                /* POLITICA PARA APLICAR A MAYOR 90 */ 
+                                dias_grupo_541 = resultado.diasTramo_181a540   // CONST que guarda los días reales a liquidar al 50%  
+                                console.log("DIAS A LIQUIDAR CON EL 50.00 %: ", dias_grupo_541)
+
+
+                                /* CALCULAR DIAS PARA VERIFICAR POLITICAS CON MÁS PRECISION */
+                                liquidacion_dias_grupoD = resultado.sumatoriaPrevia + resultado.diasTramo_1a90 + resultado.diasTramo_91a180 + resultado.diasTramo_181a540 + resultado.diasTramo_541plus
+                                console.log("LIQUIDACION DIAS GRUPO D: ", liquidacion_dias_grupoD)
+
+
+                                /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+                                PoliticaGrupoD = await getPoliticaGrupoD(
+                                    prorroga_grupoD,
+                                    dias_laborados_conversion_grupoD,
+                                    salario_conversion_grupoD,
+                                    liquidacion_dias_grupoD,
+                                    tipo_incapacidad_grupoD
+                                );
+
+
+                                console.log("PoliticaGrupoD: ", PoliticaGrupoD)
+
+
+                                /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
+                                Liq_porcentaje_liquidacion_eps_grupoD = parseFloat( PoliticaGrupoD.porcentaje_liquidacion_eps  ) || 0;
+                                console.log("Liq_porcentaje_liquidacion_eps_grupoD", Liq_porcentaje_liquidacion_eps_grupoD);
+
+
+                                /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE FONDO DE PENSIONES  */
+                                liq_valor_eps_grupoD = entityLiquidation(
+                                    data.salario_empleado,
+                                    Liq_porcentaje_liquidacion_eps_grupoD,
+                                    dias_grupo_541
+                                );
+                                console.log("VALOR A LIQUIDAR POR PARTE DE EPS: ", liq_valor_eps_grupoC);
+
+                            }
+
+
+                            console.log("TOTAL DIAS A LIQUIDAR GRUPO A: ", liquidacion_dias_grupo_menor_90)
+                            console.log("PORCENTAJE A LIQUIDAR GRUPO A: ", Liq_porcentaje_liquidacion_eps_grupoA)
+                            console.log("VALOR TOTAL A LIQUIDAR GRUPO A: ", liq_valor_eps_grupoA)
+                            console.log("ENTIDAD LIQUIDADORA: ", PoliticaGrupoA.entidad_liquidadora)
+
+                            console.log("TOTAL DIAS A LIQUIDAR GRUPO B: ", dias_grupo_91a180)
+                            console.log("PORCENTAJE A LIQUIDAR GRUPO B: ", Liq_porcentaje_liquidacion_eps_grupoB)
+                            console.log("VALOR TOTAL A LIQUIDAR GRUPO B: ", liq_valor_eps_grupoB)
+                            console.log("ENTIDAD LIQUIDADORA: ", PoliticaGrupoB.entidad_liquidadora)
+
+
+                            console.log("TOTAL DIAS A LIQUIDAR GRUPO C: ", dias_grupo_181a540)
+                            console.log("PORCENTAJE A LIQUIDAR GRUPO C: ", Liq_porcentaje_liquidacion_eps_grupoC)
+                            console.log("VALOR TOTAL A LIQUIDAR GRUPO C: ", liq_valor_eps_grupoC)
+                            console.log("ENTIDAD LIQUIDADORA: ", PoliticaGrupoC.entidad_liquidadora)
+
+
+                            console.log("TOTAL DIAS A LIQUIDAR GRUPO D: ", dias_grupo_541)
+                            console.log("PORCENTAJE A LIQUIDAR GRUPO D: ", Liq_porcentaje_liquidacion_eps_grupoD)
+                            console.log("VALOR TOTAL A LIQUIDAR GRUPO D: ", liq_valor_eps_grupoD)
+                            console.log("ENTIDAD LIQUIDADORA: ", PoliticaGrupoD.entidad_liquidadora)
+
 
 
                             /* SE CALCULA EL TOTAL A LIQUIDAR POR PARTE DE LA ENTIDAD */
 
 
 
-                            console.log("resultado:", resultado);
+                            //console.log("resultado:", resultado);
                         }else{
 
                             /* SE REALIZA LA SUMATORIA DE LOS DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIOR CON LOS DÍAS LIQUIDABLE DE LA NUEVA INCAPACIDAD */
