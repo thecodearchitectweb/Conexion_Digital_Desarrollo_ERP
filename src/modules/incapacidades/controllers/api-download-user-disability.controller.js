@@ -265,7 +265,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         let tipo_incapacidad_grupoD = parametroGrupoD.tipo_incapacidad
 
 
-
+                        console.log("SECCION DIVIDIDA, VERIFICACION Y LIQUIDACION SI HAY PRORROGA ACOMULADA")
 
 
                         /* VALIDACION PARA VERIFICAR SI HAY PRORROGA CONTINUA, EN CASO DE HABER PRORROGA TRAER LOS DATOS Y PROCESARLOS. */
@@ -656,7 +656,11 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                             //console.log("resultado:", resultado);
-                        }else{
+                        }
+                        
+
+                        /* VALIDACION PARA VERIFICAR SI HAY PRORROGA CONTINUA, EN CASO DE HABER PRORROGA TRAER LOS DATOS Y PROCESARLOS.*/
+                        if(!validacioTablaProrroga){
 
                             /* SE REALIZA LA SUMATORIA DE LOS DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIOR CON LOS DÍAS LIQUIDABLE DE LA NUEVA INCAPACIDAD */
                             sumatoria_incapacidades = total_dias_liquidar + datosIncapacidadProrroga.dias_liquidables_totales
@@ -668,29 +672,29 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                         /* CATOS PARA TRAER LA POLITICA ADECUADA AL PROCESO, APLICA UNCAMENTE PARA EL GRUPO MENOR A 90 DIAS */
 
-                        sumatoria_incapacidades
+                        //sumatoria_incapacidades
 
                         /* VALIDAR POLITICAS */
                         /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD*/
-                        const parametros = transformarParametrosPolitica(data);
+                        //const parametros = transformarParametrosPolitica(data);
 
                         /* CONSTANTES PARA VALIDAR POLITICAS  EN LOS DIFERENTES CASOS*/
-                        const prorroga_conversion = parametros.prorroga;
+                        //const prorroga_conversion = parametros.prorroga;
 
-                        const dias_laborados_conversion = parametros.dias_laborados_conversion;
-                        const dias_laborados = parametros.dias_laborados
+                        //const dias_laborados_conversion = parametros.dias_laborados_conversion;
+                        //const dias_laborados = parametros.dias_laborados
 
-                        const salario_conversion = parametros.salario;
+                        //const salario_conversion = parametros.salario;
 
                         //const tipo_incapacidad = "EPS";
 
                         //const cantidad_dias = parametros.dias_incapacidad;
-                        const cantidad_dias_conversion = parametros.dias_incapacidad_conversion;
+                        //const cantidad_dias_conversion = parametros.dias_incapacidad_conversion;
 
 
 
                         /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
-                        const politicaAplicada = await getPoliticaByParametrosProrroga(
+/*                         const politicaAplicada = await getPoliticaByParametrosProrroga(
                             prorroga_conversion,
                             dias_laborados_conversion,
                             salario_conversion,
@@ -706,7 +710,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         console.log("tipo_incapacidad: ", tipo_incapacidad )
                         console.log("cantidad_dias: ",cantidad_dias )
                         console.log("cantidad_dias_conversion: ", cantidad_dias_conversion )
-                        console.log("politicaAplicada: ", politicaAplicada)
+                        console.log("politicaAplicada: ", politicaAplicada) */
 
 
 
@@ -1315,6 +1319,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         }
 
 
+                        
                         /* CONDICIONAL SI NO HAY INCAPACIDAD CON PRORROGA */
                         if(!datosIncapacidadProrrogaARL){
 
