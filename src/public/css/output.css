@@ -83,6 +83,9 @@
 .left-0 {
   left: calc(var(--spacing) * 0);
 }
+.left-1 {
+  left: calc(var(--spacing) * 1);
+}
 .left-1\/2 {
   left: calc(1/2 * 100%);
 }
@@ -241,6 +244,9 @@
 }
 .ms-1 {
   margin-inline-start: calc(var(--spacing) * 1);
+}
+.ms-2 {
+  margin-inline-start: calc(var(--spacing) * 2);
 }
 .ms-2\.5 {
   margin-inline-start: calc(var(--spacing) * 2.5);
@@ -500,6 +506,9 @@
 .min-h-screen {
   min-height: 100vh;
 }
+.w-1 {
+  width: calc(var(--spacing) * 1);
+}
 .w-1\/2 {
   width: calc(1/2 * 100%);
 }
@@ -511,6 +520,9 @@
 }
 .w-1\/8 {
   width: calc(1/8 * 100%);
+}
+.w-2 {
+  width: calc(var(--spacing) * 2);
 }
 .w-2\.5 {
   width: calc(var(--spacing) * 2.5);
@@ -578,8 +590,14 @@
 .max-w-7xl {
   max-width: var(--container-7xl);
 }
+.max-w-10 {
+  max-width: calc(var(--spacing) * 10);
+}
 .max-w-10\/12 {
   max-width: calc(10/12 * 100%);
+}
+.max-w-11 {
+  max-width: calc(var(--spacing) * 11);
 }
 .max-w-11\/12 {
   max-width: calc(11/12 * 100%);
@@ -697,6 +715,10 @@
 .translate-full {
   --tw-translate-x: 100%;
   --tw-translate-y: 100%;
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
+.-translate-x-1 {
+  --tw-translate-x: calc(var(--spacing) * -1);
   translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 .-translate-x-1\/2 {

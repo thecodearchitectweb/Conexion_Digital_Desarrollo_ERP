@@ -18,9 +18,9 @@ import { calcularDiasLiquidar } from '../utils/api-download-user-disability/calc
 import { transformarParametrosPolitica } from '../utils/api-download-user-disability/transformPolicyParameters.js'
 import { uploadFilesroutes } from '../repositories/api-download-user-disability/uploadFilesroutes.js'
 import { obtenerDiasNoRepetidos, obtenerDiasEntreFechas } from '../utils/api-download-user-disability/calcularDiasLiquidar.js'
-import { getDatosIncapacidadProrroga } from '../repositories/api-download-user-disability/get_incapacidad_prorroga.js'
+import { getDatosIncapacidadProrroga, getDatosIncapacidadProrrogaARL } from '../repositories/api-download-user-disability/get_incapacidad_prorroga.js'
 import { obtenerDiasNoRepetidosProrroga } from '../services/api-download-user-disability/obtenerDiasNoRepetidos.js'
-import { buscarProrrogaConsecutiva } from '../repositories/api-download-user-disability/get_buscar_prorroga_consecutiva.js'
+import { buscarProrrogaConsecutiva, buscarProrrogaConsecutivaARL } from '../repositories/api-download-user-disability/get_buscar_prorroga_consecutiva.js'
 import { calcularDistribucionDias  } from '../services/api-download-user-disability/calcularDistribucionDiasGrupos.js'
 
 const app = express();
@@ -593,10 +593,6 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         }
 
 
-                        
-                        /*  */
-
-
 
                         /* CATOS PARA TRAER LA POLITICA ADECUADA AL PROCESO, APLICA UNCAMENTE PARA EL GRUPO MENOR A 90 DIAS */
 
@@ -795,6 +791,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                 /* ARL */
                 case 'ARL':
                     
+                    /* INCAPACIDAD ARL SIN PRORROGA */
                     if(liq_prorroga === 'NO'){
 
                         /* SE CALCULA LA CANTIDAD DE DIAS A LIQUIDAR POR PARTE DE ARL */
@@ -845,6 +842,95 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         return res.json({ message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte de ARL : ${liq_dias_arl}.` });
 
                     }
+
+
+                    if(liq_prorroga === 'SI'){
+
+                        /* TRAEMOS EL ID DE LA INCAPACIDAD EXTENSION QUE NOS DA LA TABLAHISTORIAL */
+                        const id_incapacidad_prorroga = data.id_incapacidad_extension
+                        console.log("ID INCAPACIDAD EXTENSION: ", id_incapacidad_prorroga)
+
+                        console.log("ARL PRORROGA, VALIDACION -----> 1")
+
+
+                        /* SE GENERA LA CONSULTA A LA BASE DE DATOS LIQUIDACION PARA TRAER DATOS DE LA INCAPACIDAD PRORROGA */
+                        const datosIncapacidadProrrogaARL = await getDatosIncapacidadProrrogaARL (id_incapacidad_prorroga)
+                        console.log("DATOS DE LA INCAPACIDAD PRORROGA, getDatosIncapacidadProrrogaARL: ", datosIncapacidadProrrogaARL)
+
+
+                        /* FORMATEAMOS FECHAS */
+                        const fecha_inicio_incapacidad_anterior = formatDate2(datosIncapacidadProrrogaARL.fecha_inicio_incapacidad)
+                        const fecha_final_incapacidad_anterior = formatDate2(datosIncapacidadProrrogaARL.fecha_final_incapacidad)
+                        const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad);
+                        const fecha_final_incapacidad_liquidar = formatDate2(data.fecha_final_incapacidad);
+
+                        console.log("FECHAS FORMATEADAS: ", fecha_inicio_incapacidad_anterior, " ", fecha_final_incapacidad_anterior)
+                        console.log("FECHAS FORMATEADAS: ", fecha_inicial_incapacidad_liquidar, " ", fecha_final_incapacidad_liquidar)
+
+                        
+                        /* CONSTRUCCION DEL OBJETO PARA VALIDAR DIAS  */
+                         const incapacidadAnterior = {
+                            fecha_inicio_incapacidad: fecha_inicio_incapacidad_anterior,
+                            fecha_final_incapacidad: fecha_final_incapacidad_anterior
+                        };
+                    
+                        const incapacidadNueva = {
+                            fecha_inicio_incapacidad: fecha_inicial_incapacidad_liquidar,
+                            fecha_final_incapacidad: fecha_final_incapacidad_liquidar
+                        };
+
+
+                        /* SE CALCULA CANTIDAD DE DÍAS A LIQUIDAR CON LAS FECHAS DE LA PRORROGA */
+                        const diasNoRepetidosARL = obtenerDiasNoRepetidosProrroga(incapacidadAnterior, incapacidadNueva);
+                        console.log("Días no repetidos a liquidar por prórroga NUEVA INCAPCIDAD ARL:", diasNoRepetidosARL.length);
+                    
+
+                        /* SE GUARDA LOS DÍAS REALES A LIQUIDAR */
+                        total_dias_liquidar = diasNoRepetidosARL.length
+                        const diasNoRepetidosALiquidarARL = total_dias_liquidar
+
+                        console.log("DÍAS REALES A LIQUIDAR DE INCAPACIDAD NUEVA ARL: ", diasNoRepetidosALiquidarARL)
+
+
+                        /* DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIOR */
+                        const dias_liquidados_incapacidad_prorroga = datosIncapacidadProrrogaARL.dias_liquidables_totales
+                        console.log("DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIROR", dias_liquidados_incapacidad_prorroga)
+
+
+                        /* SE REALIZA BUSQUEDA EN LA TABLA DE PRORROGA PARA VALIDAR SI EXISTE UNA PRORROGA ANTERIOR CONSECUTIVA */
+                        const validacioTablaProrroga = await buscarProrrogaConsecutivaARL(id_incapacidad_prorroga)
+                        console.log("DATOS TRAIDOS DE LA TABLA DE PRORROGA: ", validacioTablaProrroga)
+
+                        
+                        /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD*/
+                        const parametroGrupoARL = transformarParametrosPolitica(data);
+                        
+
+                        /* VARIABLES PARA CONSULTAR POLITICAS */
+                        let cumplimiento_politica = 'SI'
+                        let prorroga = 'SI'
+                        let dias_laborados_conversion_grupoARL = parametroGrupoARL.dias_laborados_conversion
+                        let salario_conversion_grupoARL = parametroGrupoARL.salario
+                        let liquidacion_dias_grupoARL  = 0
+                        let tipo_incapacidad_grupoARL = parametroGrupoARL.tipo_incapacidad
+
+                        console.log("dias_laborados_conversion_grupoARL: ", dias_laborados_conversion_grupoARL)
+                        console.log("salario_conversion_grupoARL: ", salario_conversion_grupoARL)
+                        console.log("tipo_incapacidad_grupoARL: ", tipo_incapacidad_grupoARL)
+
+
+                        if(validacioTablaProrroga !== null){
+
+                            
+                            /* SE DA LA SUMATORIA ACOMULADA CON LA TABLA PRORROGA Y SE PAGA AL 100% AL SER ARL */
+                            const sumatoria_incapacidadesARL = validacioTablaProrroga.sumatoria_incapacidades + diasNoRepetidosALiquidarARL
+                            console.log("SUMATORIA TOTAL CON INCAPACIDAD ACOMULADA: ", sumatoria_incapacidadesARL)
+
+                        }
+
+
+                    }
+
                     
                 break;
 

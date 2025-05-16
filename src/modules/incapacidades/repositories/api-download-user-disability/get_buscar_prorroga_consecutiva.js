@@ -24,3 +24,36 @@ export async function buscarProrrogaConsecutiva(id_incapacidad_prorroga){
         throw error;
     }
 } 
+
+
+
+
+/* BUSQUEDA TABLA PRORROGA PARA ARL */
+export async function buscarProrrogaConsecutivaARL(id_incapacidad_prorroga){
+    try {
+
+        const tipo_incapcidad = 'ARL'
+
+        const [rows] = await pool.query(
+            `
+                SELECT * FROM 
+                    prorroga
+                WHERE
+                    id_incapacidades_liquidacion = ?
+                AND
+                    tipo_incapacidad = ?
+            `, [id_incapacidad_prorroga, tipo_incapcidad]
+        )
+
+        
+        if (rows.length === 0) {
+            return []
+        }
+
+        return rows[0]
+
+    } catch (error) {
+        console.error("Error al obtener el historial de incapacidad:", error);
+        throw error;
+    }
+} 
