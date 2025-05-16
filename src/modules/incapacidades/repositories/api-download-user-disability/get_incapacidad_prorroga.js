@@ -21,11 +21,7 @@ export async function getDatosIncapacidadProrroga(id_incapacidad_prorroga){
             `, [id_incapacidad_prorroga]
         )
 
-        if(!rows.length){
-            return []
-        }
-
-        return rows[0]
+        return rows.length > 0 ? rows[0] : null;
 
     } catch (error) {
         console.error('Error en getDatosIncapacidadProrroga:', error);
@@ -42,6 +38,7 @@ export async function getDatosIncapacidadProrrogaARL(id_incapacidad_prorroga){
 
     try {
 
+        const tipo_incapacidad = 'ARL'
         const [rows] = await pool.query(
             `
                 SELECT 
@@ -56,14 +53,13 @@ export async function getDatosIncapacidadProrrogaARL(id_incapacidad_prorroga){
                     incapacidades_liquidacion
                 WHERE
                     id_incapacidades_liquidacion = ?
-            `, [id_incapacidad_prorroga]
+                AND
+                    tipo_incapacidad = ?
+            `, [id_incapacidad_prorroga, tipo_incapacidad]
         )
 
-        if(!rows.length){
-            return []
-        }
+        return rows.length > 0 ? rows[0] : null;
 
-        return rows[0]
 
     } catch (error) {
         console.error('Error en getDatosIncapacidadProrroga:', error);

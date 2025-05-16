@@ -13,11 +13,8 @@ export async function buscarProrrogaConsecutiva(id_incapacidad_prorroga){
         )
 
         
-        if (rows.length === 0) {
-            return []
-        }
+        return rows.length > 0 ? rows[0] : null;
 
-        return rows[0]
 
     } catch (error) {
         console.error("Error al obtener el historial de incapacidad:", error);
@@ -46,11 +43,7 @@ export async function buscarProrrogaConsecutivaARL(id_incapacidad_prorroga){
         )
 
         
-        if (rows.length === 0) {
-            return []
-        }
-
-        return rows[0]
+        return rows.length > 0 ? rows[0] : null;
 
     } catch (error) {
         console.error("Error al obtener el historial de incapacidad:", error);
