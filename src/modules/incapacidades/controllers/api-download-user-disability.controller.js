@@ -25,6 +25,7 @@ import { calcularDistribucionDias  } from '../services/api-download-user-disabil
 import { updateTablaProrrogaDB } from '../repositories/api-download-user-disability/insert_tabla_prorroga_DB.js'
 const app = express();
 
+
 // CONTROLADOR PRINCIPAL
 export const api_download_user_disability = async (req, res) => {
     try {
@@ -284,15 +285,16 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
 
-
                             /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
                             let liquidacion_dias_grupo_menor_90 = 0
                             let Liq_porcentaje_liquidacion_eps_grupoA = 0
                             let liq_valor_eps_grupoA = 0
                             let PoliticaGrupoA = 0
 
+
                             /* GRUPO A -  3 - 90  EPS 66.67%*/
                             if(resultado.diasTramo_1a90 > 0 ){
+
 
                                 /* POLITICA PARA APLICAR A MENOR 90 */ 
                                 liquidacion_dias_grupo_menor_90 = resultado.diasTramo_1a90   // CONST que guarda los días reales a liquidar al 66%  
@@ -659,7 +661,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         }
                         
 
-                        /* VALIDACION PARA VERIFICAR SI HAY PRORROGA CONTINUA, EN CASO DE HABER PRORROGA TRAER LOS DATOS Y PROCESARLOS.*/
+                        /* VALIDACION SIN PRORROGA CONTINUA, EN CASO DE HABER PRORROGA TRAER LOS DATOS Y PROCESARLOS.*/
                         if(!validacioTablaProrroga){
 
                             /* SE REALIZA LA SUMATORIA DE LOS DIAS LIQUIDADOS DE LA INCAPACIDAD ANTERIOR CON LOS DÍAS LIQUIDABLE DE LA NUEVA INCAPACIDAD */
@@ -815,6 +817,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         const upd_dias_Laborados = dias_laborados;
                         const upd_id_liquidacion = id_liquidacion;
                         const upd_dias_liquidables_totales = total_dias_liquidar
+
 
                         /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
                         const updateSettlementTableLiq = await updateSettlementTable(
@@ -1125,6 +1128,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                                 console.log(" up_T_prorroga_dias_liquidados:",up_T_prorroga_dias_liquidados )
                                 console.log(" up_T_prorroga_sumatoria_acomulada:", up_T_prorroga_sumatoria_acomulada)
 
+                            
                                 /* SE ACTUALIZA BASE DE DATOS DE PRORROGA */
                                 const updateTablaProrroga = await updateTablaProrrogaDB (
                                     up_T_prorroga_id_empleado,
@@ -1343,7 +1347,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                 default:
                     // otros casos
-                    break;
+                break;
             }
         }
 
