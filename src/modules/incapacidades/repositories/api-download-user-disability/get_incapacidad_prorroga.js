@@ -9,6 +9,7 @@ export async function getDatosIncapacidadProrroga(id_incapacidad_prorroga){
             `
                 SELECT 
                     id_incapacidades_liquidacion,
+                    tipo_incapacidad,
                     id_empleado,
                     fecha_inicio_incapacidad,
                     fecha_final_incapacidad,
