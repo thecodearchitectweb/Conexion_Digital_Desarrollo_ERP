@@ -10,6 +10,9 @@ import { pool } from './models/db.js'; // Importa la conexión a la base de dato
 
 import  rutasDeIncapacidades  from './modules/rutas/rutas-incapacidades/incapacidades_index.routes.js'
 
+import rutasDeLogin from './modules/rutas/rutas-login/rutas_login.routes.js'
+import rutasDeUsers from './modules/rutas/rutas-users/rutas_users.routes.js'
+
 
 // Cargar variables de entorno
 dotenv.config();
@@ -32,6 +35,7 @@ console.log("Ruta de archivos estáticos:", join(__dirname, "public"));
 
 
 app.use("/incapacidades",  express.static(join(__dirname, "modules", "incapacidades", "public")));
+app.use("/global",  express.static(join(__dirname, "modules", "global", "public")));
 
 
 
@@ -48,9 +52,12 @@ console.log("Ruta pública para archivos de upload:", path.join(process.cwd(), '
 app.set("port", process.env.PORT || 3000);
 
 
+
 const viewDirectories = [
-  join(__dirname, "modules/incapacidades/views/views")
-]
+  join(__dirname, "modules", "incapacidades", "views", "view"),
+  join(__dirname, "modules", "global",       "views", "view"),
+];
+
 
 
 app.set("views", viewDirectories);
@@ -101,8 +108,15 @@ app.use(sessionMiddleware); // Middleware de sesión
 
 // Usar rutas
 
-[...rutasDeIncapacidades].forEach(route => app.use(route));
+const todasLasRutas = [
+  ...rutasDeIncapacidades,
+  ...rutasDeLogin,
+  ...rutasDeUsers
+];
 
+//[...rutasDeIncapacidades].forEach(route => app.use(route));
+
+todasLasRutas.forEach(route => app.use(route));
 
 
 

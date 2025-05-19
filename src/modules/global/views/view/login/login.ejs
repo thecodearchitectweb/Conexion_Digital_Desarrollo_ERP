@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión</title>
+  <link href="css/output.css" rel="stylesheet" />
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700">
+  <div class="bg-slate-50 backdrop-blur-lg p-10 rounded-2xl shadow-2xl max-w-md w-full">
+    <!-- Logo -->
+    <div class="flex justify-center mb-6">
+      <img src="/global/img/logo/conexion_digital.png" alt="Logo" class="h-18 w-auto" />
+    </div>
+
+    <!-- Título -->
+    <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-2">Bienvenido de nuevo</h1>
+    <p class="text-center text-gray-600 mb-8">Ingresa tus credenciales para continuar</p>
+
+    <!-- Formulario -->
+    <form action="/login" method="POST" class="space-y-5">
+      <div>
+        <label for="input_usuario" class="block text-gray-700 font-medium mb-1">Usuario</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <!-- Icono usuario -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5.121 17.804A13.937 13.937 0 0112 15c2.106 0 4.086.525 5.879 1.452M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </span>
+          <input type="text" id="input_usuario" name="input_usuario" required
+            placeholder="usuario@empresa.com"
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 shadow-sm"  />
+        </div>
+      </div>
+
+      <div>
+        <label for="input_password" class="block text-gray-700 font-medium mb-1">Contraseña</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <!-- Icono candado -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5s-3 1.343-3 3 1.343 3 3 3zm0 0v6m0 4h.01" />
+            </svg>
+          </span>
+          <input type="password" id="input_password" name="input_password" required
+            placeholder="********"
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 shadow-sm" />
+        </div>
+      </div>
+
+      <button type="submit"
+        class="w-full py-3 bg-lime-600 text-white font-semibold rounded-lg hover:bg-lime-700 transition">
+        Iniciar sesión
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-gray-500">
+      ¿Olvidaste tu contraseña? Contacta a tu supervisor para recuperarla.
+    </p>
+  </div>
+</body>
+
+</html>
+

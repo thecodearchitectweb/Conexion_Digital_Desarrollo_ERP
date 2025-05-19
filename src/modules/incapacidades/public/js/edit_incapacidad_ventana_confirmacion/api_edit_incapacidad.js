@@ -4,14 +4,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Mensaje de que el DOM está completamente cargado
   console.log("🟢 DOMContentLoaded: Iniciando script de actualización de incapacidad");
 
+
   // Obtenemos el formulario de actualización y el botón de envío
   const updateForm = document.getElementById("update-form");
   const submitButton = document.getElementById("submit-button");
+
 
   // Recoge los IDs desde atributos en el HTML (puestos en un label por ejemplo)
   const idIncapacidad = document.querySelector('label[data-id-incapacidad]')?.dataset.idIncapacidad;
   const idEmpleado = document.querySelector('label[data-id-empleado]')?.dataset.idEmpleado;
   console.log("🟢 IDs recogidos:", { idIncapacidad, idEmpleado });
+
 
   // Escucha el envío del formulario
   updateForm.addEventListener("submit", async (e) => {
@@ -34,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //const estadoIncapacidad = document.getElementById("select_estado_incapacidad").value;
     //const observaciones = document.getElementById("message").value;
     const prorroga = document.getElementById("input_toggle_prorroga").checked ? 1 : 0; // ✔ Capturamos el estado del toggle
+
 
     // Validación de campos obligatorios
     const requiredFields = [
@@ -64,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
+    
     if (!isValid) {
       Swal.fire({
         icon: 'warning',

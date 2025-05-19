@@ -42,16 +42,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error(`HTTP ${response.status}: ${errText}`);
             }
 
-            // Aquí leemos el blob en lugar de JSON
+
+            // Obtiene el nombre del archivo desde el encabezado 'Content-Disposition'
+            const disposition = response.headers.get('Content-Disposition');
+            let filename = 'reporte_incapacidades.xlsx'; // Valor por defecto
+
+            if (disposition && disposition.includes('filename=')) {
+                // Extrae el nombre del archivo y limpia comillas
+                filename = disposition.split('filename=')[1].replace(/["']/g, '').trim();
+            }
+
+            // Crea un enlace temporal para descargar el archivo
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'incapacidades_empleado.xlsx';  // nombre del archivo
+            a.download = filename; // Usa el nombre recibido del servidor
             document.body.appendChild(a);
-            a.click();
+            a.click(); // Inicia la descarga
             a.remove();
-            window.URL.revokeObjectURL(url);
+            window.URL.revokeObjectURL(url); // Libera memoria
+
+
 
             Swal.fire({
                 icon: "success",
