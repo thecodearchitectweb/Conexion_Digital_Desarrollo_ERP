@@ -8,6 +8,7 @@ import { getDataLiquidation } from "../repositories/entity-liquidation-view/get_
 import { updateMensajeSeguimiento } from "../repositories/entity-liquidation-view/updateMensajeSeguimiento.js"
 import { getTablaObservaciones } from "../repositories/entity-liquidation-view/get_tabla_observaciones.js"
 import { getTablaFiles } from '../repositories/entity-liquidation-view/get_tabla_files.js'
+import { incapacidadProrrogaVinculadaDB, ProrrogaVinculadaDB } from '../repositories/entity-liquidation-view/get_incapacidad_prorroga.js'
 
 
 
@@ -25,6 +26,7 @@ export const getEntityLiquidationView = async(req, res) => {
         const { id_liquidacion } = req.params
         console.log("ESTE ES EL ID QUE RECIBE EL CONTROLLER ENTITY LIQUIDATION VIEW", id_liquidacion)
 
+
         /* TRAE LOS DATOS DE LA TABLA INCAPACIDAD LIQUIDADA */
         const incapacidadLiquidada = await getDataLiquidation(id_liquidacion)
         console.log("ESTOS SON TODOS LOS DATOS QUE TRAE EL ID: ", incapacidadLiquidada)
@@ -32,6 +34,22 @@ export const getEntityLiquidationView = async(req, res) => {
 
         /* SACAMOS EL ID EMPLEADO DE LA TABLA */
         const id_empleado = incapacidadLiquidada.id_empleado
+
+
+        /* TRAER LOS DATOS DE LA TABLA PRORROGA CON ID PRORROGA DE LA TABLA LIQUIDACION*/
+        const incapacidadProrrogaVinculada = await incapacidadProrrogaVinculadaDB(id_liquidacion)
+        console.log("datos de la incapcidad vinculada, prorroga: ", incapacidadProrrogaVinculada)
+
+
+        let ProrrogaVinculada = null;
+
+        /* TRAER LOS DATOS DE LA INCAPCIDAD VINCULADA A LA PRORROGA CON EL ID TRAIDO DE incapacidadProrrogaVinculada*/
+        if (incapacidadProrrogaVinculada && incapacidadProrrogaVinculada.id_incapacidad_prorroga) {
+            ProrrogaVinculada = await ProrrogaVinculadaDB(incapacidadProrrogaVinculada.id_incapacidad_prorroga);
+            console.log("Datos de la prorroga vinculada: ", ProrrogaVinculada);
+        } else {
+            console.log("No hay prorroga vinculada para esta incapacidad.");
+        }
 
 
         /* TRAEMOS LOS DATOS DEL EMPLEADO */
@@ -58,6 +76,14 @@ export const getEntityLiquidationView = async(req, res) => {
         incapacidadLiquidada.fecha_inicio_incapacidad = formatDate2(incapacidadLiquidada.fecha_inicio_incapacidad)
         incapacidadLiquidada.fecha_final_incapacidad = formatDate2(incapacidadLiquidada.fecha_final_incapacidad)
         incapacidadLiquidada.fecha_registro = formatDateTime(incapacidadLiquidada.fecha_registro)
+        
+
+        // Verificamos que ProrrogaVinculada exista antes de formatear sus fechas
+        if (ProrrogaVinculada) {
+            ProrrogaVinculada.fecha_registro_incapacidad = formatDate2(ProrrogaVinculada.fecha_registro_incapacidad);
+            ProrrogaVinculada.fecha_inicio_incapacidad = formatDate2(ProrrogaVinculada.fecha_inicio_incapacidad);
+            ProrrogaVinculada.fecha_final_incapacidad = formatDate2(ProrrogaVinculada.fecha_final_incapacidad);
+        }
 
         /* AL SER UN ARRAY, DEBEMS RECORRER UN CICLO PARA FORMATEAR LA FECHA DE TODOS */
         tablaObservaciones.forEach(obs => {
@@ -80,7 +106,8 @@ export const getEntityLiquidationView = async(req, res) => {
                 datos_empleado: dataEmployee,
                 datos_incapacidad_liquidad: incapacidadLiquidada,
                 Seguimiento: tablaObservaciones,
-                files: tablaFiles
+                files: tablaFiles,
+                incapacidadProrroga: ProrrogaVinculada || null
             }
         )
         

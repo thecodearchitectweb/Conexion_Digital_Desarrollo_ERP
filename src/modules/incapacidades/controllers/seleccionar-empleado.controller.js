@@ -21,8 +21,34 @@ const app = express();
 
     export const postseleccionarEmpleado = async (req, res) => {
         try {
-            const { filtro, busqueda } = req.body;
     
+
+        /* ELIMINAR ID DE LA SESSION, LUEGO DE UTILIZARLA */
+            console.log("BORRANDO DATOS DE SESION ANTES DE CONSULTA:")
+            console.log("Session antes de borrar:", req.session);
+
+            if (req.session) {
+                if (req.session.id_empleado_consultado) {
+                    console.log("Borrando id_empleado_consultado:", req.session.id_empleado_consultado);
+                    delete req.session.id_empleado_consultado;
+                }
+                if (req.session.id_incapacidad_registrada) {
+                    console.log("Borrando id_incapacidad_registrada:", req.session.id_incapacidad_registrada);
+                    delete req.session.id_incapacidad_registrada;
+                }
+
+
+                // Asegúrate de eliminar los IDs de las rutas también
+                if (req.session.ids_rutas_documentos) {
+                    console.log("Borrando ids_rutas_documentos:", req.session.ids_rutas_documentos);
+                    delete req.session.ids_rutas_documentos;
+                }
+            }
+
+
+    
+            const { filtro, busqueda } = req.body;
+                
             console.log("Filtro recibido:", filtro);
             console.log("Búsqueda recibida:", busqueda);
     

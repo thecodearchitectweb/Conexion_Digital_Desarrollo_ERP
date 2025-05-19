@@ -7,7 +7,7 @@ import { getUltimasIncapacidades, getUltimasIncapacidadesIdEmpleado } from '../r
 import { getIdEmpleadoByHistorial } from '../repositories/api-download-user-disability/getIdEmpleadoByHistorial.js';
 import { getDisabilityDischargeHistory } from '../repositories/api-download-user-disability/getDisabilityDischargeHistory.js';
 import { updateLiquidacoinTableIncapacity, updateDownloadStatus } from '../repositories/api-download-user-disability/updateLiquidacoinTableIncapacity.js';
-import { getPoliticaByParametros, getPoliticaByParametrosProrroga, getPoliticaGrupoA, getPoliticaGrupoB, getPoliticaGrupoC, getPoliticaGrupoD } from '../repositories/api-download-user-disability/getPoliticaByParametros.js';
+import { getPoliticaByParametros, getPoliticaByParametrosProrroga, getPoliticaGrupoA, getPoliticaGrupoB, getPoliticaGrupoC, getPoliticaGrupoD, getPoliticaLicencia } from '../repositories/api-download-user-disability/getPoliticaByParametros.js';
 import { formatDate, formatDate2 } from '../utils/formatDate/formatDate.js';
 import { validarProrroga } from '../utils/api-download-user-disability/validarProrroga.js';
 import { updateDisabilitySettlementExtensionLiq, updateDisabilitySettlementExtensionHis } from '../repositories/api-download-user-disability/updateDisabilitySettlementExtension.js';
@@ -78,14 +78,10 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
         /* CONSTANTES PARA VALIDAR POLITICAS  EN LOS DIFERENTES CASOS*/
         const prorroga_conversion = parametros.prorroga;
-
         const dias_laborados_conversion = parametros.dias_laborados_conversion;
         const dias_laborados = parametros.dias_laborados
-
         const salario_conversion = parametros.salario;
-
         const tipo_incapacidad = parametros.tipo_incapacidad;
-
         const cantidad_dias = parametros.dias_incapacidad;
         const cantidad_dias_conversion = parametros.dias_incapacidad_conversion;
 
@@ -159,6 +155,185 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                 /* EPS */
                 case 'EPS':
+
+
+                    /* LICENCIA DE MATERNIDAD O PATERNIDAD */
+                    if(data.subtipo_incapacidad === 'LICENCIA DE MATERNIDAD' || data.subtipo_incapacidad === 'LICENCIA DE PATERNIDAD'){
+
+                        /* BUSCAR LA POLITICA PARA MATERNIDAD O PATERNIDAD */
+                        console.log("VALIDACION PARA LICENCIAS DE MATERNIDAD O PATERNIDAD")
+
+
+                        /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD*/
+                        const parametros = transformarParametrosPolitica(data);
+    
+
+                        /* VARIABLES PARA CONSULTAR POLITICAS */
+                        let cumplimiento_politica = 'SI'
+                        let prorroga = 'NO'
+                        let dias_laborados_conversion = parametros.dias_laborados_conversion
+                        let salario_conversion = parametros.salario
+                        let liquidacion_dias  = 0
+                        let tipo_incapacidad = data.tipo_incapacidad
+                        let origen_incapacidad = data.subtipo_incapacidad
+
+
+                        console.log(" cumplimiento_politica:",cumplimiento_politica )
+                        console.log("prorroga :",prorroga )
+                        console.log(" dias_laborados_conversion:",dias_laborados_conversion )
+                        console.log(" salario_conversion:",salario_conversion )
+                        console.log("liquidacion_dias :",liquidacion_dias )
+                        console.log(" tipo_incapacidad:",tipo_incapacidad )
+                        console.log("origen_incapacidad :", origen_incapacidad)
+
+
+                        
+                        /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+                        const Politica = await getPoliticaLicencia(
+                            prorroga,
+                            dias_laborados_conversion,
+                            salario_conversion,
+                            tipo_incapacidad,
+                            origen_incapacidad
+                        );
+
+                        console.log("POLITICA LICENCIA: ", Politica)
+
+
+                        /* FUNCION QUE TRAAE LA ULTIMA INCAPACIDAD DEL EMPLEADO */
+                        const data_incapacidades_liquidadas = await getUltimasIncapacidadesIdEmpleado(id_empleado);
+                        console.log("data_incapacidades_liquidadas", data_incapacidades_liquidadas);
+
+
+                        /* TRAER LAS FECHAS DE LA INCAPACIDAD ANTERIOR Y LA NUEVA INCAPACIDAD */
+                        const fecha_inicio_incapacidad_anterior = data_incapacidades_liquidadas?.fecha_inicio_incapacidad;
+                        const fecha_final_incapacidad_anterior = data_incapacidades_liquidadas?.fecha_final_incapacidad;
+                        const fecha_inicial_incapacidad_liquidar = formatDate2(data.fecha_inicio_incapacidad);
+                        const fecha_final_incapacidad_liquidar = formatDate2(data.fecha_final_incapacidad);
+
+                        console.log("fecha_inicio_incapacidad_anterior", fecha_inicio_incapacidad_anterior);
+                        console.log("fecha_final_incapacidad_anterior", fecha_final_incapacidad_anterior);
+                        console.log("fecha_inicial_incapacidad_liquidar", fecha_inicial_incapacidad_liquidar);
+                        console.log("fecha_final_incapacidad_liquidar", fecha_final_incapacidad_liquidar);
+
+
+                        /* CONSTRUCCION DEL OBJETO PARA VALIDAR DIAS */
+                        const incapacidadA = {
+                            fecha_inicio_incapacidad: fecha_inicio_incapacidad_anterior,
+                            fecha_final_incapacidad: fecha_final_incapacidad_anterior
+                        };
+                        const incapacidadB = {
+                            fecha_inicio_incapacidad: fecha_inicial_incapacidad_liquidar,
+                            fecha_final_incapacidad: fecha_final_incapacidad_liquidar
+                        };
+
+
+                        /* CALCULAR LOS DÍAS UNICOS NO REPETIDOS*/
+                        const diasNoRepetidos = obtenerDiasNoRepetidos(incapacidadA, incapacidadB);
+                        console.log("FUNCION DIAS NO REPETIDOS:", diasNoRepetidos.length);
+
+
+                        /* SE GUARDA LOS DÍAS REALES A LIQUIDAR */
+                        total_dias_liquidar = diasNoRepetidos.length
+                        const diasNoRepetidosALiquidar = total_dias_liquidar
+
+                        console.log("DÍAS REALES A LIQUIDAR DE INCAPACIDAD NUEVA: ", diasNoRepetidosALiquidar)
+
+
+                        /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
+                        Liq_porcentaje_liquidacion_eps = parseFloat( Politica.porcentaje_liquidacion_eps  ) || 0;
+                        console.log("Liq_porcentaje_liquidacion_eps", Liq_porcentaje_liquidacion_eps);
+
+
+                        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS */
+                        const liq_valor_EPS = entityLiquidationEmpleador(
+                            data.salario_empleado,
+                            Liq_porcentaje_liquidacion_eps,
+                            diasNoRepetidosALiquidar
+                        );
+                        console.log("liq_valor_empleador", liq_valor_EPS);
+
+                            
+                        
+                        const upd_liq_dias_empleador = 0;
+                        const upd_liq_dias_eps = diasNoRepetidosALiquidar;
+                        const upd_liq_dias_arl = 0;
+                        const upd_liq_dias_fondo_pensiones = 0;
+                        const upd_liq_dias_eps_fondo_pensiones = 0;
+
+                        const upd_Liq_porcentaje_liquidacion_empleador = 0;
+                        const upd_Liq_porcentaje_liquidacion_eps = Liq_porcentaje_liquidacion_eps || 50;
+                        const upd_Liq_porcentaje_liquidacion_arl = 0;
+                        const upd_Liq_porcentaje_liquidacion_fondo_pensiones = 0;
+                        const upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones = 0;
+
+                        const upd_liq_valor_empleador = 0;
+                        const upd_liq_valor_eps = liq_valor_EPS;
+                        const upd_liq_valor_arl = 0;
+                        const upd_liq_valor_fondo_pensiones = 0;
+                        const upd_liq_valor_eps_fondo_pensiones = 0;
+
+                        const upd_dias_Laborados = dias_laborados;
+                        const upd_id_liquidacion = id_liquidacion;
+                        const upd_dias_liquidables_totales = diasNoRepetidosALiquidar;
+
+
+
+                        console.log("  ", )
+                        console.log(" upd_liq_dias_empleador ", upd_liq_dias_empleador)
+                        console.log(" upd_liq_dias_eps ", upd_liq_dias_eps)
+                        console.log(" upd_liq_dias_arl ", upd_liq_dias_arl)
+                        console.log(" upd_liq_dias_fondo_pensiones ", upd_liq_dias_fondo_pensiones)
+                        console.log(" upd_liq_dias_eps_fondo_pensiones ", upd_liq_dias_eps_fondo_pensiones)
+                        console.log("  ", )
+                        console.log(" upd_Liq_porcentaje_liquidacion_empleador ", upd_Liq_porcentaje_liquidacion_empleador)
+                        console.log(" upd_Liq_porcentaje_liquidacion_eps ",upd_Liq_porcentaje_liquidacion_eps )
+                        console.log(" upd_Liq_porcentaje_liquidacion_arl ",upd_Liq_porcentaje_liquidacion_arl )
+                        console.log(" upd_Liq_porcentaje_liquidacion_fondo_pensiones ", upd_Liq_porcentaje_liquidacion_fondo_pensiones)
+                        console.log(" upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones ", upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones)
+                        console.log("  ", )
+                        console.log(" upd_liq_valor_empleador ", upd_liq_valor_empleador)
+                        console.log(" upd_liq_valor_eps ", upd_liq_valor_eps)
+                        console.log(" upd_liq_valor_arl ",upd_liq_valor_arl )
+                        console.log(" upd_liq_valor_fondo_pensiones ",upd_liq_valor_fondo_pensiones )
+                        console.log(" upd_liq_valor_eps_fondo_pensiones ", upd_liq_valor_eps_fondo_pensiones)
+                        console.log("  ", )
+                        console.log(" upd_dias_Laborados ",upd_dias_Laborados )
+                        console.log(" upd_id_liquidacion ", upd_id_liquidacion)
+                        console.log(" upd_dias_liquidables_totales ", upd_dias_liquidables_totales)
+                        console.log("  ", )
+
+
+                        /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
+                        const updateSettlementTableLiq = await updateSettlementTable(
+                            upd_liq_dias_empleador,
+                            upd_liq_dias_eps,
+                            upd_liq_dias_arl,
+                            upd_liq_dias_fondo_pensiones,
+                            upd_liq_dias_eps_fondo_pensiones,
+                            upd_Liq_porcentaje_liquidacion_empleador,
+                            upd_Liq_porcentaje_liquidacion_eps,
+                            upd_Liq_porcentaje_liquidacion_arl,
+                            upd_Liq_porcentaje_liquidacion_fondo_pensiones,
+                            upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+                            upd_liq_valor_empleador,
+                            upd_liq_valor_eps,
+                            upd_liq_valor_arl,
+                            upd_liq_valor_fondo_pensiones,
+                            upd_liq_valor_eps_fondo_pensiones,
+                            upd_dias_Laborados,
+                            upd_id_liquidacion,
+                            upd_dias_liquidables_totales
+                        );
+                        console.log("DATOS ACTUALIZADOS, INCAPACIDAD LIQUIDADA. LICENCIA:", updateSettlementTableLiq);
+                       
+                        const updateDownloadStatusLiq = await updateDownloadStatus(id_historial); 
+                       
+                        return res.json({
+                            message: `Actualización realizada: LICENCIAS DE MATERNIDAD O PATERNIDAD`
+                        }); 
+                    }
+
 
 
                     /* VALIDACION PRORROGA == SI */
@@ -285,7 +460,9 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         console.log("SECCION DIVIDIDA, VERIFICACION Y LIQUIDACION SI HAY PRORROGA ACOMULADA")
 
 
-                        /* VALIDACION PARA VERIFICAR SI HAY PRORROGA CONTINUA, EN CASO DE HABER PRORROGA TRAER LOS DATOS Y PROCESARLOS. */
+
+
+                        /* PRORROGA CONTINUA. */
                         if(validacioTablaProrroga){
 
                             /* FUNCIONA PARA CALCULAR Y AGRUPAR CANTIDAD DE DÍAS  Y LOGRAR CALCULAR DE MANERA ADECUADA POR PORCENTAJE 3 - 90, y mayor a 90 */
@@ -668,17 +845,14 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                             return res.json({
-                                message: `Actualización realizada: EPS CON PRORROGA CONTINUA`
+                                message: `Actualización realizada: Incapacidad con PRORROGA CONTINUA`
                             });
 
 
                             //console.log("resultado:", resultado);
                         }
-                        
-
-
-
-
+                       
+                        /* SIN PRORROGA CONTINUA */
                         if(!validacioTablaProrroga){
 
 
@@ -909,6 +1083,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                             console.log(" ")
 
+
                             console.log("TOTAL DIAS A LIQUIDAR GRUPO A: ", liquidacion_dias_grupo_menor_90)
                             console.log("PORCENTAJE A LIQUIDAR GRUPO A: ", Liq_porcentaje_liquidacion_eps_grupoA)
                             console.log("VALOR TOTAL A LIQUIDAR GRUPO A: ", liq_valor_eps_grupoA)
@@ -1010,11 +1185,11 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             /* DATOS PARA ACTUALIZAR TABLA PRORROGA */
                             const up_T_prorroga_id_empleado = id_empleado
                             const up_T_prorroga_id_incapacidad_prorroga = id_incapacidad_prorroga
-                            const up_T_prorroga_tipo_incapacidad_prorroga = validacioTablaProrroga.tipo_incapacidad
-                            const up_T_prorroga_fecha_inicio_incapacidad = validacioTablaProrroga.fecha_inicio_incapacidad
-                            const up_T_prorroga_fecha_final_incapacidad = validacioTablaProrroga.fecha_final_incapacidad
-                            const up_T_prorroga_dias_incapacidad_prorroga = validacioTablaProrroga.cantidad_dias
-                            const up_T_prorroga_dias_liquidables_totales_prorroga = validacioTablaProrroga.dias_liquidables_totales
+                            const up_T_prorroga_tipo_incapacidad_prorroga = datosIncapacidadProrroga.tipo_incapacidad
+                            const up_T_prorroga_fecha_inicio_incapacidad = datosIncapacidadProrroga.fecha_inicio_incapacidad
+                            const up_T_prorroga_fecha_final_incapacidad = datosIncapacidadProrroga.fecha_final_incapacidad
+                            const up_T_prorroga_dias_incapacidad_prorroga = datosIncapacidadProrroga.cantidad_dias
+                            const up_T_prorroga_dias_liquidables_totales_prorroga = datosIncapacidadProrroga.dias_liquidables_totales
                             const up_T_prorroga_id_incapacidad_liquidacion = id_liquidacion
                             const up_T_prorroga_tipo_incapcidad = data.tipo_incapacidad
                             const up_T_prorroga_fehca_inicio = data.fecha_inicio_incapacidad
@@ -1042,7 +1217,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                             /* SE ACTUALIZA BASE DE DATOS DE PRORROGA */
-/*                             const updateTablaProrroga = await updateTablaProrrogaDB (
+                            const updateTablaProrroga = await updateTablaProrrogaDB (
                                 up_T_prorroga_id_empleado,
                                 up_T_prorroga_id_incapacidad_prorroga,
                                 up_T_prorroga_tipo_incapacidad_prorroga,
@@ -1060,31 +1235,27 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                                 
                             )
 
-                            console.log("TABLA PRORROGA ACTUALIZADA: ", updateTablaProrroga) */
+                            console.log("TABLA PRORROGA ACTUALIZADA: ", updateTablaProrroga)
 
-                            //const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
+                            const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
 
 
-/*                             return res.json({
-                                message: `Actualización realizada: EPS CON PRORROGA CONTINUA`
+                            return res.json({
+                                message: `Actualización realizada: Incapacidad sin PRORROGA CONTINUA`
                             });
- */
+
 
 
                         }
 
+                        /* SE ACTUALIZA PRORROGA A NO */
+                        console.log("NO SE ENCONTRO DATOS DE LA PRORROGA SOBRE LA INCAPACIDAD SELECCIONADA, DE ACTUALIZA PRORROGA A 'NO' ")
+                                
+                        const actuaizarProrrogaTabHistorial = await updateDisabilitySettlementExtensionHis(id_historial)
+                        console.log("SE ACTUALIZA PRORROGA A NO: ", actuaizarProrrogaTabHistorial)
 
-
-
-
-
-
-
-
-
-
-
-
+                        // Reejecuta el proceso desde el inicio
+                        return await processDownloadUserDisability(id_liquidacion, id_historial, res);
 
 
                     }
@@ -1210,15 +1381,14 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             upd_id_liquidacion,
                             upd_dias_liquidables_totales
                         );
-                        console.log("DATOS ACTUALIZADOS, INCAPACIDAD LIQUIDADA:", updateSettlementTableLiq);
+                        
+                       const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);   //Actualiza downloaded = 1, en la tabla liquidacion
 
-                        await updateDownloadStatus(id_historial);
-                        console.log("ACTUALIZADO, SIN PRORROGA");
 
                         return res.json({
-                            message: `Actualización realizada: incapacidad sin prórroga. Total de días a liquidar por parte del empleador: ${liq_dias_empleador}. Días a liquidar por parte de EPS: ${liq_dias_eps}`
+                            message: `Error, no es posible procesar la incapacidad`
                         });
-                        
+                       
 
                     }
 
@@ -1524,7 +1694,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                                 return res.json({
-                                    message: `Actualización realizada: incapacidad con prórroga.`
+                                    message: `Actualización realizada: incapacidad con prórroga, cuenta con Prorroga continua.`
                                 });
 
                             }    
@@ -1685,7 +1855,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                                 return res.json({
-                                    message: `Actualización realizada: incapacidad con prórroga ARL. No cuenta con Prorroga acomulativa.`
+                                    message: `Actualización realizada: incapacidad con prórroga. No cuenta con Prorroga continua.`
                                 });
 
                             }
@@ -1706,9 +1876,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                             return await processDownloadUserDisability(id_liquidacion, id_historial, res);
 
                         }
-
-
-
+                    
                     }
 
                     

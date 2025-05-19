@@ -16,7 +16,7 @@
 
 
 
-<body class="bg-slate-200" >
+<body class="bg-slate-200">
 
   <!-- NAVBAR -->
   <header>
@@ -25,7 +25,8 @@
       <div class="navbar-left ">
         <div class="navbar-left" style="gap: 0.5rem;">
           <img src="/incapacidades/img/logo/LOGO_SPEED_NETWORKS_SAS-01.png" alt="Logo 1" style="height: 60px;" />
-          <img src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="Logo 2" style="height: 90px;" />
+          <img src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="Logo 2"
+            style="height: 90px;" />
         </div>
       </div>
 
@@ -49,41 +50,49 @@
   </aside>
 
 
-<div class="w-full flex">
-  <div  id="container_seleccionar_empleado" class=" flex-col gap-6 mt-16 p-8 w-full max-w-11/12 transition-all duration-500 container-collapsed ">
+  <div class="w-full flex">
+    <div id="container_seleccionar_empleado"
+      class=" flex-col gap-6 mt-16 p-8 w-full max-w-11/12 transition-all duration-500 container-collapsed ">
 
-   
-  
-  
-      <div id="container-seleccionar-empleado" class=" shadow-[0px_4px_10px_rgba(100,116,139,0.5)] bg-white p-6 rounded-2xl w-full mx-auto my-6 flex flex-col items-center justify-center ">
-  
+
+
+
+      <div id="container-seleccionar-empleado"
+        class=" shadow-[0px_4px_10px_rgba(100,116,139,0.5)] bg-white p-6 rounded-2xl w-full mx-auto my-6 flex flex-col items-center justify-center ">
+
         <%- include('./../partials/breadcrumb/modulos/incapacidades/breadcrumb_busquedad_personal_incapacidad.ejs') %>
-  
-        <div class="flex justify-center w-full">
-          <h1 class="text-slate-800 font-[Markazi] font-bold  items-center justify-center text-sm block">SELECCIONE EMPLEADO</h1>
-        </div>
-  
-        <form action="/incapacidad/seleccionar/empleado" method="POST" class="p-4 pt-1 w-full max-w-3xl flex flex-col gap-4 ">
-  
-          <select id="filtro" name="filtro" class="bg-gray-50 border drop-shadow-sm border-gray-300 text-gray-900 text-xs rounded-lg outline-none focus:ring-lime-500 focus:border-lime-500 block w-full p-1.5">
-            <option selected>Seleccione una opción</option>
-            <option value="cedula">CEDULA</option>
-            <option value="contacto">CONTACTO</option>
-            <option value="nombres">NOMBRES</option>
-            <option value="apellidos">APELLIDOS</option>
-          </select>
-  
-          <input id="busqueda" name="busqueda" type="text" class="outline-none w-full p-1.5 hidden drop-shadow-sm bg-gray-50 uppercase border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingrese valor" required />
-  
-          <div class="w-full flex justify-center mt-2">
-            <button type="submit" class="text-white bg-slate-700 w-2xs hover:bg-slate-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2 me-1 mb-1 focus:outline-none">Buscar</button>
+
+          <div class="flex justify-center w-full">
+            <h1 class="text-slate-800 font-[Markazi] font-bold  items-center justify-center text-sm block">SELECCIONE
+              EMPLEADO</h1>
           </div>
-        </form>
+
+          <form action="/incapacidad/seleccionar/empleado" method="POST"
+            class="p-4 pt-1 w-full max-w-3xl flex flex-col gap-4 ">
+
+            <select id="filtro" name="filtro"
+              class="bg-gray-50 border drop-shadow-sm border-gray-300 text-gray-900 text-xs rounded-lg outline-none focus:ring-lime-500 focus:border-lime-500 block w-full p-1.5">
+              <option selected>Seleccione una opción</option>
+              <option value="cedula">CEDULA</option>
+              <option value="contacto">CONTACTO</option>
+              <option value="nombres">NOMBRES</option>
+              <option value="apellidos">APELLIDOS</option>
+            </select>
+
+            <input id="busqueda" name="busqueda" type="text"
+              class="outline-none w-full p-1.5 hidden drop-shadow-sm bg-gray-50 uppercase border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Ingrese valor" required />
+
+            <div class="w-full flex justify-center mt-2">
+              <button type="submit"
+                class="text-white bg-slate-700 w-2xs hover:bg-slate-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2 me-1 mb-1 focus:outline-none">Buscar</button>
+            </div>
+          </form>
       </div>
-  
-  
-      <% if (Empleados.length > 0) { %>
-  
+
+
+      <% if (Empleados.length> 0) { %>
+
         <div class="w-full my-6 rounded-2xl flex flex-col items-center justify-center">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
             <div class="overflow-y-auto max-h-100">
@@ -103,81 +112,109 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% if (Empleados.length > 0) { %>
-                  <% for (let i = 0; i < Empleados.length; i++) { %>
-                  <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-                    <td class="px-2 text-center">
-                      <div class="flex items-center justify-center gap-x-2">
-                        <a href="/incapacidad/detalle/incapacidad/empleado/<%= Empleados[i].id_empleado %>">
-                          <i class='bx bxs-file-plus text-xl text-lime-600'></i>
-                        </a>
-                        <a href="/incapacidad/tabla/incapacidades/<%= Empleados[i].id_empleado %>">
-                          <i class='bx bx-table text-xl text-emerald-700'></i>
-                        </a>
-                      </div>
-                    </td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].nombres %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].apellidos %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].documento %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].contacto %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].area %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].cargo %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].estado %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].lider %></td>
-                    <td class="px-4 py-1.5 text-gray-800"><%= Empleados[i].eps %></td>
-                  </tr>
-                  <% } %>
-                  <% } else { %>
-                  <tr>
-                    <td colspan="10" class="px-4 py-3 text-center text-gray-800">
-                      No se encontraron empleados.
-                    </td>
-                  </tr>
-                  <% } %>
+                  <% if (Empleados.length> 0) { %>
+                    <% for (let i=0; i < Empleados.length; i++) { %>
+                      <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                        <td class="px-2 text-center">
+                          <div class="flex items-center justify-center gap-x-2">
+                            <a href="/incapacidad/detalle/incapacidad/empleado/<%= Empleados[i].id_empleado %>">
+                              <i class='bx bxs-file-plus text-xl text-lime-600'></i>
+                            </a>
+                            <a href="/incapacidad/tabla/incapacidades/<%= Empleados[i].id_empleado %>">
+                              <i class='bx bx-table text-xl text-emerald-700'></i>
+                            </a>
+
+                            <a href="javascript:void(0);" 
+                              id="download_id_empleado"
+                              data-id="<%= Empleados[i].id_empleado %>"
+                              data-modal-target="descargarIncapacidadesEmpleado"
+                              data-modal-toggle="descargarIncapacidadesEmpleado" 
+                              class="btnDownloadIncapacidades">
+                              <i class='bx bxs-download text-xl text-orange-700'></i>
+                            </a>
+
+                          </div>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].nombres %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].apellidos %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].documento %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].contacto %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].area %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].cargo %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].estado %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].lider %>
+                        </td>
+                        <td class="px-4 py-1.5 text-gray-800">
+                          <%= Empleados[i].eps %>
+                        </td>
+                      </tr>
+                      <% } %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="10" class="px-4 py-3 text-center text-gray-800">
+                              No se encontraron empleados.
+                            </td>
+                          </tr>
+                          <% } %>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-        
-  
-  
-      <% } else { %>
-  
-      <div class="mx-auto px-4 my-10 p-4 rounded-2xl flex flex-col items-center justify-center w-full max-w-10/12 bg-red-100 border border-red-400 text-red-700">
-        <p class="text-lg font-semibold">No se encontraron empleados.</p>
-      </div>
-  
-      <% } %>
-  
-  
-   
-  
-  
+
+
+
+        <% } else { %>
+
+          <div
+            class="mx-auto px-4 my-10 p-4 rounded-2xl flex flex-col items-center justify-center w-full max-w-10/12 bg-red-100 border border-red-400 text-red-700">
+            <p class="text-lg font-semibold">No se encontraron empleados.</p>
+          </div>
+
+          <% } %>
+
+
+
+
+
+    </div>
   </div>
-</div>
 
 
 
 
+  <!-- MODALS -->
+  <%-include('./../partials/modals/seleccionar_empleado/descargar_incapacidades.ejs') %>
+
+    <script src="/incapacidades/js/seleccionar-empleado/api_descargar_incapacidades.js"></script>
+
+    <!-- SELECCIONART ID DEL EMPLEADO Y ENVIAR A LA VISTA DE INCAPACIDADES -->
+    <script src="/incapacidades/js/tabla_incapacidad_empleado/api_tabla_incapacidad_empleado.js"> </script>
+
+
+    <!--  -->
+    <script src="/incapacidades/js/seleccionar-empleado/filtro-busqueda-empleado.js"></script>
+
+
+    <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
 
 
 
-  <!-- SELECCIONART ID DEL EMPLEADO Y ENVIAR A LA VISTA DE INCAPACIDADES -->
-  <script src="/incapacidades/js/tabla_incapacidad_empleado/api_tabla_incapacidad_empleado.js"> </script>
-
-
-  <!--  -->
-  <script src="/incapacidades/js/seleccionar-empleado/filtro-busqueda-empleado.js"></script>
-
-
-  
-
-  
-  <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
-  
-  
-  
 
 </body>
 

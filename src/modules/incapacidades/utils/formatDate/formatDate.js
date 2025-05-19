@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { parse, format, isValid } from "date-fns";
 
 
 /* FECHA FORMATEADA FECHA */
@@ -32,3 +32,15 @@ export function formatDateTime(fecha) {
     }
 }
 
+
+
+/* FORMATEAR FECHA "31-07-2025" a "2025-07-31" */
+export function convertirFecha(fechaTexto) {
+    try {
+        const fecha = parse(fechaTexto, "dd-MM-yyyy", new Date());
+        if (!isValid(fecha)) throw new Error("Fecha inválida");
+        return format(fecha, "yyyy-MM-dd");
+    } catch (error) {
+        return "Fecha inválida";
+    }
+}

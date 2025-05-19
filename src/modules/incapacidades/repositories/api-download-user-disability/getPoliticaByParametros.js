@@ -231,3 +231,43 @@ export async function getPoliticaGrupoD(
         throw error;
     }
 }
+
+
+
+
+/* POLITICA CON PRORROGA PARA VALIDAR OTTRAS ENTIDADES */
+export async function getPoliticaLicencia(
+    prorroga,
+    dias_laborados_conversion_grupoA,
+    salario_conversion_grupoA,
+    tipo_incapacidad,
+    origen
+) {
+    try {
+        const [politicas] = await pool.query(
+            `
+            SELECT *
+            FROM politicas_incapacidades
+            WHERE
+                TRIM(LOWER(prorroga))     = TRIM(LOWER(?))
+                AND TRIM(LOWER(dias_laborados)) = TRIM(LOWER(?))
+                AND TRIM(LOWER(salario))      = TRIM(LOWER(?))
+                AND TRIM(LOWER(tipo_incapacidad)) = TRIM(LOWER(?))
+                AND TRIM(LOWER(origen)) = TRIM(LOWER(?))
+            `,
+            [
+              
+              prorroga,
+              dias_laborados_conversion_grupoA,
+              salario_conversion_grupoA,
+              tipo_incapacidad,
+              origen
+            ]
+        );
+
+        return politicas[0] || null;
+    } catch (error) {
+        console.error("Error al obtener la política de incapacidad:", error);
+        throw error;
+    }
+}
