@@ -21,7 +21,8 @@
     <p class="text-center text-gray-600 mb-8">Ingresa tus credenciales para continuar</p>
 
     <!-- Formulario -->
-    <form action="/login" method="POST" class="space-y-5">
+    <form id="form_login" class="space-y-5">
+      
       <div>
         <label for="input_usuario" class="block text-gray-700 font-medium mb-1">Usuario</label>
         <div class="relative">
@@ -33,7 +34,7 @@
                 d="M5.121 17.804A13.937 13.937 0 0112 15c2.106 0 4.086.525 5.879 1.452M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </span>
-          <input type="text" id="input_usuario" name="input_usuario" required
+          <input type="text" id="input_usuario" name="input_usuario" 
             placeholder="usuario@empresa.com"
             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 shadow-sm"  />
         </div>
@@ -50,13 +51,13 @@
                 d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5s-3 1.343-3 3 1.343 3 3 3zm0 0v6m0 4h.01" />
             </svg>
           </span>
-          <input type="password" id="input_password" name="input_password" required
+          <input type="password" id="input_password" name="input_password" 
             placeholder="********"
             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 shadow-sm" />
         </div>
       </div>
 
-      <button type="submit"
+      <button id="button_login" type="submit"
         class="w-full py-3 bg-lime-600 text-white font-semibold rounded-lg hover:bg-lime-700 transition">
         Iniciar sesión
       </button>
@@ -66,6 +67,12 @@
       ¿Olvidaste tu contraseña? Contacta a tu supervisor para recuperarla.
     </p>
   </div>
+
+
+  <script src="/global/js/login/api_login.js"></script>
+
+
+
 </body>
 
 </html>
