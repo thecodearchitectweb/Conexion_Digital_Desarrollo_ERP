@@ -7,6 +7,8 @@ import morgan from 'morgan';
 import session from "express-session";
 import MySQLStore from "express-mysql-session";
 import { pool } from './models/db.js'; // Importa la conexión a la base de datos
+//import { secureHeaders } from '../src/modules/global/middlewares/login/security.js'
+//import { sessionRequired } from '../src/modules/global/middlewares/login/autenticacion.js'
 
 import  rutasDeIncapacidades  from './modules/rutas/rutas-incapacidades/incapacidades_index.routes.js'
 
@@ -27,6 +29,8 @@ const app = express()
 
 
 
+// Middleware global
+//app.use(secureHeaders); // aplica helmet a todas las rutas
 
 
 // Archivos estáticos
@@ -74,7 +78,9 @@ const sessionStore = new (MySQLStore(session))({
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE
+  database: process.env.DB_DATABASE,
+  clearExpired: true, // ✅ limpia automáticamente sesiones expiradas
+  checkExpirationInterval: 900000 // ✅ cada 15 minutos
 }, pool);
 
 
@@ -86,13 +92,15 @@ const sessionMiddleware = session({
   store: sessionStore, // Almacena sesiones en MySQL
   resave: false, // No guardar sesión si no hay cambios
   saveUninitialized: false, // No guardar sesiones vacías
+  rolling: true,
   cookie: {
       httpOnly: true, // Protege contra ataques XSS
       secure: false, // Cambia a `true` si usas HTTPS
       sameSite: "strict", // Protección CSRF
-      maxAge: 1000 * 60 * 60 * 24 // Expira en 24 horas
+      maxAge:  1000 * 60 * 30 // Expira en 24 horas
   }
 });
+
 
 
 // Middlewares generales
@@ -102,6 +110,13 @@ app.use(express.json()); // Parsear JSON
 app.use(sessionMiddleware); // Middleware de sesión
 
 
+
+/* TRAER DATOS CORRESPONDIENTE DEL USUARIO */
+// Middleware para pasar los datos de sesión a las vistas
+app.use((req, res, next) => {
+  res.locals.user = req.session && req.session.user ? req.session.user : null
+  next()
+})
 
 
 // Importar y configurar rutas

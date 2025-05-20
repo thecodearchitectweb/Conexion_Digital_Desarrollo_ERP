@@ -61,12 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //console.log("🚀 Enviando datos al servidor:", payload)
 
-            const response = await fetch('', {
+            const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                credentials: "include"
             })
 
 
@@ -80,11 +81,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json()
             console.log("✅ Ingreso exitodo:", result)
 
+            // ✅ Redirección tras login exitoso
+            window.location.href = "/incapacidad/seleccionar/empleado";
+
+
 
         } catch (error) {
             console.error("❌ Error en la petición:", error)
         } finally {
-            button_usuario.disabled = false
+             button_usuario.disabled = false
         }
 
 

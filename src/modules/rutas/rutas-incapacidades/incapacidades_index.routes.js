@@ -1,3 +1,5 @@
+import { Router } from "express"
+
 import seleccionarEmpleado  from '../../incapacidades/routes/seleccionar-empleado.routes.js'
 import detalleIncapacidadEmpleado  from '../../incapacidades/routes/detalle-incapacidad.routes.js'
 import  registroNuevaIncapacidad from '../../incapacidades/routes/registro-nueva-incapacidad.routes.js'
@@ -14,7 +16,13 @@ import  api_select_disability_extension from '../../incapacidades/routes/api-sel
 import  api_add_new_observation from '../../incapacidades/routes/api-add-new-observation.routes.js'
 import api_download_libro_incapacidades_empleado from '../../incapacidades/routes/api-download-incapacidades-empleado.routes.js'
 
-//import  api_add_new_observation from './modules/incapacidades/routes/api-add-new-observation.routes.js'
+import { sessionRequired  } from '../../global/middlewares/login/autenticacion.js'
+
+const router = Router()
+
+
+router.use(sessionRequired)
+
 
 
 export default [

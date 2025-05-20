@@ -1,0 +1,23 @@
+ <!-- NAVBAR SUPERIOR -->
+    <nav class="navbar">
+      <div class="navbar-left ">
+        <div class="navbar-left" style="gap: 0.5rem;">
+          <img src="/incapacidades/img/logo/LOGO_SPEED_NETWORKS_SAS-01.png" alt="Logo 1" style="height: 60px;" />
+          <img src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="Logo 2"
+            style="height: 90px;" />
+        </div>
+      </div>
+
+      <!-- views/layouts/header.ejs o donde tengas la barra -->
+      <% if (user) { %>
+      <div class="navbar-right">
+        <span class="navbar-user">Hola, &nbsp; <%= user.nombre %></span>
+        <i class='bx bx-user-circle text-2xl ml-4'></i>
+        <i onclick="logout()" class='bx bx-exit ml-4 text-xl cursor-pointer'></i>
+      </div>
+      <% } else { %>
+      <div class="navbar-right">
+        <span class="navbar-user">No has iniciado sesión</span>
+      </div>
+      <% } %>
+    </nav>

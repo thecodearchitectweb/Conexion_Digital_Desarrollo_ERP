@@ -22,22 +22,10 @@
 
 
   <!-- NAVBAR -->
-  <header>
-    <!-- NAVBAR SUPERIOR -->
-    <nav class="navbar">
-      <div class="navbar-left ">
-        <div class="navbar-left" style="gap: 0.5rem;">
-          <img src="/incapacidades/img/logo/LOGO_SPEED_NETWORKS_SAS-01.png" alt="Logo 1" style="height: 60px;" />
-          <img src="/incapacidades/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="Logo 2" style="height: 90px;" />
-        </div>
-      </div>
 
-      <div class="navbar-right">
-        <span class="navbar-user">Hola, Alex Alejandro Oviedo Gonzalez</span>
-        <i class='bx bx-user-circle text-2xl ml-4'></i>
-        <i class='bx bx-exit ml-4 text-xl cursor-pointer'></i>
-      </div>
-    </nav>
+  <!-- NAVBAR -->
+  <header>
+     <%-include('./../partials/navbars/modulos/incapacidades/navbar_incapacidad.ejs') %>
   </header>
 
   <!-- SIDEBAR -->
@@ -302,6 +290,7 @@
   <!-- API FETCH PARA CONSULTAR SI HAY DUPLICIDAD CON LA INCAPACIDAD -->
   <script  src="/incapacidades/js/detalle_empleado/api_fetch_duplicidad_incapacidad.js"></script>
 
+    <script src="/global/js/login/api_logout.js"></script>
 
 
     

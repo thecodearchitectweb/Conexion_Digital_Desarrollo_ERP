@@ -5,6 +5,12 @@ const router = Router()
 import {getEntityLiquidationView } from '../../../modules/incapacidades/controllers/entity_liquidation_view.controller.js'
 
 
+import { sessionRequired  } from '../../global/middlewares/login/autenticacion.js'
+
+
+router.use(sessionRequired)
+
+
 router.get('/incapacidad/vista/liquidacion/entidades/:id_liquidacion', getEntityLiquidationView)
 
 
