@@ -54,8 +54,8 @@ app.set("port", process.env.PORT || 3000);
 
 
 const viewDirectories = [
-  join(__dirname, "modules", "incapacidades", "views", "view"),
-  join(__dirname, "modules", "global",       "views", "view"),
+  join(__dirname, "modules", "incapacidades", "views", "views"),
+  join(__dirname, "modules", "global",       "views", "views"),
 ];
 
 

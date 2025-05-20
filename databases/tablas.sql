@@ -283,3 +283,32 @@ CREATE TABLE `prorroga` (
         `id_incapacidades_liquidacion`
     ) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+
+
+
+/* TABLA USUARIO */
+CREATE TABLE `usuarios` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `nombre` varchar(100) DEFAULT NULL,
+    `documento` varchar(50) DEFAULT NULL,
+    `estado` varchar(100) DEFAULT NULL,
+    `fecha_nacimiento` date DEFAULT NULL,
+    `correo` varchar(150) DEFAULT NULL,
+    `contacto` varchar(20) DEFAULT NULL,
+    `direccion` varchar(255) DEFAULT NULL,
+    `area` varchar(100) DEFAULT NULL,
+    `cargo` varchar(100) DEFAULT NULL,
+    `lider_directo` varchar(100) DEFAULT NULL,
+    `rol` varchar(100) DEFAULT NULL,
+    `usuario` varchar(50) DEFAULT NULL,
+    `password` varchar(200) DEFAULT NULL,
+    `login_attempts` int DEFAULT '0',
+    `lock_until` bigint DEFAULT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `documento` (`documento`),
+    UNIQUE KEY `correo` (`correo`),
+    UNIQUE KEY `usuario` (`usuario`)
+) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci

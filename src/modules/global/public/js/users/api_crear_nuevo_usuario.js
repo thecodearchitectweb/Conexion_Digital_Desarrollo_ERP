@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const area = document.getElementById('area').value
         const cargo = document.getElementById('cargo').value
         const lider_directo = document.getElementById('lider_directo').value
+        const rol = document.getElementById('rol').value
         const usuario = document.getElementById('usuario').value.trim()
         const contraseña = document.getElementById('contraseña').value
         const contraseña_2 = document.getElementById('contraseña_2').value
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const requiredFields = [
             "nombre", "documento", "estado", "fecha_nacimiento",
             "correo", "contacto", "direccion", "area",
-            "cargo", "lider_directo", "usuario", "contraseña", "contraseña_2"
+            "cargo", "lider_directo", "rol", "usuario", "contraseña", "contraseña_2"
         ]
 
         let isValid = true;
@@ -88,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 area,
                 cargo,
                 lider_directo,
+                rol,
                 usuario,
                 contraseña
             }
