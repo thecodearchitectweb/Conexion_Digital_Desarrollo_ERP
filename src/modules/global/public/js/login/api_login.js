@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("✅ Ingreso exitodo:", result)
 
             // ✅ Redirección tras login exitoso
-            window.location.href = "/incapacidad/seleccionar/empleado";
+            window.location.href = "/inicio";
 
 
 
