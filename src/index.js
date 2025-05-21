@@ -14,6 +14,7 @@ import  rutasDeIncapacidades  from './modules/rutas/rutas-incapacidades/incapaci
 
 import rutasDeLogin from './modules/rutas/rutas-login/rutas_login.routes.js'
 import rutasDeUsers from './modules/rutas/rutas-users/rutas_users.routes.js'
+import rutasDeModulos from './modules/rutas/rutas-modulos/rutas-modulos.routes.js'
 
 
 // Cargar variables de entorno
@@ -126,7 +127,8 @@ app.use((req, res, next) => {
 const todasLasRutas = [
   ...rutasDeIncapacidades,
   ...rutasDeLogin,
-  ...rutasDeUsers
+  ...rutasDeUsers,
+  ...rutasDeModulos
 ];
 
 //[...rutasDeIncapacidades].forEach(route => app.use(route));

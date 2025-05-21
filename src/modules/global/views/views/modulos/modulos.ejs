@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantalla Principal - Dashboard Empresarial</title>
+ 
+    <link href="css/output.css" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+</head>
+<body class="relative min-h-screen bg-[url('/global/img/modulos/hoja3.jpg')] bg-cover bg-center">
+  <!-- Fondo con imagen y overlay -->
+  <div class="absolute inset-0 bg-[url('/images/tranquil-bg.jpg')] bg-center bg-cover"></div>
+  <div class="absolute inset-0 bg-black/20"></div>
+
+  <!-- navbar -->
+  <header class="fixed top-0 inset-x-0 bg-black/60 h-16 flex items-center px-8 z-50">
+    <!-- Logo -->
+    <a href="#" class="flex items-center">
+      <img src="/global/img/logo/CONEXION-DIGITAL-LOGO-VECTOR-png-blanco.png" alt="Logo Empresa" class="h-22 w-auto ml-12"  />
+      <!-- <span class="ml-3 text-white text-xl font-semibold"></span> -->
+    </a>
+    <!-- Menú -->
+    <nav class="ml-auto flex items-center space-x-8">
+      <a href="#" class="text-white hover:text-gray-300 transition" aria-label="Inicio">Inicio</a>
+      <a href="#" class="text-white hover:text-gray-300 transition" aria-label="Módulos">Módulos</a>
+      <a href="#" class="text-white hover:text-gray-300 transition" aria-label="Ayuda">Ayuda</a>
+    </nav>
+  </header>
+
+  <!-- cards -->
+  <main class="relative z-10 pt-30 pb-16 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+
+
+
+      <!-- Usuarios -->
+      <a href="#" role="button" aria-label="Módulo Usuarios" class="group relative block bg-gradient-to-tr from-blue-600 to-indigo-600/90 rounded-lg shadow-lg p-4 text-center cursor-pointer transform transition-transform hover:scale-105 hover:shadow-2xl">
+        <!-- Decorativo: triángulos estáticos -->
+        <span class="absolute top-6 left-6 w-9 h-9 bg-white/20 rotate-45 transform -translate-y-1/2 -translate-x-1/2"></span>
+        <span class="absolute bottom-0 right-0 w-8 h-8 bg-white/10 rotate-12 transform translate-x-1/3 translate-y-1/3"></span>
+        <!-- Icono -->
+        <div class="relative z-10 mx-auto flex items-center justify-center
+                w-13 h-13 bg-white/80 rounded-full shadow-md mb-2">
+          <i class="bx bxs-user-pin text-indigo-600 text-3xl"></i> 
+        </div>
+        <div class="relative z-10">
+          <h2 class="text-md font-semibold text-white drop-shadow-lg mb-1">Usuarios</h2>
+          <p class="text-xs text-white/80">Administra accesos y roles</p>
+        </div>
+      </a>
+
+      <!-- Finanzas -->
+      <a href="#" role="button" aria-label="Módulo Finanzas" class="group relative block bg-gradient-to-br from-yellow-600 to-orange-600/90 rounded-lg shadow-lg p-4 text-center cursor-pointer transform transition-transform hover:scale-105 hover:shadow-2xl">
+        <!-- Decorativo: rombo estático -->
+        <span class="absolute top-1 right-1 w-8 h-8 bg-white/20 rotate-45 transform translate-x-1/4 -translate-y-1/4"></span>
+        <span class="absolute bottom-2 left-2 w-4 h-4 bg-white/30 rounded-full"></span>
+        <!-- Icono -->
+        <div class="relative z-10 mx-auto flex items-center justify-center
+                w-13 h-13 bg-white/80 rounded-full shadow-md mb-2">
+          <i class="bx bxs-group text-orange-600 text-3xl"></i>
+        </div>
+        <div class="relative z-10">
+          <h2 class="text-md font-semibold text-white drop-shadow-sm mb-1">Staff</h2>
+          <p class="text-xs text-white/80">Talento organizacional</p>
+        </div>
+      </a>
+
+
+      <!-- Proyectos -->
+      <a href="/incapacidad/seleccionar/empleado" role="button" aria-label="Módulo Incapacidades" class="group relative block bg-gradient-to-br from-pink-600 to-red-600/90 rounded-lg shadow-lg p-4 text-center cursor-pointer transform transition-transform hover:scale-105 hover:shadow-2xl">
+
+        <!-- Decorativo: líneas onduladas estáticas -->
+        <span class="absolute top-0 left-1/3 w-16 h-1 bg-white/20 rounded-full"></span>
+        <span class="absolute bottom-1 right-1 w-6 h-6 bg-white/30 rotate-6 transform translate-x-1/4 translate-y-1/4"></span>
+        <div class="relative z-10 mx-auto flex items-center justify-center
+                w-13 h-13 bg-white/80 rounded-full shadow-md mb-2">
+          <i class="bx bxs-ambulance text-red-700 text-3xl"></i>
+        </div>
+
+        <div class="relative z-10">
+          <h2 class="text-md font-semibold text-white drop-shadow-sm mb-1">Incapacidades</h2>
+          <p class="text-xs text-white/90">Administración incapacidades médicas del personal.</p>
+        </div>
+      </a>
+
+
+
+      <!-- Reportes -->
+      <a href="#" role="button" aria-label="Módulo Reportes" class="group relative block bg-gradient-to-br from-teal-600 to-cyan-600/90 rounded-lg shadow-lg p-4 text-center cursor-pointer transform transition-transform hover:scale-105 hover:shadow-2xl hidden">
+        <!-- Decorativo: puntos estáticos -->
+        <span class="absolute top-2 left-1/2 w-2 h-2 bg-white/20 rounded-full"></span>
+        <span class="absolute bottom-0 right-1 w-3 h-3 bg-white/30 rounded-full"></span>
+        <!-- Icono -->
+        <div class="relative z-10 inline-block p-2 bg-white/80 rounded-full shadow-md mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6"/>
+          </svg>
+        </div>
+        <div class="relative z-10">
+          <h2 class="text-md font-semibold text-white drop-shadow-sm mb-1">Reportes</h2>
+          <p class="text-xs text-white/90">Datos y métricas</p>
+        </div>
+      </a>
+
+
+
+      <!-- Configuración -->
+      <a href="#" role="button" aria-label="Módulo Configuración" class="group relative block bg-gradient-to-br from-gray-600 to-gray-600/90 rounded-lg shadow-lg p-4 text-center cursor-pointer transform transition-transform hover:scale-105 hover:shadow-2xl hidden">
+        <!-- Decorativo: engranajes estáticos -->
+        <span class="absolute bottom-1 right-1 w-8 h-8 bg-white/20 rounded-full"></span>
+        <span class="absolute top-3 left-3 w-6 h-6 bg-white/30 rotate-12 transform -translate-x-1/4 -translate-y-1/4"></span>
+        <!-- Icono -->
+        <div class="relative z-10 inline-block p-2 bg-white/80 rounded-full shadow-md mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 0v4m0-4h4m-4 0H8"/>
+          </svg>
+        </div>
+        <div class="relative z-10">
+          <h2 class="text-md font-semibold text-white drop-shadow-sm mb-1">Configuración</h2>
+          <p class="text-xs text-white/80">Ajustes del sistema</p>
+        </div>
+      </a>
+
+
+      
+      <!-- Estadísticas -->
+      <a href="#" role="button" aria-label="Módulo Estadísticas" class="group relative block bg-gradient-to-tr from-purple-600 to-pink-600/90 rounded-lg shadow-lg p-4 text-center cursor-pointer transform transition-transform hover:scale-105 hover:shadow-2xl hidden">
+        <!-- Decorativo: burbujas estáticas -->
+        <span class="absolute top-1 left-1 w-4 h-4 bg-white/20 rounded-full"></span>
+        <span class="absolute bottom-1 right-1 w-5 h-5 bg-white/30 rounded-full"></span>
+        <!-- Icono -->
+        <div class="relative z-10 inline-block p-2 bg-white/80 rounded-full shadow-md mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18"/>
+          </svg>
+        </div>
+        <div class="relative z-10">
+          <h2 class="text-md font-semibold text-white drop-shadow-sm mb-1">Estadísticas</h2>
+          <p class="text-xs text-white/80">Gráficos e informes</p>
+        </div>
+      </a>
+
+    </div>
+
+
+
+    
+
+
+  </main>
+
+
+      <!-- Más módulos -->
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer class="fixed bottom-0 inset-x-0 bg-black/80 text-gray-400 py-4">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center">
+      <p class="text-xs">© 2025 Conexión Digital. Todos los derechos reservados.</p>
+      <div class="mt-4 sm:mt-0 space-x-6">
+        <a href="#" class="hover:text-white transition text-xs" aria-label="Política de privacidad">Política de Privacidad</a>
+        <a href="#" class="hover:text-white transition text-xs" aria-label="Términos de servicio">Términos de Servicio</a>
+        <a href="#" class="hover:text-white transition text-xs" aria-label="Contacto">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -5,7 +5,7 @@ import { inicio } from '../../controllers/inicio/inicio.controller.js'
 
 const router = Router()
 
-router.get('/inicio', inicio)
+router.get('/Inicio', inicio)
 
 
 export default router

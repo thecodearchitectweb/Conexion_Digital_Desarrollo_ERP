@@ -2,66 +2,96 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Lobby de Bienvenida</title>
-    <!-- Tailwind Play CDN -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Lobby de Bienvenida</title>
+  <!-- Tailwind Play CDN -->
   <link href="css/output.css" rel="stylesheet" />
 
 </head>
 
-<body
-    class="min-h-screen bg-[url('/global/img/inicio/cabaña.jpg')] bg-cover bg-center relative">
+<body class="min-h-screen bg-[url('/global/img/inicio/cabaña.jpg')] bg-cover bg-center relative">
 
 
-    <!-- Capa semitransparente sobre el fondo -->
-    <div class="absolute inset-0 bg-black/50"></div>
+  <!-- Capa semitransparente sobre el fondo -->
+  <div class="absolute inset-0 bg-black/50"></div>
 
-    <!-- Contenedor principal centrado -->
-    <div class="relative flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-2xl p-6 space-y-6 max-w-sm w-full
+
+  <!-- Contenedor principal centrado -->
+  <div class="relative flex items-center justify-center min-h-screen p-4">
+    
+    <div class="bg-gray-800/30 backdrop-blur-md rounded-2xl p-6 space-y-6 max-w-md w-full
              transition-opacity duration-500 opacity-0 animate-fadeIn">
-            <!-- Avatar + texto de bienvenida -->
-            <div class="flex items-center space-x-4">
-                <!-- Avatar circular -->
-                <div
-                    class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xl font-semibold text-gray-700 dark:text-gray-200">
-                    AD
-                </div>
-                <div>
-                    <!-- Título -->
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">¡Bienvenido, Alex Dev!</h1>
-                    <!-- Subtítulo -->
-                    <p class="text-sm text-gray-700 dark:text-gray-300">Desarrollador Full-Stack · Admin</p>
-                </div>
-            </div>
 
-            <!-- Botones de acción opcionales -->
-            <div class="flex space-x-4 justify-center">
-                <button class="flex-1 bg-teal-600/40 hover:bg-teal-700 text-white font-medium py-2 rounded-lg
-                 transform hover:scale-105 transition">
-                    Ir al Dashboard
-                </button>
-<!--                 <button class="flex-1 bg-white/20 hover:bg-white/30 text-teal-600 hover:text-teal-700 font-medium py-2 rounded-lg
-                 transform hover:scale-105 transition">
-                    Configuración
-                </button> -->
-            </div>
+      <!-- Avatar + texto de bienvenida -->
+      <div class="flex items-center space-x-4 ">
+        <!-- Avatar circular -->
+        <% 
+            // Separamos por espacios y limpiamos
+            const parts = (user.nombre || '').trim().split(/\s+/);
+            // Primera inicial: primer elemento
+            const firstInitial = parts[0]?.charAt(0).toUpperCase() || '';
+            // Primer apellido: si hay al menos 3 partes, tomamos la tercera, si no la segunda
+            const surname = parts.length >= 3 ? parts[2] : parts[1] || '';
+            const secondInitial = surname.charAt(0).toUpperCase() || '';
+        %>
+
+        <div class="w-16 h-16 rounded-full bg-gray-700 
+         flex items-center justify-center text-xl font-semibold 
+         text-gray-200 dark:text-gray-200 mx-2">
+          <%= firstInitial + secondInitial %>
         </div>
+
+          <div class="ml-5">
+            <%
+              const nombreCompleto = user.nombre || '';
+              const nombresSeparados = nombreCompleto.trim().split(/\s+/);
+              const primerNombre = nombresSeparados[0] || '';
+              const primerApellido = nombresSeparados[2] || '';
+              const displayName = (primerNombre + ' ' + primerApellido).trim();
+            %>
+
+            <h1 class="text-xl font-bold text-gray-100 dark:text-gray-100">
+              ¡Bienvenido, <%= displayName %>!
+            </h1>
+
+
+
+  <!-- <h1 class="text-2xl font-bold text-gray-100 dark:text-gray-100">
+    ¡Bienvenido, <%= displayName %>!
+  </h1>
+  -->
+            <!-- Subtítulo -->
+            <p class="text-sm text-gray-300 dark:text-gray-300"><%= user.cargo %> · <%= user.rol %> </p>
+            <p class="text-sm text-gray-300 dark:text-gray-300 text-center mt-2"><%= user.correo %> </p>
+        </div>
+      </div>
+
+
+
+      <!-- Botones de acción opcionales -->
+      <div class="flex space-x-4 justify-center">
+        <a href="/Modulos" role="button" class="flex-1 bg-gradient-to-tr from-blue-600 to-teal-600/40 hover:bg-teal-700 text-white font-medium py-3 rounded-lg text-center transform hover:scale-105 transition">
+          Comenzar
+        </a>
+      </div>
+
+
     </div>
+  </div>
 
-    <!-- Animación fade-in -->
-    <style>
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
+  <!-- Animación fade-in -->
+  <style>
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
 
-        .animate-fadeIn {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-    </style>
+    .animate-fadeIn {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+  </style>
 </body>
 
 </html>
