@@ -3,6 +3,9 @@ import { pool } from "../../../models/db.js";
 
 export const edit_incapacidad_ventana = async (req, res) => {
   try {
+
+    await conn.query('SET @usuario_id = ?', [req.session.user.id]);
+
     console.log("=== Iniciando edit_incapacidad_ventana ===");
     console.log("📅 BODY:", req.body);
 
@@ -32,6 +35,8 @@ export const edit_incapacidad_ventana = async (req, res) => {
     }
 
     console.log("🟢 Actualizando datos principales de la incapacidad...");
+
+  await pool.query('SET @usuario_id = ?', [req.session.user.id]);
 
     /* ACTUALIZAR LOS DATOS REGISTRADOS DE LA INCAPACIDAD */
     const [update_tracking_data] = await pool.query(

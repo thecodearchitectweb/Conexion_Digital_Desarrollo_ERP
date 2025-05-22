@@ -89,6 +89,10 @@ export const registroNuevaIncapacidad = async(req, res) => {
         const id_extension = select_fecha_incapacidad || null;
 
 
+        // CAPTURA DE ID DEL USUARIO PARA EL TRIGGER INCAPACIDAD HISTORIAL
+        await pool.query('SET @usuario_id = ?', [req.session.user.id]);
+
+
         /* INSERTAR DATOS EN LA TABLA HISTORIAL DE INCAPACIDADES */
         const [data_insert_incapacidad] = await pool.query(
 

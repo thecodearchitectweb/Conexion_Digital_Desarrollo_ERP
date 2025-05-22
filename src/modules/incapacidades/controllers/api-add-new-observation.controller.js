@@ -6,7 +6,12 @@ const app = express();
 
 export const api_add_new_observation = async (req, res) => {
     try {
-        
+
+        console.log("--------------------------------------------------->")
+
+        const user_session = req.session.user.id
+        console.log("USER: ", user_session)
+
         // Capturar los datos enviados desde el fetch
         const {
             codigoLiquidacion, 
@@ -25,8 +30,8 @@ export const api_add_new_observation = async (req, res) => {
 
 
         /* SE REALIZA INSERCION EN LA BASE DE DATOS DE LA NUEVA OBSERVACION */
-        const NewObservation = await addNewObservation(codigoLiquidacion, estadoIncapacidad, observacion)
-        
+        const NewObservation = await addNewObservation(user_session, codigoLiquidacion, estadoIncapacidad, observacion)
+        console.log("NEW OBSERVACION: ", NewObservation)
 
 
         /* RESPUESTA */

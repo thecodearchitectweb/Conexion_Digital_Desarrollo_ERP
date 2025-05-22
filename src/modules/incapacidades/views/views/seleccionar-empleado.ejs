@@ -27,7 +27,7 @@
   <!-- SIDEBAR -->
   <aside>
     <!-- SIDEBAR (partial) -->
-    <div id="sidebar_principal_incapacidades" class="main-content">
+    <div id="sidebar_principal_incapacidades" class="main-content ">
       <aside id="sidebar" class="sidebar">
         <%- include('./../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
       </aside>
@@ -103,21 +103,21 @@
                       <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
                         <td class="px-2 text-center">
                           <div class="flex items-center justify-center gap-x-2">
-                            <a href="/incapacidad/detalle/incapacidad/empleado/<%= Empleados[i].id_empleado %>">
-                              <i class='bx bxs-file-plus text-xl text-lime-600'></i>
-                            </a>
-                            <a href="/incapacidad/tabla/incapacidades/<%= Empleados[i].id_empleado %>">
-                              <i class='bx bx-table text-xl text-emerald-700'></i>
-                            </a>
 
-                            <a href="javascript:void(0);" 
-                              id="download_id_empleado"
-                              data-id="<%= Empleados[i].id_empleado %>"
-                              data-modal-target="descargarIncapacidadesEmpleado"
-                              data-modal-toggle="descargarIncapacidadesEmpleado" 
-                              class="btnDownloadIncapacidades">
-                              <i class='bx bxs-download text-xl text-orange-700'></i>
-                            </a>
+                              <!-- Agregar incapacidad -->
+                              <a href="/incapacidad/detalle/incapacidad/empleado/<%= Empleados[i].id_empleado %>" aria-label="Agregar incapacidad" class="p-0  text-green-700   hover:-translate-y-1">
+                                <i class='bx bxs-file-plus text-lg'></i>
+                              </a>
+
+                              <!-- Ver tabla de incapacidades -->
+                              <a href="/incapacidad/tabla/incapacidades/<%= Empleados[i].id_empleado %>" aria-label="Ver tabla de incapacidades" class="p-0 text-blue-700 hover:-translate-y-1">
+                                <i class='bx bx-table text-lg'></i>
+                              </a>
+
+                              <!-- Descargar Excel -->
+                              <a href="javascript:void(0);" id="download_id_empleado" data-id="<%= Empleados[i].id_empleado %>" data-modal-target="descargarIncapacidadesEmpleado" data-modal-toggle="descargarIncapacidadesEmpleado" aria-label="Descargar incapacidades" class="p-0  text-yellow-700  hover:-translate-y-1">
+                                <i class='bx bxs-download text-lg'></i>
+                              </a>
 
                           </div>
                         </td>

@@ -1,8 +1,11 @@
 import { pool } from "../../../../models/db.js";
 
 // ✅ Función para agregar una nueva observación a la tabla seguimiento_incapacidad_liquidada
-export async function addNewObservation(codigoLiquidacion, estadoIncapacidad, observacion) {
+export async function addNewObservation(user, codigoLiquidacion, estadoIncapacidad, observacion) {
     try {
+
+
+
         // ✅ Verificar que los campos no estén vacíos
         if (!codigoLiquidacion || !estadoIncapacidad || !observacion) {
             return {
@@ -10,18 +13,22 @@ export async function addNewObservation(codigoLiquidacion, estadoIncapacidad, ob
                 message: "Todos los campos son obligatorios."
             };
         }
+        
+
 
         // ✅ Insertar la nueva observación en la base de datos
         const [result] = await pool.query(
             `
             INSERT INTO seguimiento_incapacidad_liquidada (
+                id_user,
                 estado,
                 observaciones,
                 id_incapacidades_liquidacion
-            ) VALUES (?, ?, ?)
+            ) VALUES (?, ?, ?, ?)
             `,
-            [estadoIncapacidad, observacion, codigoLiquidacion]
+            [user, estadoIncapacidad, observacion, codigoLiquidacion]
         );
+
 
         // ✅ Verificar si la inserción fue exitosa
         if (result.affectedRows > 0) {

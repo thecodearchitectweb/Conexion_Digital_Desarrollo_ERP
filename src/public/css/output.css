@@ -98,6 +98,9 @@
 .right-2 {
   right: calc(var(--spacing) * 2);
 }
+.right-3 {
+  right: calc(var(--spacing) * 3);
+}
 .bottom-0 {
   bottom: calc(var(--spacing) * 0);
 }
@@ -3109,6 +3112,9 @@
 .text-green-600 {
   color: var(--color-green-600);
 }
+.text-green-700 {
+  color: var(--color-green-700);
+}
 .text-indigo-600 {
   color: var(--color-indigo-600);
 }
@@ -4012,6 +4018,13 @@
     }
   }
 }
+.hover\:bg-blue-200 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-blue-200);
+    }
+  }
+}
 .hover\:bg-blue-700 {
   &:hover {
     @media (hover: hover) {
@@ -4058,6 +4071,13 @@
   &:hover {
     @media (hover: hover) {
       background-color: var(--color-gray-950);
+    }
+  }
+}
+.hover\:bg-green-200 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-green-200);
     }
   }
 }
@@ -4145,6 +4165,13 @@
     }
   }
 }
+.hover\:bg-yellow-200 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-yellow-200);
+    }
+  }
+}
 .hover\:text-sm {
   &:hover {
     @media (hover: hover) {
@@ -4185,6 +4212,13 @@
   &:hover {
     @media (hover: hover) {
       color: var(--color-gray-600);
+    }
+  }
+}
+.hover\:text-gray-700 {
+  &:hover {
+    @media (hover: hover) {
+      color: var(--color-gray-700);
     }
   }
 }
@@ -4338,6 +4372,11 @@
 .focus\:ring-gray-300 {
   &:focus {
     --tw-ring-color: var(--color-gray-300);
+  }
+}
+.focus\:ring-indigo-500 {
+  &:focus {
+    --tw-ring-color: var(--color-indigo-500);
   }
 }
 .focus\:ring-lime-300 {
