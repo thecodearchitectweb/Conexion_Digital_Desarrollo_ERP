@@ -61,3 +61,29 @@ VALUES
 ('Famisanar', 'Liberty', 'Protección', 'Colsubsidio', 18),
 ('Aliansalud', 'Sura', 'Colpatria', 'Compensar', 19),
 ('Salud Total', 'Bolívar', 'Skandia', 'Cafam', 20);
+
+
+
+INSERT INTO seguridad_social
+  (eps, arl, fondo_pension, caja_compensacion, id_empleado)
+VALUES
+  ('Sura',        'Colpatria',    'Protección',    'Comfama',    67),
+  ('Sanitas',     'Sura',         'Colfondos',     'Cafam',      68),
+  ('Nueva EPS',   'Bolívar',      'Porvenir',      'Compensar',  69),
+  ('Compensar',   'Bolívar',      'Porvenir',      'Colsubsidio',70),
+  ('Coomeva',     'Positiva',     'Old Mutual',    'Cajasan',    71),
+  ('Famisanar',   'Liberty',      'Horizonte',     'Comfama',    72),
+  ('Aliansalud',  'Sura',         'Colpatria',     'Compensar',  73),
+  ('Salud Total', 'Bolívar',      'Skandia',       'Cafam',      74),
+  ('Sanitas',     'Axa Colpatria','Porvenir',      'Comfandi',   75),
+  ('Nueva EPS',   'Mapfre',       'Colfondos',     'Cajacopi',   76),
+  ('Coomeva',     'Bolívar',      'Old Mutual',    'Comfenalco', 77),
+  ('Famisanar',   'Liberty',      'Protección',    'Colsubsidio',78),
+  ('Aliansalud',  'Sura',         'Colpatria',     'Compensar',  79),
+  ('Salud Total', 'Bolívar',      'Skandia',       'Cafam',      80),
+  ('Sanitas',     'Axa Colpatria','Porvenir',      'Comfandi',   81),
+  ('Nueva EPS',   'Mapfre',       'Colfondos',     'Cajacopi',   82),
+  ('Coomeva',     'Bolívar',      'Old Mutual',    'Comfenalco', 83),
+  ('Famisanar',   'Liberty',      'Protección',    'Colsubsidio',84),
+  ('Aliansalud',  'Sura',         'Colpatria',     'Compensar',  85),
+  ('Salud Total', 'Bolívar',      'Skandia',       'Cafam',      86);

@@ -9,7 +9,7 @@ import { sessionRequired  } from '../../middlewares/login/autenticacion.js'
 
 router.get('/new/user', sessionRequired,  newUser)
 
-router.post('/new/user', sessionRequired, _newUser)
+router.post('/new/user', sessionRequired,  _newUser)
 
 
 
