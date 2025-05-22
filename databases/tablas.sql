@@ -42,7 +42,8 @@ CREATE TABLE `empleado` (
     `fecha_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_empleado`),
     UNIQUE KEY `documento` (`documento`)
-) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+) ENGINE = InnoDB AUTO_INCREMENT = 27 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
 
 
 
@@ -82,7 +83,7 @@ CREATE TABLE `incapacidades_historial` (
     PRIMARY KEY (`id_incapacidades_historial`),
     KEY `fk_incapacidades_historial_empleado` (`id_empleado`),
     CONSTRAINT `fk_incapacidades_historial_empleado` FOREIGN KEY (`id_empleado`) REFERENCES `empleado` (`id_empleado`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -138,7 +139,7 @@ CREATE TABLE `incapacidades_liquidacion` (
     ),
     KEY `fk_incapacidades_liquidacion_incapacidades_historial` (`id_incapacidades_historial`),
     CONSTRAINT `fk_incapacidades_liquidacion_incapacidades_historial` FOREIGN KEY (`id_incapacidades_historial`) REFERENCES `incapacidades_historial` (`id_incapacidades_historial`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 91 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -154,9 +155,7 @@ CREATE TABLE `incapacidades_seguimiento` (
     ),
     KEY `fk_incapacidades_seguimiento_incapacidades_historial` (`id_incapacidades_historial`),
     CONSTRAINT `fk_incapacidades_seguimiento_incapacidades_historial` FOREIGN KEY (`id_incapacidades_historial`) REFERENCES `incapacidades_historial` (`id_incapacidades_historial`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 107 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
-
-
+) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -166,7 +165,10 @@ CREATE TABLE `politicas_incapacidades` (
     `prorroga` varchar(10) DEFAULT NULL,
     `dias_laborados` varchar(10) DEFAULT NULL,
     `salario` varchar(20) DEFAULT NULL,
+    `rango_minimo` int DEFAULT NULL,
+    `rango_maximo` int DEFAULT NULL,
     `tipo_incapacidad` varchar(10) DEFAULT NULL,
+    `entidad_liquidadora` varchar(200) DEFAULT NULL,
     `dias_incapacidad` varchar(10) DEFAULT NULL,
     `porcentaje_liquidacion_empleador` decimal(10, 2) DEFAULT NULL,
     `porcentaje_liquidacion_eps` decimal(10, 2) DEFAULT NULL,
@@ -176,7 +178,7 @@ CREATE TABLE `politicas_incapacidades` (
     `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `fecha_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_politicas_incapacidades`)
-) ENGINE = InnoDB AUTO_INCREMENT = 25 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+) ENGINE = InnoDB AUTO_INCREMENT = 37 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -196,7 +198,6 @@ CREATE TABLE `ruta_documentos` (
 
 
 
-
 CREATE TABLE `seguridad_social` (
     `id_seguridad_social` int NOT NULL AUTO_INCREMENT,
     `eps` varchar(100) DEFAULT NULL,
@@ -212,8 +213,6 @@ CREATE TABLE `seguridad_social` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
-
-
 CREATE TABLE `sessions` (
     `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
     `expires` int unsigned NOT NULL,
@@ -223,24 +222,32 @@ CREATE TABLE `sessions` (
 
 
 
-CREATE TABLE seguimiento_incapacidad_liquidada (
-    id_seguimiento_incapacidad_liquidada INT NOT NULL AUTO_INCREMENT,
-    estado VARCHAR(100) DEFAULT NULL,
-    observaciones VARCHAR(600) DEFAULT NULL,
-    id_incapacidades_liquidacion INT NOT NULL,
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id_seguimiento_incapacidad_liquidada),
-    CONSTRAINT fk_seguimiento_liquidacion
-        FOREIGN KEY (id_incapacidades_liquidacion)
-        REFERENCES incapacidades_liquidacion(id_incapacidades_liquidacion)
-        ON DELETE CASCADE
-);
+CREATE TABLE `seguimiento_incapacidad_liquidada` (
+    `id_seguimiento_incapacidad_liquidada` int NOT NULL AUTO_INCREMENT,
+    `id_user` int DEFAULT NULL,
+    `estado` varchar(100) DEFAULT NULL,
+    `observaciones` varchar(600) DEFAULT NULL,
+    `id_incapacidades_liquidacion` int NOT NULL,
+    `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    `fecha_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (
+        `id_seguimiento_incapacidad_liquidada`
+    ),
+    KEY `fk_seguimiento_liquidacion` (
+        `id_incapacidades_liquidacion`
+    ),
+    CONSTRAINT `fk_seguimiento_liquidacion` FOREIGN KEY (
+        `id_incapacidades_liquidacion`
+    ) REFERENCES `incapacidades_liquidacion` (
+        `id_incapacidades_liquidacion`
+    ) ON DELETE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 24 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
 CREATE TABLE `files_upload` (
     `id_ruta_documentos` int NOT NULL AUTO_INCREMENT,
+    `id_ruta_documentos_tabla_historial` int DEFAULT NULL,
     `nombre` varchar(100) DEFAULT NULL,
     `ruta` varchar(600) DEFAULT NULL,
     `id_incapacidades_liquidacion` int DEFAULT NULL,
@@ -263,11 +270,13 @@ CREATE TABLE `prorroga` (
     `id_prorroga` int NOT NULL AUTO_INCREMENT,
     `id_empleado` int DEFAULT NULL,
     `id_incapacidad_prorroga` int DEFAULT NULL,
+    `tipo_incapacidad_prorroga` varchar(100) DEFAULT NULL,
     `fecha_inicio_prorroga` date DEFAULT NULL,
     `fecha_final_prorroga` date DEFAULT NULL,
     `dias_incapacidad_prorroga` int DEFAULT NULL,
     `dias_liquidados_prorroga` int DEFAULT NULL,
     `id_incapacidades_liquidacion` int NOT NULL,
+    `tipo_incapacidad` varchar(100) DEFAULT NULL,
     `fecha_inicio` date DEFAULT NULL,
     `fecha_final` date DEFAULT NULL,
     `dias_incapacidad` int DEFAULT NULL,
@@ -282,8 +291,7 @@ CREATE TABLE `prorroga` (
     ) REFERENCES `incapacidades_liquidacion` (
         `id_incapacidades_liquidacion`
     ) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
-
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 
 
@@ -311,4 +319,4 @@ CREATE TABLE `usuarios` (
     UNIQUE KEY `documento` (`documento`),
     UNIQUE KEY `correo` (`correo`),
     UNIQUE KEY `usuario` (`usuario`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci

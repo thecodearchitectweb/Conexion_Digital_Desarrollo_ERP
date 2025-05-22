@@ -1386,7 +1386,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
 
                         return res.json({
-                            message: `Error, no es posible procesar la incapacidad`
+                            message: `Liquidacion de incapacidad exitosa.`
                         });
                        
 
