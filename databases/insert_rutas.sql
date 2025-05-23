@@ -1,0 +1,36 @@
+
+
+INSERT INTO erp_rutas (
+  modulo,
+  submodulo,
+  ruta,
+  nombre_vista,
+  metodo_http,
+  requiere_auth,
+  ruta_activa,
+  observacion
+) VALUES
+('Incapacidades','Seleccionar Empleado','/api/validacion/incapacidad/duplicada','detalle-incapacidad','POST',0,1,'Verificacion si hay duplicidad de incapcidad en el momento de registrar una nueva incapacidad')	,
+('Incapacidades','Detalle de incapacidad, filtro I','/api/agregar/nueva/observacion','entity_liquidation_view','POST',0,1,'Agregar nueva  observacion a la incapacidad')	,
+('Incapacidades','Seleccionar Empleado','/api/download/libro/incapacidades/empleado','seleccionar-empleado','POST',0,1,'Descargar Exel de las incapacidades del empleado')	,
+('Incapacidades','Liquidacion Incapacidad','/api/download/user/disability/*','tabla-incapacidades','POST',0,1,'Genera la liquidacion de la incapacidad del empleado')	,
+('Incapacidades','Seleccionar Empleado','/incapacidad/api/select/disability/date/*','seleccionar-empleado','GET',0,1,'Selecciona las fechas de la incapacidad prorroga')	,
+('Incapacidades','Seleccionar Empleado','/incapacidad/api/select/disability/extension/*','seleccionar-empleado','POST',0,1,'selecciona la incapacidad de la extension prorroga')	,
+('Incapacidades','Seleccionar Empleado','/api/cie_10/*','seleccionar-empleado','GET',0,1,'Trae el codigo y la informacion de la enfermedad')	,
+('Incapacidades','ventana confirmacion incapacidad recibida','/api/edit/incapacidad','ventana_confirmacion_incapacidad_recibida','POST',0,1,'Permite editar lainformacion de la incapacidad, antes de iquidarla')	,
+('Incapacidades','Tabla incapacidades Empleado','/incapacidad/detalle/incapacidad/empleado/*','user_disability_table','GET',0,1,'Permite crear nueva incapacidad')	,
+('Incapacidades','ventana confirmacion incapacidad recibida','/api/cie_10/*','ventana_confirmacion_incapacidad_recibida','GET',0,1,'Permte editar el cie-10 en la ventana de confirmacion')	,
+('Incapacidades','Ventana de liquidacion confirmada','/incapacidad/vista/liquidacion/entidades/*','entity_liquidation_view','GET',0,1,'Permite visualizar la incapacidad con su liquidacion')	,
+('Incapacidades','Seleccionar Empleado','/incapacidad/registro/nueva/incapacidad','seleccionar-empleado','POST',0,1,'Permite guardar la incapacidad, ruta y documento ')	,
+('Incapacidades','Seleccionar Empleado','/incapacidad/seleccionar/empleado','seleccionar-empleado','GET',0,1,'Trae la visual de seleccionar un empleado')	,
+('Incapacidades','Seleccionar Empleado','/incapacidad/seleccionar/empleado','seleccionar-empleado','POST',0,1,'Trae el resultado de la seleccion del empleado')	,
+('Incapacidades','Tabla incapacidades Empleado','/incapacidad/tabla/incapacidades/*','tabla-incapacidades','GET',0,1,'Trae las incapacidades del empleado')	,
+('Incapacidades','Tabla incapacidades Empleado','/incapacidad/user/disabiblity/table/*/*','tabla-incapacidades','GET',0,1,'Trae las incapacidades del empleado')	,
+('Incapacidades','ventana confirmacion incapacidad recibida','/incapacidad/confirmacion/incapacidad/recibida/*','ventana_confirmacion_incapacidad_recibida','GET',0,1,'Trae datos de confirmacion de la incapacidad antes de ser liquidada')	,
+('Global','Inicio','/Inicio','Inicio','GET',0,1,'Lobby')	,
+('Global','Login','/Login','Login','GET',0,1,'Permite el Logue del usuario')	,
+('Global','Login','/Login','Login','POST',0,1,'Permite el Logue del usuario')	,
+('Global','Logout','/logout','Logout','POST',0,1,'Permite romper la sesion del usuario')	,
+('Global','Modulos','/Modulos','Modulos','GET',0,1,'Permite visualizar los modulos ')	,
+('Global','Users','/new/user','Users','GET',0,1,'Permite la visualizacion del formulario de ingreso del nuevo usuario')	,
+('Global','Users','/new/user','Users','POST',0,1,'Permite guardar nuevo usuario')	

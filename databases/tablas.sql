@@ -320,3 +320,24 @@ CREATE TABLE `usuarios` (
     UNIQUE KEY `correo` (`correo`),
     UNIQUE KEY `usuario` (`usuario`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+
+
+/* TABLA DE RUTAS PARA PERMISOS */
+
+CREATE TABLE `erp_rutas` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `modulo` varchar(100) DEFAULT NULL,
+  `submodulo` varchar(100) DEFAULT NULL,
+  `ruta` varchar(255) NOT NULL,
+  `nombre_vista` varchar(255) DEFAULT NULL,
+  `metodo_HTTP` varchar(20) DEFAULT NULL,
+  `requiere_AUTH` tinyint(1) DEFAULT NULL,
+  `ruta_activa` tinyint(1) DEFAULT NULL,
+  `observacion` varchar(255) DEFAULT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_0900_ai_ci;
