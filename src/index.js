@@ -11,11 +11,8 @@ import { pool } from './models/db.js'; // Importa la conexión a la base de dato
 //import { sessionRequired } from '../src/modules/global/middlewares/login/autenticacion.js'
 
 import  rutasDeIncapacidades  from './modules/rutas/rutas-incapacidades/incapacidades_index.routes.js'
+import rutasDeGlobal from './modules/rutas/rutas-global/rutas-global.routes.js'
 
-import rutasDeLogin from './modules/rutas/rutas-login/rutas_login.routes.js'
-import rutasDeUsers from './modules/rutas/rutas-users/rutas_users.routes.js'
-import rutasDeModulos from './modules/rutas/rutas-modulos/rutas-modulos.routes.js'
-import rutasDeAplicativos from './modules/rutas/rutas-aplicativos/rutas_aplicativos.routes.js'
 
 
 // Cargar variables de entorno
@@ -127,10 +124,7 @@ app.use((req, res, next) => {
 
 const todasLasRutas = [
   ...rutasDeIncapacidades,
-  ...rutasDeLogin,
-  ...rutasDeUsers,
-  ...rutasDeModulos,
-  ...rutasDeAplicativos
+  ...rutasDeGlobal
 ];
 
 //[...rutasDeIncapacidades].forEach(route => app.use(route));
