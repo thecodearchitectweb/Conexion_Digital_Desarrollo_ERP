@@ -12,6 +12,7 @@ import { pool } from './models/db.js'; // Importa la conexión a la base de dato
 
 import  rutasDeIncapacidades  from './modules/rutas/rutas-incapacidades/incapacidades_index.routes.js'
 import rutasDeGlobal from './modules/rutas/rutas-global/rutas-global.routes.js'
+import rutasDeStaff from './modules/rutas/rutas-staff/rutas-staff.routes.js'
 
 
 
@@ -39,6 +40,7 @@ console.log("Ruta de archivos estáticos:", join(__dirname, "public"));
 
 app.use("/incapacidades",  express.static(join(__dirname, "modules", "incapacidades", "public")));
 app.use("/global",  express.static(join(__dirname, "modules", "global", "public")));
+app.use("/staff",  express.static(join(__dirname, "modules", "staff", "public")));
 
 
 
@@ -59,6 +61,7 @@ app.set("port", process.env.PORT || 3000);
 const viewDirectories = [
   join(__dirname, "modules", "incapacidades", "views", "views"),
   join(__dirname, "modules", "global",       "views", "views"),
+  join(__dirname, "modules", "staff",       "views", "views"),
 ];
 
 
@@ -124,7 +127,8 @@ app.use((req, res, next) => {
 
 const todasLasRutas = [
   ...rutasDeIncapacidades,
-  ...rutasDeGlobal
+  ...rutasDeGlobal,
+  ...rutasDeStaff
 ];
 
 //[...rutasDeIncapacidades].forEach(route => app.use(route));
