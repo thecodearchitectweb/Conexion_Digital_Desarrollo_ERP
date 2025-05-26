@@ -27,6 +27,8 @@ const __dirname = dirname(__filename);
 
 const app = express()
 
+// 1. Habilitamos confianza en proxies (p. ej. Nginx, Heroku, etc.)
+app.set('trust proxy', false);
 
 
 // Middleware global

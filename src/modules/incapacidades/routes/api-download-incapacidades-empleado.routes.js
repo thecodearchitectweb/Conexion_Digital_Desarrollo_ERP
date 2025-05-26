@@ -6,11 +6,16 @@ import {api_download_libro_incapacidades_empleado} from '../../../modules/incapa
 
 
 import { sessionRequired  } from '../../global/middlewares/login/autenticacion.js'
+import { logAccesoModulo } from '../../global/middlewares/modulos/accesoModulos.js'
+
+
 
 router.use(sessionRequired)
+//router.use(logAccesoModulo)
 
 
-router.post('/api/download/libro/incapacidades/empleado', api_download_libro_incapacidades_empleado)
+
+router.post('/api/download/libro/incapacidades/empleado', logAccesoModulo, api_download_libro_incapacidades_empleado)
 
 
 export default router;

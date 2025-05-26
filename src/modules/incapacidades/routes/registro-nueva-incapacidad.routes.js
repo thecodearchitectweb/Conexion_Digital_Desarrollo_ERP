@@ -4,12 +4,15 @@ import upload from '../../../modules/incapacidades/middlewares/uploadConfig.midd
 import { registroNuevaIncapacidad} from '../../../modules/incapacidades/controllers/registro-nueva-incapacidad.controller.js'
 
 import { sessionRequired  } from '../../global/middlewares/login/autenticacion.js'
+import { logAccesoModulo } from '../../global/middlewares/modulos/accesoModulos.js'
 
 
 const router = Router()
 
 
 router.use(sessionRequired)
+router.use(logAccesoModulo)
+
 
 
 // Configurar los campos de archivos que se esperan en el formulario

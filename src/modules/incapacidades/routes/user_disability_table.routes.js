@@ -6,8 +6,12 @@ import {UserDisabilityTable} from '../../../modules/incapacidades/controllers/us
 
 
 import { sessionRequired  } from '../../global/middlewares/login/autenticacion.js'
+import { logAccesoModulo } from '../../global/middlewares/modulos/accesoModulos.js'
+
+
 
 router.use(sessionRequired)
+router.use(logAccesoModulo)
 
 
 router.get('/incapacidad/user/disabiblity/table/:id_empleado/:id_incapacidad', UserDisabilityTable);

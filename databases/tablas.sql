@@ -356,3 +356,20 @@ CREATE TABLE aplicativos (
 ) ENGINE=InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
+
+
+/* TABLA LOGEO EN LOS MODULOS */
+CREATE TABLE `accesos_modulos` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `usuario_id` int DEFAULT NULL,
+    `usuario` varchar(100) DEFAULT NULL,
+    `modulo` varchar(100) DEFAULT NULL,
+    `ruta` varchar(255) DEFAULT NULL,
+    `ip_cliente` varchar(45) DEFAULT NULL,
+    `user_agent` varchar(255) DEFAULT NULL,
+    `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `usuario_id` (`usuario_id`),
+    CONSTRAINT `accesos_modulos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 232 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci|

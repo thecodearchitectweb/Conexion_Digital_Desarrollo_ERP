@@ -7,8 +7,12 @@ import {getEntityLiquidationView } from '../../../modules/incapacidades/controll
 
 import { sessionRequired  } from '../../global/middlewares/login/autenticacion.js'
 
+import { logAccesoModulo } from '../../global/middlewares/modulos/accesoModulos.js'
+
+
 
 router.use(sessionRequired)
+router.use(logAccesoModulo)
 
 
 router.get('/incapacidad/vista/liquidacion/entidades/:id_liquidacion', getEntityLiquidationView)
