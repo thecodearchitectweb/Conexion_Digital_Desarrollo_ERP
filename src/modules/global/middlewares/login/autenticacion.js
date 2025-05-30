@@ -1,5 +1,5 @@
 // src/middleware/sessionAuth.js
-const rutasPublicas = ['/login', '/api/login', '/logout']; // lo que no requiere sesión
+const rutasPublicas = ['/login', '/api/login', '/logout', '/new/user']; // lo que no requiere sesión
 
 export function sessionRequired(req, res, next) {
   if (rutasPublicas.includes(req.path)) {

@@ -9,7 +9,7 @@ import { logAccesoModulo } from '../../middlewares/modulos/accesoModulos.js'
 
 
 
-router.get('/new/user', sessionRequired, logAccesoModulo,  newUser)
+router.get('/new/user',  logAccesoModulo,  newUser)
 
 router.post('/new/user', sessionRequired,  _newUser)
 

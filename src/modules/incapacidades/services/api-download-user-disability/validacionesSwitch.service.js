@@ -1,0 +1,77 @@
+
+import { epsProrrogaNO } from '../api-download-user-disability/validacion-tipo-incapacidad/EPS/epsProrrogaNO.service.js'
+import { epsProrrogaSI } from '../api-download-user-disability/validacion-tipo-incapacidad/EPS/epsProrrogaSI.service.js'
+import { epsLicencias } from '../api-download-user-disability/validacion-tipo-incapacidad/EPS/epsLicencias.service.js'
+
+import { arlProrrogaNO } from '../../services/api-download-user-disability/validacion-tipo-incapacidad/ARL/arlProrrogaNO.service.js'
+import { arlProrrogaSI } from '../../services/api-download-user-disability/validacion-tipo-incapacidad/ARL/arlProrrogaSI.service.js'
+
+
+export async function validacionesSwitch(
+  id_liquidacion,
+  id_historial,
+  proceso_1
+) 
+{
+  try {
+ 
+    /* VALIDAR SI CUMPLE REQUISITOS PARA LIQUIDAR LA INCAPACIDAD */
+    if (proceso_1.Liq_cumplimiento === "SI") {
+      switch (proceso_1.parametros.tipo_incapacidad) {
+        /* EPS */
+        case "EPS":
+
+            /* VALIDACION INCAPACIDAD LICENCIAS */
+            if(proceso_1.data.subtipo_incapacidad === 'LICENCIA DE MATERNIDAD' || proceso_1.data.subtipo_incapacidad === 'LICENCIA DE PATERNIDAD' ){
+                
+                /* FUNCION PARA LICENCIAS */
+                const licencias = await epsLicencias( id_liquidacion, id_historial,  proceso_1 )
+
+            }
+
+
+
+            /* VALIDACION INCAPCIDAD PRORROGA NO */
+            if(proceso_1.liq_prorroga === 'NO'){
+
+                /* FUNCION PARA PRRROGA NO */
+                const epsProrrogaNO = await epsProrrogaNO( id_liquidacion, id_historial,  proceso_1)
+
+            }
+
+
+            /* VALIDACION INCAPCIDAD PRORROGA SI */
+            if(proceso_1.liq_prorroga === 'SI'){
+                
+                /* FUNCION PARA PRRROGA SI */
+                const epsProrrogaSI = await epsProrrogaSI( id_liquidacion, id_historial,  proceso_1)
+            }
+
+        break;
+
+
+        case "ARL":
+
+            /* ARL SIN PRORROGA */
+            if(proceso_1.liq_prorroga === 'NO'){
+                
+                /* FUNCION PARA PRRROGA NO */
+                const arlProrrogaNO = await arlProrrogaNO( id_liquidacion, id_historial,  proceso_1)
+
+            }
+
+            
+            /* ARL SIN PRORROGA */
+            if(proceso_1.liq_prorroga === 'SI'){
+                
+                /* FUNCION PARA PRRROGA NO */
+                const arlProrrogaSI = await arlProrrogaSI( id_liquidacion, id_historial,  proceso_1)
+
+            }
+
+        break;
+
+      }
+    }
+  } catch (error) {}
+}

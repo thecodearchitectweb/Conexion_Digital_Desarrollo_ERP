@@ -372,4 +372,4 @@ CREATE TABLE `accesos_modulos` (
     PRIMARY KEY (`id`),
     KEY `usuario_id` (`usuario_id`),
     CONSTRAINT `accesos_modulos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 232 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci|
+) ENGINE = InnoDB AUTO_INCREMENT = 232 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
