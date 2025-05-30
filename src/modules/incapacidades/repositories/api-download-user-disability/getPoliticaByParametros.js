@@ -235,13 +235,13 @@ export async function getPoliticaGrupoD(
 
 
 
-/* POLITICA CON PRORROGA PARA VALIDAR OTTRAS ENTIDADES */
+/* LICENCIA DE MATERNIDAD  O PATERNIDAD*/
 export async function getPoliticaLicencia(
     prorroga,
-    dias_laborados_conversion_grupoA,
-    salario_conversion_grupoA,
+    dias_laborados_conversion,
+    salario_conversion,
     tipo_incapacidad,
-    origen
+    origen_incapacidad
 ) {
     try {
         const [politicas] = await pool.query(
@@ -257,11 +257,11 @@ export async function getPoliticaLicencia(
             `,
             [
               
-              prorroga,
-              dias_laborados_conversion_grupoA,
-              salario_conversion_grupoA,
-              tipo_incapacidad,
-              origen
+                prorroga,
+                dias_laborados_conversion,
+                salario_conversion,
+                tipo_incapacidad,
+                origen_incapacidad
             ]
         );
 

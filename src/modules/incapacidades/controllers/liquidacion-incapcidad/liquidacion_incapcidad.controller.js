@@ -8,6 +8,11 @@ export const api_download_user_disability = async (req, res) => {
     try {
         
         const { id_liquidacion, id_historial } = req.params;
+        const id_user_session = req.session.user.id
+
+        console.log("ID GUARDADO EN INCAPCIDAD DE LICENCIAS: ", id_user_session)
+        
+        
 
 
         /* OBTENER TODOS LOS DATOS NECESARIOS PARA LA LIQUIDACION CORRESPONDIENTE */
@@ -16,9 +21,17 @@ export const api_download_user_disability = async (req, res) => {
 
         
         /* REALIZAR LAS VALIDACIONES CORRESPONDIENTES  */
-        const proceso_2 = validacionesSwitch(id_liquidacion, id_historial, proceso_1)
+        const proceso_2 = validacionesSwitch(id_liquidacion, id_historial, proceso_1, id_user_session)
 
 
+        if (!proceso_2.success) {
+            return res.status(400).json({ message: resultado.message });
+        }
+
+        return res.status(200).json({
+            message: resultado.message,
+            data: proceso_2.data
+        });
 
 
 

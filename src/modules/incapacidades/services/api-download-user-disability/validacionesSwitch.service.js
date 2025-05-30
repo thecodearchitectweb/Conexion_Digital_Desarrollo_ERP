@@ -10,7 +10,8 @@ import { arlProrrogaSI } from '../../services/api-download-user-disability/valid
 export async function validacionesSwitch(
   id_liquidacion,
   id_historial,
-  proceso_1
+  proceso_1,
+  id_user_session
 ) 
 {
   try {
@@ -25,7 +26,14 @@ export async function validacionesSwitch(
             if(proceso_1.data.subtipo_incapacidad === 'LICENCIA DE MATERNIDAD' || proceso_1.data.subtipo_incapacidad === 'LICENCIA DE PATERNIDAD' ){
                 
                 /* FUNCION PARA LICENCIAS */
-                const licencias = await epsLicencias( id_liquidacion, id_historial,  proceso_1 )
+                const licencias = await epsLicencias( id_liquidacion, id_historial,  proceso_1, id_user_session )
+
+                // Devuelves directamente el objeto que vino de epsLicencias
+                return {
+                  success: true,
+                  message: 'Liquidación de licencia procesada correctamente',
+                  data: licencias
+                };
 
             }
 
