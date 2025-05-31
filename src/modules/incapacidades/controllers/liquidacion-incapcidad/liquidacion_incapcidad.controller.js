@@ -21,17 +21,21 @@ export const api_download_user_disability = async (req, res) => {
 
         
         /* REALIZAR LAS VALIDACIONES CORRESPONDIENTES  */
-        const proceso_2 = validacionesSwitch(id_liquidacion, id_historial, proceso_1, id_user_session)
+        const proceso_2 = await validacionesSwitch(id_liquidacion, id_historial, proceso_1, id_user_session)
 
 
+        /* VALIDACION SI EL PROCESO_2 FUE EXITODO, DE LO CONTRARIO */
         if (!proceso_2.success) {
-            return res.status(400).json({ message: resultado.message });
+            return res.status(400).json({ 
+                message: proceso_2.message 
+            });
         }
 
         return res.status(200).json({
-            message: resultado.message,
-            data: proceso_2.data
+        message: proceso_2.message,
+        data: proceso_2.data
         });
+
 
 
 

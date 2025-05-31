@@ -244,7 +244,7 @@ export async function getPoliticaLicencia(
     origen_incapacidad
 ) {
     try {
-        const [politicas] = await pool.query(
+        const [rows] = await pool.query(
             `
             SELECT *
             FROM politicas_incapacidades
@@ -265,7 +265,8 @@ export async function getPoliticaLicencia(
             ]
         );
 
-        return politicas[0] || null;
+         return rows.length > 0 ? rows[0] : null;
+
     } catch (error) {
         console.error("Error al obtener la política de incapacidad:", error);
         throw error;

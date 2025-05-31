@@ -3,7 +3,7 @@ import { getPoliticaLicencia } from '../../../../repositories/api-download-user-
 import { getUltimasIncapacidadesIdEmpleado } from '../../../../repositories/api-download-user-disability/incapacidadesHelpers.js'
 import { obtenerDiasNoRepetidos, obtenerDiasNoRepetidos2  } from "../../../../utils/api-download-user-disability/calcularDiasLiquidar.js";
 import { formatDate2 } from "../../../../utils/formatDate/formatDate.js";
-import { entityLiquidationEmpleador } from "../../../../utils/api-download-user-disability/entityLiquidation.js";
+import { entityLiquidation } from "../../../../utils/api-download-user-disability/entityLiquidation.js";
 import { updateDownloadStatus } from "../../../../repositories/api-download-user-disability/updateLiquidacoinTableIncapacity.js";
 import { updateSettlementTable } from '../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacionLicencia.js'
 
@@ -53,13 +53,22 @@ export async function epsLicencias(id_liquidacion, id_historial,  proceso_1, id_
 
         console.log("POLITICA LICENCIA: ", politica)
 
+        if (!politica) {
+            // Si no hay política, devolvemos un error controlado
+            return {
+                success: false,
+                message: 'No se encontró una política aplicable para la licencia.',
+                data: null
+            };
+        }
+
 
         /* FUNCION QUE TRAAE LA ULTIMA INCAPACIDAD DEL EMPLEADO */
         const data_incapacidades_liquidadas = await getUltimasIncapacidadesIdEmpleado(proceso_1.id_empleado);
         console.log("data_incapacidades_liquidadas", data_incapacidades_liquidadas);
 
 
-        /* CON INCAPACIDAD ANTEIRIOR */
+        /* CON INCAPACIDAD ANTERIOR */
         if(data_incapacidades_liquidadas){
             
             /* TRAER LAS FECHAS DE LA INCAPACIDAD ANTERIOR Y LA NUEVA INCAPACIDAD */
@@ -135,7 +144,7 @@ export async function epsLicencias(id_liquidacion, id_historial,  proceso_1, id_
 
 
         /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS */
-        const liq_valor_EPS = entityLiquidationEmpleador(
+        const liq_valor_EPS = entityLiquidation(
             proceso_1.data.salario_empleado,
             Liq_porcentaje_liquidacion_eps,
             diasNoRepetidosALiquidar
@@ -163,17 +172,11 @@ export async function epsLicencias(id_liquidacion, id_historial,  proceso_1, id_
 
 
         /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
-        const updateSettlementTableLiq = await updateSettlementTable(id_user, upd_liq_dias_eps, upd_Liq_porcentaje_liquidacion_eps, upd_liq_valor_eps, upd_dias_Laborados, upd_id_liquidacion, upd_dias_liquidables_totales)
+        const updateSettlementTableLiq = await updateSettlementTableEmpleador(id_user, upd_liq_dias_eps, upd_Liq_porcentaje_liquidacion_eps, upd_liq_valor_eps, upd_dias_Laborados, upd_id_liquidacion, upd_dias_liquidables_totales)
 
 
         console.log("RESPUESTA: ", updateSettlementTableLiq)
 
-
-        if(updateSettlementTableLiq){
-
-            /* ACTUALIZAR DESCARGA DE INCAPACIDAD A 1 */
-            const updateDownloadStatusLiq = await updateDownloadStatus(id_historial); 
-        }
 
         return {
             success: true,
@@ -190,20 +193,3 @@ export async function epsLicencias(id_liquidacion, id_historial,  proceso_1, id_
 
 
 
-/* 
-
-
-Procesando liquidacion para licencia de maternidad o paternidad
-Estos son los datos de parametros en las licencias {
-  prorroga: 'NO',
-  dias_laborados_conversion: '>30',
-  dias_laborados: 742,
-  salario: '>SMLV',
-  tipo_incapacidad: 'EPS',
-  dias_incapacidad_conversion: '>2',
-  dias_incapacidad: 3
-}
-  
-
-
-*/

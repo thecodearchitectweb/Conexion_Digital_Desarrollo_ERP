@@ -1,7 +1,7 @@
 
 /* LIQUIDACION POR EPS */
 
-export function entityLiquidation(salario, porcentaje_liquidacion_eps, cant_dias_liq) {
+export function entityLiquidation_(salario, porcentaje_liquidacion_eps, cant_dias_liq) {
     try {
         console.log("LIQUIDACION PARA EPS: ", salario, porcentaje_liquidacion_eps, cant_dias_liq)
         if (!salario || !porcentaje_liquidacion_eps || !cant_dias_liq) {
@@ -33,10 +33,9 @@ export function entityLiquidation(salario, porcentaje_liquidacion_eps, cant_dias
 
 /* LIQUIDACION POR EMPLEADOR */
 
-export function entityLiquidationEmpleador(salario, porcentaje_liquidacion_empleador, cant_dias_liq) {
+export function entityLiquidation(salario, porcentaje_liquidacion_empleador, cant_dias_liq) {
     try {
 
-        console.log("LIQUIDACION PARA EMPLEADOR", salario, porcentaje_liquidacion_empleador, cant_dias_liq )
 
         if (!salario || !porcentaje_liquidacion_empleador || !cant_dias_liq) {
             throw new Error("Faltan parámetros para calcular la liquidación.");
