@@ -5,7 +5,7 @@ import { obtenerDiasNoRepetidos, obtenerDiasNoRepetidos2  } from "../../../../ut
 import { formatDate2 } from "../../../../utils/formatDate/formatDate.js";
 import { entityLiquidation } from "../../../../utils/api-download-user-disability/entityLiquidation.js";
 import { updateDownloadStatus } from "../../../../repositories/api-download-user-disability/updateLiquidacoinTableIncapacity.js";
-import { updateSettlementTable } from '../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacionLicencia.js'
+import { updateSettlementTable } from '../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacion.js'
 
 
 

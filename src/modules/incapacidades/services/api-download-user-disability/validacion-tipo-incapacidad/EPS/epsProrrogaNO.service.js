@@ -3,9 +3,10 @@ import { obtenerDiasNoRepetidos, obtenerDiasNoRepetidos2 } from "../../../../uti
 import { transformarParametrosPolitica } from "../../../../utils/api-download-user-disability/transformPolicyParameters.js";
 import { formatDate2 } from "../../../../utils/formatDate/formatDate.js";
 import { calcularDistribucionDias, calcularDistribucionDias2 } from '../GRUPOS/distribucionDias.service.js'
-import { getPoliticaGrupoA } from '../../../../repositories/api-download-user-disability/POLITICAS/politicasGrupos.js'
+import { getPoliticaGrupoA, getPoliticaGrupoB, getPoliticaGrupoC, getPoliticaGrupoD, getPoliticaGrupoE } from '../../../../repositories/api-download-user-disability/POLITICAS/politicasGrupos.js'
 import { entityLiquidation } from "../../../../utils/api-download-user-disability/entityLiquidation.js";
-import { updateSettlementTable, updateSettlementTableEmpleador } from "../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacionLicencia.js";
+import { updateSettlementTable, updateSettlementTableEmpleador, updateSettlementTableEps, updateSettlementTableEps_50, updateSettlementTableFondoPensiones, updateSettlementTableEpsFondoPensiones } from "../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacion.js";
+import { acomuladoDeuda } from '../../acomulado-deuda-incapacidad/acomulado.service.js'
 
 export async function epsProrrogaNO(
   id_liquidacion,
@@ -64,7 +65,17 @@ export async function epsProrrogaNO(
     let Liq_porcentaje_liquidacion_fondo_pensiones = 0;
     let Liq_porcentaje_liquidacion_eps_fondo_pensiones = 0;
 
+    let acomuladoDeudaGrupoA = 0
+    let acomuladoDeudaGrupoB = 0
+    let acomuladoDeudaGrupoC = 0
+    let acomuladoDeudaGrupoD = 0
+    let acomuladoDeudaGrupoE = 0
+
     let PoliticaGrupoA = 0
+    let PoliticaGrupoB = 0
+    let PoliticaGrupoC = 0
+    let PoliticaGrupoD = 0
+    let PoliticaGrupoE = 0
 
     let grupoA = 0
     let grupoB = 0
@@ -158,7 +169,7 @@ export async function epsProrrogaNO(
 
         /* GUARDAR DATOS */
         grupoA = grupos.diasGrupo_1a2
-        console.log("GRUPOA 1-2: ", grupoA)
+        console.log("GRUPOA A: ", grupoA)
 
         
         /* SE ASIGNA LA CANTIDAD DE DÍAS A LIQUIDAR DEL GRUPO A Y SE ASIGNA A LA VARIABLE */
@@ -176,25 +187,28 @@ export async function epsProrrogaNO(
         );
 
         console.log("POLITICA GRUPO A: ", PoliticaGrupoA )
+        console.log("liquidacion_dias: ", liquidacion_dias )
 
 
+        /* PORCENTAJE A LIQUIDAR SEGUN PRORROGA */
         Liq_porcentaje_liquidacion_empleador = parseFloat(PoliticaGrupoA.porcentaje_liquidacion_empleador) || 0
         console.log("% liquidacion empleador: ", Liq_porcentaje_liquidacion_empleador )
 
 
         
-        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS */
+        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EMPLEADOR */
         liq_valor_empleador = entityLiquidation(
             proceso_1.data.salario_empleado,
             Liq_porcentaje_liquidacion_empleador,
-            diasNoRepetidosALiquidar
+            liquidacion_dias
         );
         console.log("EPS, valor a liquidar", liq_valor_empleador);
 
 
-        
+
+        /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
         const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
-        const upd_liq_dias_empleador = diasNoRepetidosALiquidar;
+        const upd_liq_dias_empleador = liquidacion_dias;
         const upd_Liq_porcentaje_liquidacion_empleador = Liq_porcentaje_liquidacion_empleador || 50;
         const upd_liq_valor_empleador = liq_valor_empleador;
 
@@ -215,5 +229,266 @@ export async function epsProrrogaNO(
 
 
 
+    /* DÍAS 3 - 90  EPS */
+    if(grupos.diasGrupo_2a90 > 0){
+         
+        console.log(" ")
+
+        /* GUARDAR DATOS */
+        grupoB = grupos.diasGrupo_2a90
+        console.log("GRUPO B: ", grupoB)
+
+
+        /* SE ASIGNA LA CANTIDAD DE DÍAS B LIQUIDAR DEL GRUPO A Y SE ASIGNA A LA VARIABLE */
+         liquidacion_dias = grupoB
+
+
+        /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+        PoliticaGrupoB = await getPoliticaGrupoB(
+            prorroga,
+            dias_laborados_conversion,
+            salario_conversion,
+            liquidacion_dias,
+            tipo_incapacidad,
+            origen_incapacidad
+        );
+
+
+        console.log("POLITICA GRUPO B: ", PoliticaGrupoB )
+        console.log("liquidacion_dias: ", liquidacion_dias )
+
+
+        /* PORCENTAJE A LIQUIDAR SEGUN PRORROGA */
+        Liq_porcentaje_liquidacion_eps = parseFloat(PoliticaGrupoB.porcentaje_liquidacion_eps) || 0
+        console.log("% liquidacion EPS: ", Liq_porcentaje_liquidacion_eps )
+
+
+        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS */
+        liq_valor_eps = entityLiquidation(
+            proceso_1.data.salario_empleado,
+            Liq_porcentaje_liquidacion_eps,
+            liquidacion_dias
+        );
+        console.log("EPS, valor a liquidar", liq_valor_eps);
+
+
+        /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
+        acomuladoDeudaGrupoA = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps, grupoB, id_liquidacion)
+
+
+
+        /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
+        const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
+        const upd_liq_dias_eps = liquidacion_dias;
+        const upd_Liq_porcentaje_liquidacion_eps = Liq_porcentaje_liquidacion_eps || 50;
+        const upd_liq_valor_eps = liq_valor_eps;
+
+        const upd_dias_Laborados = parametros.dias_laborados;        
+        const upd_id_liquidacion = id_liquidacion;
+        const upd_dias_liquidables_totales = diasNoRepetidosALiquidar;
+
+        console.log("DATOS A LIQUIDAR GRUPO B: ", id_user, upd_liq_dias_eps, upd_Liq_porcentaje_liquidacion_eps, upd_liq_valor_eps, upd_dias_Laborados, upd_id_liquidacion, upd_dias_liquidables_totales)
+
+
+        
+        /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
+        const updateSettlementTableLiq = await updateSettlementTableEps(id_user, upd_liq_dias_eps, upd_Liq_porcentaje_liquidacion_eps, upd_liq_valor_eps, upd_dias_Laborados, upd_id_liquidacion, upd_dias_liquidables_totales)
+
+        console.log("RESPUESTA: ", updateSettlementTableLiq)
+
+
+
+    }
+
+
+    /* DIAS 91 - 180 EPS */
+    if(grupos.diasGrupo_91a180 > 0){
+
+
+        console.log(" ")
+
+        /* GUARDAR DATOS */
+        grupoC = grupos.diasGrupo_91a180
+        console.log("GRUPO C: ", grupoC)
+        
+        
+        /* SE ASIGNA LA CANTIDAD DE DÍAS A LIQUIDAR DEL GRUPO C Y SE ASIGNA A LA VARIABLE */
+         liquidacion_dias = grupoA + grupoB + grupoC
+
+
+        /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+        PoliticaGrupoC = await getPoliticaGrupoC(
+            prorroga,
+            dias_laborados_conversion,
+            salario_conversion,
+            liquidacion_dias,
+            tipo_incapacidad,
+            origen_incapacidad
+        );
+
+
+        console.log("POLITICA GRUPO C: ", PoliticaGrupoC )
+        console.log("liquidacion_dias: ", grupoC, liquidacion_dias )
+
+
+        /* PORCENTAJE A LIQUIDAR SEGUN PRORROGA */
+        Liq_porcentaje_liquidacion_eps = parseFloat(PoliticaGrupoC.porcentaje_liquidacion_eps) || 0
+        console.log("% liquidacion EPS: ", Liq_porcentaje_liquidacion_eps )
+
+
+        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS */
+        liq_valor_eps = entityLiquidation(
+            proceso_1.data.salario_empleado,
+            Liq_porcentaje_liquidacion_eps,
+            grupoC
+        );
+        console.log("EPS, valor a liquidar", liq_valor_eps);
+
+
+        /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
+        const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
+        const upd_liq_dias_eps = grupoC;
+        const upd_Liq_porcentaje_liquidacion_eps = Liq_porcentaje_liquidacion_eps || 50;
+        const upd_liq_valor_eps = liq_valor_eps;
+
+        const upd_dias_Laborados = parametros.dias_laborados;        
+        const upd_id_liquidacion = id_liquidacion;
+        const upd_dias_liquidables_totales = diasNoRepetidosALiquidar;
+
+        
+        /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
+        const updateSettlementTableLiq = await updateSettlementTableEps_50(id_user, upd_liq_dias_eps, upd_Liq_porcentaje_liquidacion_eps, upd_liq_valor_eps, upd_dias_Laborados, upd_id_liquidacion, upd_dias_liquidables_totales)
+
+        console.log("RESPUESTA: ", updateSettlementTableLiq)
+
+    }
+
+
+    /* DIAS 181 - 540 */
+    if(grupos.diasGrupo_181a540 > 0){
+
+
+        console.log(" ")
+        
+        /* GUARDAR DATOS */
+        grupoD = grupos.diasGrupo_181a540
+        console.log("GRUPO D: ", grupoD)
+
+
+        /* SE ASIGNA LA CANTIDAD DE DÍAS A LIQUIDAR DEL GRUPO C Y SE ASIGNA A LA VARIABLE */
+        liquidacion_dias = grupoA + grupoB + grupoC + grupoD
+
+
+        /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+        PoliticaGrupoD = await getPoliticaGrupoD(
+            prorroga,
+            dias_laborados_conversion,
+            salario_conversion,
+            liquidacion_dias,
+            tipo_incapacidad,
+            origen_incapacidad
+        );        
+
+
+        console.log("POLITICA GRUPO C: ", PoliticaGrupoD )
+        console.log("liquidacion_dias: ", grupoD, liquidacion_dias )        
+
+
+        /* PORCENTAJE A LIQUIDAR SEGUN PRORROGA */
+        Liq_porcentaje_liquidacion_fondo_pensiones = parseFloat(PoliticaGrupoD.porcentaje_liquidacion_fondo_pensiones) || 50
+        console.log("% liquidacion FONDO DE PENSIONES: ", Liq_porcentaje_liquidacion_fondo_pensiones )        
+
+
+        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE FONDO DE PENSIONES */
+        liq_valor_fondo_pensiones = entityLiquidation(
+            proceso_1.data.salario_empleado,
+            Liq_porcentaje_liquidacion_fondo_pensiones,
+            grupoD
+        );
+        console.log("FONDO DE PENSIONES, valor a liquidar", liq_valor_fondo_pensiones);    
+        
+        
+
+        /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
+        const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
+        const upd_liq_dias_fondo_pensiones = grupoD;
+        const upd_Liq_porcentaje_liquidacion_fondo_pensiones = Liq_porcentaje_liquidacion_fondo_pensiones || 50;
+        const upd_liq_valor_fondo_pensiones = liq_valor_fondo_pensiones;
+
+        const upd_dias_Laborados = parametros.dias_laborados;        
+        const upd_id_liquidacion = id_liquidacion;
+        const upd_dias_liquidables_totales = diasNoRepetidosALiquidar;        
+
+
+        /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
+        const updateSettlementTableLiq = await updateSettlementTableFondoPensiones(id_user, upd_liq_dias_fondo_pensiones, upd_Liq_porcentaje_liquidacion_fondo_pensiones, upd_liq_valor_fondo_pensiones, upd_dias_Laborados, upd_id_liquidacion, upd_dias_liquidables_totales)
+
+        console.log("RESPUESTA: ", updateSettlementTableLiq)
+
+    }
+
+
+    /* DÍAS 541 + */
+    if(grupos.diasGrupo_541plus > 0){
+
+
+        console.log(" ")
+        
+
+        /* GUARDAR DATOS */
+        grupoE = grupos.diasGrupo_541plus
+        console.log("GRUPO E: ", grupoE)        
+
+
+        /* SE ASIGNA LA CANTIDAD DE DÍAS A LIQUIDAR DEL GRUPO C Y SE ASIGNA A LA VARIABLE */
+        liquidacion_dias = grupoA + grupoB + grupoC + grupoD + grupoE 
+
+
+        /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+        PoliticaGrupoE = await getPoliticaGrupoE(
+            prorroga,
+            dias_laborados_conversion,
+            salario_conversion,
+            liquidacion_dias,
+            tipo_incapacidad,
+            origen_incapacidad
+        );     
+
+
+        console.log("POLITICA GRUPO C: ", PoliticaGrupoE )
+        console.log("liquidacion_dias: ", grupoE, liquidacion_dias )    
+        
+        
+        /* PORCENTAJE A LIQUIDAR SEGUN PRORROGA */
+        Liq_porcentaje_liquidacion_eps_fondo_pensiones = parseFloat(PoliticaGrupoE.porcentaje_liquidacion_eps_fondo_pensiones) || 50
+        console.log("% liquidacion EPS / FONDO DE PENSIONES: ", Liq_porcentaje_liquidacion_eps_fondo_pensiones )         
+
+
+        /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE FONDO DE PENSIONES */
+        liq_valor_eps_fondo_pensiones = entityLiquidation(
+            proceso_1.data.salario_empleado,
+            Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+            grupoE
+        );
+        console.log("EPS / FONDO DE PENSIONES, valor a liquidar", liq_valor_eps_fondo_pensiones);    
+                
+
+        /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
+        const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
+        const upd_liq_dias_eps_fondo_pensiones = grupoE;
+        const upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones = Liq_porcentaje_liquidacion_eps_fondo_pensiones || 50;
+        const upd_liq_valor_eps_fondo_pensiones = liq_valor_eps_fondo_pensiones;
+
+        const upd_dias_Laborados = parametros.dias_laborados;        
+        const upd_id_liquidacion = id_liquidacion;
+        const upd_dias_liquidables_totales = diasNoRepetidosALiquidar;           
+
+
+
+        /* SE ACTUALIZA LA BASE DE DATOS DE LIQUIDACION  */
+        const updateSettlementTableLiq = await updateSettlementTableEpsFondoPensiones(id_user, upd_liq_dias_eps_fondo_pensiones, upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones, upd_liq_valor_eps_fondo_pensiones, upd_dias_Laborados, upd_id_liquidacion, upd_dias_liquidables_totales)
+
+        console.log("RESPUESTA: ", updateSettlementTableLiq)        
+    }
 
 }
