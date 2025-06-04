@@ -1,5 +1,3 @@
-import { complementoIncapacidad } from '../../../repositories/api-download-user-disability/complemento-incapacidad/complemento_incapacidad.js'
-
 
 
 /* CALCULAR ACOMULADO DE LA DEUDA  */
@@ -51,14 +49,7 @@ export async function acomuladoDeuda (salario_empleado, Liq_porcentaje, grupo, i
     console.log("DEUDA ACOMULADA EMPLEADOR: ", Deuda )
 
     
-    /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
-    if(Deuda > 0){
-
-        /* FUNCION PARA GUARDAR EN BASE DE DATOS */
-        const complemento = await complementoIncapacidad(Deuda, id_liquidacion)
-        console.log("COMPLEMENTO INCAPACIDAD: ", complemento)
-
-    }   
+    return Deuda
 
 }
 

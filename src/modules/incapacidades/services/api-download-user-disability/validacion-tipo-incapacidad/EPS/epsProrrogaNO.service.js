@@ -7,6 +7,10 @@ import { getPoliticaGrupoA, getPoliticaGrupoB, getPoliticaGrupoC, getPoliticaGru
 import { entityLiquidation } from "../../../../utils/api-download-user-disability/entityLiquidation.js";
 import { updateSettlementTable, updateSettlementTableEmpleador, updateSettlementTableEps, updateSettlementTableEps_50, updateSettlementTableFondoPensiones, updateSettlementTableEpsFondoPensiones } from "../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacion.js";
 import { acomuladoDeuda } from '../../acomulado-deuda-incapacidad/acomulado.service.js'
+import { complementoIncapacidad, complementoIncapacidadEPS_50 } from '../../../../repositories/api-download-user-disability/complemento-incapacidad/complemento_incapacidad.js'
+
+
+
 
 export async function epsProrrogaNO(
   id_liquidacion,
@@ -276,6 +280,14 @@ export async function epsProrrogaNO(
         acomuladoDeudaGrupoA = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps, grupoB, id_liquidacion)
 
 
+        /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
+        if(acomuladoDeudaGrupoA.Deuda > 0){
+
+            /* FUNCION PARA GUARDAR EN BASE DE DATOS */
+            const complemento = await complementoIncapacidad(Deuda, id_liquidacion)
+            console.log("COMPLEMENTO INCAPACIDAD GRUPO B: ", complemento)
+
+        }            
 
         /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
         const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
@@ -343,6 +355,21 @@ export async function epsProrrogaNO(
             grupoC
         );
         console.log("EPS, valor a liquidar", liq_valor_eps);
+
+
+
+        /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
+        acomuladoDeudaGrupoC = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps, grupoC, id_liquidacion)
+
+        /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
+        if(acomuladoDeudaGrupoC.Deuda > 0){
+
+            /* FUNCION PARA GUARDAR EN BASE DE DATOS */
+            const complemento = await complementoIncapacidadEPS_50(Deuda, id_liquidacion)
+            console.log("COMPLEMENTO INCAPACIDAD: ", complemento)
+
+        }           
+
 
 
         /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
