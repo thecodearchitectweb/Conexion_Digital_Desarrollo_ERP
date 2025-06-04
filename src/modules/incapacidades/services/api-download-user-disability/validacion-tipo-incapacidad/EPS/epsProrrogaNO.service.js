@@ -7,7 +7,7 @@ import { getPoliticaGrupoA, getPoliticaGrupoB, getPoliticaGrupoC, getPoliticaGru
 import { entityLiquidation } from "../../../../utils/api-download-user-disability/entityLiquidation.js";
 import { updateSettlementTable, updateSettlementTableEmpleador, updateSettlementTableEps, updateSettlementTableEps_50, updateSettlementTableFondoPensiones, updateSettlementTableEpsFondoPensiones } from "../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacion.js";
 import { acomuladoDeuda } from '../../acomulado-deuda-incapacidad/acomulado.service.js'
-import { complementoIncapacidad, complementoIncapacidadEPS_50 } from '../../../../repositories/api-download-user-disability/complemento-incapacidad/complemento_incapacidad.js'
+import { complementoIncapacidadEmpleador, complementoIncapacidad, complementoIncapacidadEPS_50, complementoIncapacidadFondoPensiones, complementoIncapacidadEPSFondoPensiones } from '../../../../repositories/api-download-user-disability/complemento-incapacidad/complemento_incapacidad.js'
 
 
 
@@ -168,6 +168,7 @@ export async function epsProrrogaNO(
     console.log("GRUPOS PARA LIQUIDAR: ", grupos)
 
 
+
     /* VALIDACION GRUPO 1-2 */
     if(grupos.diasGrupo_1a2 > 0){
 
@@ -208,6 +209,22 @@ export async function epsProrrogaNO(
         );
         console.log("EPS, valor a liquidar", liq_valor_empleador);
 
+
+        /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
+        acomuladoDeudaGrupoA = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_empleador, grupoA, id_liquidacion)
+        console.log("ACOMULADO DEUDA GRUPO B: ", acomuladoDeudaGrupoA)
+
+
+        /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
+        if(acomuladoDeudaGrupoA > 0){
+
+
+            console.log("Entramos al condicional")
+            /* FUNCION PARA GUARDAR EN BASE DE DATOS */
+            const complemento = await complementoIncapacidadEmpleador(acomuladoDeudaGrupoA, id_liquidacion)
+            console.log("COMPLEMENTO INCAPACIDAD GRUPO E: ", complemento)
+
+        } 
 
 
         /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
@@ -277,14 +294,17 @@ export async function epsProrrogaNO(
 
 
         /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
-        acomuladoDeudaGrupoA = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps, grupoB, id_liquidacion)
+        acomuladoDeudaGrupoB = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps, grupoB, id_liquidacion)
+        console.log("ACOMULADO DEUDA GRUPO B: ", acomuladoDeudaGrupoB)
 
 
         /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
-        if(acomuladoDeudaGrupoA.Deuda > 0){
+        if(acomuladoDeudaGrupoB > 0){
 
+
+            console.log("Entramos al condicional")
             /* FUNCION PARA GUARDAR EN BASE DE DATOS */
-            const complemento = await complementoIncapacidad(Deuda, id_liquidacion)
+            const complemento = await complementoIncapacidad(acomuladoDeudaGrupoB, id_liquidacion)
             console.log("COMPLEMENTO INCAPACIDAD GRUPO B: ", complemento)
 
         }            
@@ -360,15 +380,19 @@ export async function epsProrrogaNO(
 
         /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
         acomuladoDeudaGrupoC = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps, grupoC, id_liquidacion)
+        console.log("ACOMULADO DEUDA GRUPO B: ", acomuladoDeudaGrupoC)
+
 
         /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
-        if(acomuladoDeudaGrupoC.Deuda > 0){
+        if(acomuladoDeudaGrupoC > 0){
 
+
+            console.log("Entramos al condicional")
             /* FUNCION PARA GUARDAR EN BASE DE DATOS */
-            const complemento = await complementoIncapacidadEPS_50(Deuda, id_liquidacion)
-            console.log("COMPLEMENTO INCAPACIDAD: ", complemento)
+            const complemento = await complementoIncapacidadEPS_50(acomuladoDeudaGrupoC, id_liquidacion)
+            console.log("COMPLEMENTO INCAPACIDAD GRUPO B: ", complemento)
 
-        }           
+        }         
 
 
 
@@ -436,6 +460,27 @@ export async function epsProrrogaNO(
         
         
 
+
+
+        /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
+        acomuladoDeudaGrupoD = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_fondo_pensiones, grupoD, id_liquidacion)
+        console.log("ACOMULADO DEUDA GRUPO B: ", acomuladoDeudaGrupoD)
+
+
+        /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
+        if(acomuladoDeudaGrupoD > 0){
+
+
+            console.log("Entramos al condicional")
+            /* FUNCION PARA GUARDAR EN BASE DE DATOS */
+            const complemento = await complementoIncapacidadFondoPensiones(acomuladoDeudaGrupoD, id_liquidacion)
+            console.log("COMPLEMENTO INCAPACIDAD GRUPO B: ", complemento)
+
+        }           
+
+
+
+
         /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
         const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
         const upd_liq_dias_fondo_pensiones = grupoD;
@@ -500,6 +545,27 @@ export async function epsProrrogaNO(
         console.log("EPS / FONDO DE PENSIONES, valor a liquidar", liq_valor_eps_fondo_pensiones);    
                 
 
+
+
+        /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
+        acomuladoDeudaGrupoE = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps_fondo_pensiones, grupoE, id_liquidacion)
+        console.log("ACOMULADO DEUDA GRUPO B: ", acomuladoDeudaGrupoE)
+
+
+        /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
+        if(acomuladoDeudaGrupoE > 0){
+
+
+            console.log("Entramos al condicional")
+            /* FUNCION PARA GUARDAR EN BASE DE DATOS */
+            const complemento = await complementoIncapacidadEPSFondoPensiones(acomuladoDeudaGrupoE, id_liquidacion)
+            console.log("COMPLEMENTO INCAPACIDAD GRUPO E: ", complemento)
+
+        }   
+
+
+
+
         /* CONSTANTES PARA INGRESAR DATOS A LA BASE DE DATOS */
         const id_user = id_user_session  //USUARIO QUIEN REGISTRA LA INCAPACIDAD
         const upd_liq_dias_eps_fondo_pensiones = grupoE;
@@ -517,5 +583,13 @@ export async function epsProrrogaNO(
 
         console.log("RESPUESTA: ", updateSettlementTableLiq)        
     }
+
+
+    // Devuelves directamente el objeto que vino de epsLicencias
+    return {
+        success: true,
+        message: 'Liquidación de incapacidad procesada'        
+    };
+
 
 }

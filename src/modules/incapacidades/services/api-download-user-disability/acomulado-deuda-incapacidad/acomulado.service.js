@@ -1,7 +1,7 @@
 
 
 /* CALCULAR ACOMULADO DE LA DEUDA  */
-export async function acomuladoDeuda (salario_empleado, Liq_porcentaje, grupo, id_liquidacion){
+export  function acomuladoDeuda (salario_empleado, Liq_porcentaje, grupo, id_liquidacion){
 
 
     console.log("FUNCION PARA CALCULAR ACOMULADO EN DEUDA DEL EMPLEADOR")
@@ -13,17 +13,6 @@ export async function acomuladoDeuda (salario_empleado, Liq_porcentaje, grupo, i
     let SMMLV = 1423500
     let DSMMLV = 47450
 
-
-    /* VARIABLES PARA RECALCULAR EL SALARIO DEL EMPLEADO EN CASO QUE SEA UN SALARIO MENOS AL SMMLV */
-    if(salario_empleado < SMMLV){
-        
-        /* SALARIO A CALCULAR */
-        SMMLV = salario_empleado
-        DSMMLV = SMMLV / 30
-
-    }
-
-    console.log("DSMMLV: ", SMMLV, DSMMLV)
 
     /* VALOR DEL DIA DEL EMPLEADO  CON PORCENTAJE A LIQUIDAR POR ENTIDAD*/
     const diaEmpleado = (salario_empleado/30) *  (parseFloat(Liq_porcentaje) / 100)
@@ -48,8 +37,11 @@ export async function acomuladoDeuda (salario_empleado, Liq_porcentaje, grupo, i
     const Deuda = Diferencia * grupo
     console.log("DEUDA ACOMULADA EMPLEADOR: ", Deuda )
 
+    const deudaRedondeada = Math.round(Deuda);
+    console.log("DEUDA ACOMULADA EMPLEADOR:", deudaRedondeada);
+
     
-    return Deuda
+    return deudaRedondeada
 
 }
 

@@ -70,6 +70,33 @@ export async function validacionesSwitch(
                 /* FUNCION PARA PRRROGA NO */
                 const epsProrrogaNO_ = await epsProrrogaNO( id_liquidacion, id_historial,  proceso_1, id_user_session)
 
+                /* SI EL RESULTADO ES TRUE, ACTUALIZAR DOWNLOAD A  1 */
+                if(epsProrrogaNO_.success){
+
+                    /* ACTUALIZAR DESCARGA DE INCAPACIDAD A 1 */
+                    const updateDownloadStatusLiq = await updateDownloadStatus(id_historial); 
+                   
+                   
+                    // Devuelves directamente el objeto que vino de epsLicencias
+                    return {
+                      success: true,
+                      message: 'Liquidación de incapacidad procesada',
+                      data: epsProrrogaNO_
+                    };
+                }
+
+
+                /* SI EL RESULTADO ES FALSE, ACTUALIZAR DOWNLOAD A  1 */
+                if(!epsProrrogaNO_.success){
+                 
+                    // Devuelves directamente el objeto que vino de epsLicencias
+                    return {
+                      success: false,
+                      message: epsProrrogaNO_.message,
+                      data: epsProrrogaNO_
+                    };
+                }
+
             }
 
 
@@ -77,7 +104,7 @@ export async function validacionesSwitch(
             if(proceso_1.liq_prorroga === 'SI'){
                 
                 /* FUNCION PARA PRRROGA SI */
-                const epsProrrogaSI_ = await epsProrrogaSI( id_liquidacion, id_historial,  proceso_1)
+                const epsProrrogaSI_ = await epsProrrogaSI( id_liquidacion, id_historial,  proceso_1, id_user_session)
             }
 
         break;

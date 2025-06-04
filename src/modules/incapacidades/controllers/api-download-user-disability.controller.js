@@ -416,6 +416,7 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
                         /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD*/
                         const parametroGrupoA = transformarParametrosPolitica(data);
     
+                        
                         /* VARIABLES PARA CONSULTAR POLITICAS */
                         let cumplimiento_politica = 'SI'
                         let prorroga = 'SI'
@@ -923,6 +924,8 @@ const processDownloadUserDisability = async (id_liquidacion, id_historial, res) 
 
                             console.log(" ")
 
+
+                            
 
                             /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
                             let dias_grupo_91a180  = 0
