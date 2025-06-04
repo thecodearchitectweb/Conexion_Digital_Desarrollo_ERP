@@ -68,7 +68,7 @@ export async function getPoliticaByParametrosProrroga(
 }
 
 
-
+/* src\modules\incapacidades\repositories\api-download-user-disability\getPoliticaByParametros.js */
 
 
 /* POLITICA CON PRORROGA PARA VALIDAR OTTRAS ENTIDADES */
