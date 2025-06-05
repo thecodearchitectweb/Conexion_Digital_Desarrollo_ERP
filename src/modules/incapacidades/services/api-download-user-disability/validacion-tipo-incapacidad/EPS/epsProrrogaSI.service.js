@@ -11,6 +11,7 @@ import { calcularDistribucionDias, calcularDistribucionDiasPorProrroga } from ".
 import { obtenerDiasNoRepetidosProrroga } from "../../obtenerDiasNoRepetidos.js";
 import { complementoIncapacidadEmpleador, complementoIncapacidad, complementoIncapacidadEPS_50, complementoIncapacidadFondoPensiones, complementoIncapacidadEPSFondoPensiones } from '../../../../repositories/api-download-user-disability/complemento-incapacidad/complemento_incapacidad.js'
 import { updateTablaLiquidacion } from '../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacion.js'
+import { updateTablaProrrogaDB } from "../../../../repositories/api-download-user-disability/insert_tabla_prorroga_DB.js";
 
 
 
@@ -105,7 +106,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
     /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD*/
     const parametros = transformarParametrosPolitica(proceso_1.data);
-    console.log('Estos son los datos de parametros en las licencias', parametros)
+    console.log('Estos son los datos de parametros ', parametros)
     console.log(" ")
 
 
@@ -121,6 +122,8 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
     /* VALIDACION CO PRORROGA CONTINUA */
     if(validacioTablaProrroga){
 
+        console.log("VALIDACION SIN PROROGA CONTINUA, INICIO CONDICIOAL")
+
         /* FUNCIONA PARA CALCULAR Y AGRUPAR CANTIDAD DE DÍAS  Y LOGRAR CALCULAR DE MANERA ADECUADA POR PORCENTAJE 3 - 90, y mayor a 90 */
         const resultado = calcularDistribucionDias(
             validacioTablaProrroga,
@@ -130,7 +133,79 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
         
         sumatoria_incapacidades = resultado.sumatoriaTotal
         console.log("SUMATORIA TOTAL CON INCAPACIDAD ACOMULADA: ", sumatoria_incapacidades)
-        console.log("RESULTADO: ", resultado)        
+        console.log("RESULTADO: ", resultado)    
+        
+        
+        /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
+        let liquidacion_dias_grupo_menor_90 = 0
+        let Liq_porcentaje_liquidacion_eps_grupoA = 0
+        let liq_valor_eps_grupoA = 0
+        let PoliticaGrupoA = 0
+
+        let acomuladoDeudaGrupoA = 0
+        let acomuladoDeudaGrupoB = 0
+        let acomuladoDeudaGrupoC = 0
+        let acomuladoDeudaGrupoD = 0
+
+        /* GRUPO A -  3 - 90  EPS 66.67%*/
+        if(resultado.diasTramo_1a90 > 0 ){
+
+
+            /* POLITICA PARA APLICAR A MENOR 90 */ 
+            liquidacion_dias_grupo_menor_90 = resultado.diasTramo_1a90   // CONST que guarda los días reales a liquidar al 66%  
+            console.log("DIAS A LIQUIDAR CON EL 66.66 %: ", liquidacion_dias_grupo_menor_90)
+
+
+
+            /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+            /* TRAER POLITICA CON LOS DATOS INGRESADOS  */
+            PoliticaGrupoA = await getPoliticaGrupoA(
+                prorroga,
+                dias_laborados_conversion,
+                salario_conversion,
+                liquidacion_dias_grupo_menor_90,
+                tipo_incapacidad,
+                origen_incapacidad
+            );
+
+            console.log("POLITICA TRAIDA GRUPO A: ", PoliticaGrupoA)
+
+
+            /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
+            Liq_porcentaje_liquidacion_eps_grupoA = parseFloat( PoliticaGrupoA.porcentaje_liquidacion_eps  ) || 0;
+            console.log("Liq_porcentaje_liquidacion_eps", Liq_porcentaje_liquidacion_eps_grupoA);
+
+
+            /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS  */
+            liq_valor_eps_grupoA = entityLiquidation(
+                proceso_1.data.salario_empleado,
+                Liq_porcentaje_liquidacion_eps_grupoA,
+                liquidacion_dias_grupo_menor_90
+            );
+            console.log("VALOR A LIQUIDAR POR PARTE DE EPS GRUPO A: ", liq_valor_eps_grupoA);
+
+
+            /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
+            acomuladoDeudaGrupoA = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps_grupoA, liquidacion_dias_grupo_menor_90, id_liquidacion)
+            console.log("ACOMULADO DEUDA GRUPO A, EPS PRORROGA: ", acomuladoDeudaGrupoA)
+
+
+            /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
+            if(acomuladoDeudaGrupoA > 0){
+
+
+                console.log("Entramos al condicional")
+                /* FUNCION PARA GUARDAR EN BASE DE DATOS */
+                const complemento = await complementoIncapacidad(acomuladoDeudaGrupoA, id_liquidacion)
+                console.log("COMPLEMENTO INCAPACIDAD GRUPO A: ", complemento)
+
+            }             
+
+        }
+
+
+
+
     }
 
 
@@ -141,6 +216,8 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
         console.log("VALIDACION SIN PROROGA CONTINUA, INICIO CONDICIOAL")
 
+
+        /* DISTRIBUCCION DE LOS DÍAS */
         const resultado = calcularDistribucionDiasPorProrroga(
             diasNoRepetidos, // array de fechas
             datosIncapacidadProrroga.dias_liquidables_totales, // número
@@ -436,13 +513,21 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
         const upd_liq_valor_fondo_pensiones = liq_valor_F_Pension_grupoC;
         const upd_liq_valor_eps_fondo_pensiones = liq_valor_eps_grupoD;
 
+        const upd_dias_liquidables_totales = diasNoRepetidosALiquidar;
+        console.log("DIAS LIQUIDABLES TOTALES:  ", upd_dias_liquidables_totales)
 
-        const a = await updateTablaLiquidacion (
+        console.log("DATOS CORRESPONDIENTES A AGREGAR A LA BASE DE DATOS: ", upd_Liq_porcentaje_liquidacion_eps   )
+
+
+
+
+        const updateTabla = await updateTablaLiquidacion (
 
             upd_liq_dias_eps,
             upd_liq_dias_eps_50,
             upd_liq_dias_fondo_pensiones,
             upd_liq_dias_eps_fondo_pensiones,
+            upd_dias_liquidables_totales,
             upd_Liq_porcentaje_liquidacion_eps,
             upd_Liq_porcentaje_liquidacion_eps_50,
             upd_Liq_porcentaje_liquidacion_fondo_pensiones,
@@ -453,12 +538,77 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
             upd_liq_valor_eps_fondo_pensiones,
             id_liquidacion,
             id_user_session
-            
-
-
+        
         )
 
+        console.log("TABLA PRORROGA ACTUALIZADA, SIN PRORROGA CONTINUA: ", updateTabla)
+
+
+
+        /* DATOS PARA ACTUALIZAR TABLA PRORROGA */
+        const up_T_prorroga_id_empleado = proceso_1.id_empleado
+        const up_T_prorroga_id_incapacidad_prorroga = id_incapacidad_prorroga
+        const up_T_prorroga_tipo_incapacidad_prorroga = datosIncapacidadProrroga.tipo_incapacidad
+        const up_T_prorroga_fecha_inicio_incapacidad = datosIncapacidadProrroga.fecha_inicio_incapacidad
+        const up_T_prorroga_fecha_final_incapacidad = datosIncapacidadProrroga.fecha_final_incapacidad
+        const up_T_prorroga_dias_incapacidad_prorroga = datosIncapacidadProrroga.cantidad_dias
+        const up_T_prorroga_dias_liquidables_totales_prorroga = datosIncapacidadProrroga.dias_liquidables_totales
+        const up_T_prorroga_id_incapacidad_liquidacion = id_liquidacion
+        const up_T_prorroga_tipo_incapcidad = proceso_1.data.tipo_incapacidad
+        const up_T_prorroga_fehca_inicio = proceso_1.data.fecha_inicio_incapacidad
+        const up_T_prorroga_fecha_final = proceso_1.data.fecha_final_incapacidad
+        const up_T_prorroga_dias_incapacidad = proceso_1.data.cantidad_dias
+        const up_T_prorroga_dias_liquidados = total_dias_liquidar
+        const up_T_prorroga_sumatoria_acomulada = resultado.sumatoriaTotal 
+
+
+        console.log(" up_T_prorroga_id_empleado:",up_T_prorroga_id_empleado )
+        console.log(" up_T_prorroga_id_incapacidad_prorroga:", up_T_prorroga_id_incapacidad_prorroga)
+        console.log(" up_T_prorroga_tipo_incapacidad_prorroga:",up_T_prorroga_tipo_incapacidad_prorroga )
+        console.log(" up_T_prorroga_fecha_inicio_incapacidad:", up_T_prorroga_fecha_inicio_incapacidad)
+        console.log(" up_T_prorroga_fecha_final_incapacidad:",up_T_prorroga_fecha_final_incapacidad )
+        console.log(" up_T_prorroga_dias_incapacidad_prorroga:", up_T_prorroga_dias_incapacidad_prorroga)
+        console.log(" up_T_prorroga_dias_liquidables_totales_prorroga:", up_T_prorroga_dias_liquidables_totales_prorroga)
+        console.log(" up_T_prorroga_id_incapacidad_liquidacion:", up_T_prorroga_id_incapacidad_liquidacion)
+        console.log(" up_T_prorroga_tipo_incapcidad:", up_T_prorroga_tipo_incapcidad)
+        console.log(" up_T_prorroga_fehca_inicio:", up_T_prorroga_fehca_inicio)
+        console.log(" up_T_prorroga_fecha_final:", up_T_prorroga_fecha_final)
+        console.log(" up_T_prorroga_dias_incapacidad:", up_T_prorroga_dias_incapacidad)
+        console.log(" up_T_prorroga_dias_liquidados:",up_T_prorroga_dias_liquidados )
+        console.log(" up_T_prorroga_sumatoria_acomulada:", up_T_prorroga_sumatoria_acomulada) 
+
+
+        /* SE ACTUALIZA BASE DE DATOS DE PRORROGA */
+        const updateTablaProrroga = await updateTablaProrrogaDB (
+            up_T_prorroga_id_empleado,
+            up_T_prorroga_id_incapacidad_prorroga,
+            up_T_prorroga_tipo_incapacidad_prorroga,
+            up_T_prorroga_fecha_inicio_incapacidad,
+            up_T_prorroga_fecha_final_incapacidad,
+            up_T_prorroga_dias_incapacidad_prorroga,
+            up_T_prorroga_dias_liquidables_totales_prorroga,
+            up_T_prorroga_id_incapacidad_liquidacion,
+            up_T_prorroga_tipo_incapcidad,
+            up_T_prorroga_fehca_inicio,
+            up_T_prorroga_fecha_final,
+            up_T_prorroga_dias_incapacidad,
+            up_T_prorroga_dias_liquidados,
+            up_T_prorroga_sumatoria_acomulada
+            
+        )
+
+        console.log("TABLA PRORROGA ACTUALIZADA: ", updateTablaProrroga)
+
+        return{
+            success : true,
+            message: `Actualización realizada: Incapacidad con PRORROGA  liquidada.`
+        }
+ 
+
     }
+
+
+
    
 }
 

@@ -256,6 +256,7 @@ export async function updateTablaLiquidacion(
   upd_liq_dias_eps_50,
   upd_liq_dias_fondo_pensiones,
   upd_liq_dias_eps_fondo_pensiones,
+  upd_dias_liquidables_totales,
 
   upd_Liq_porcentaje_liquidacion_eps,
   upd_Liq_porcentaje_liquidacion_eps_50,
@@ -270,11 +271,36 @@ export async function updateTablaLiquidacion(
   id_user_session
 ) {
   try {
+
+    console.log("datos recibidos del service: ",  
+      "upd_liq_dias_eps ", upd_liq_dias_eps,
+        "upd_liq_dias_eps_50 ", upd_liq_dias_eps_50,
+        "upd_liq_dias_fondo_pensiones ", upd_liq_dias_fondo_pensiones,
+        "upd_liq_dias_eps_fondo_pensiones ", upd_liq_dias_eps_fondo_pensiones,
+        "upd_dias_liquidables_totales ", upd_dias_liquidables_totales,
+
+        "upd_Liq_porcentaje_liquidacion_eps ", upd_Liq_porcentaje_liquidacion_eps,
+        "upd_Liq_porcentaje_liquidacion_eps_50 ", upd_Liq_porcentaje_liquidacion_eps_50,
+        "upd_Liq_porcentaje_liquidacion_fondo_pensiones ", upd_Liq_porcentaje_liquidacion_fondo_pensiones,
+        "upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones ", upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+
+        "upd_liq_valor_eps ", upd_liq_valor_eps,
+        "upd_liq_valor_eps_50 ", upd_liq_valor_eps_50,
+        "upd_liq_valor_fondo_pensiones ", upd_liq_valor_fondo_pensiones,
+        "upd_liq_valor_eps_fondo_pensiones ", upd_liq_valor_eps_fondo_pensiones,
+        "id_liquidacion ", id_liquidacion,
+        "id_user_session ", id_user_session
+    )
+
+    
     const [result] = await pool.query(
+      
       `
-        UPDATE incapacidades_liquidacion
+        UPDATE 
+          incapacidades_liquidacion
         SET
-          id_user_session = ?,                     -- <–– corregido
+          id_user_session = ?, 
+          dias_liquidables_totales = ?,                   
           dias_liquidacion_eps = ?,
           dias_liquidacion_eps_50 = ?,
           dias_liquidacion_fondo_pensiones = ?,
@@ -291,6 +317,7 @@ export async function updateTablaLiquidacion(
       `,
       [
         id_user_session,                         // 1er “?”
+        upd_dias_liquidables_totales,
         upd_liq_dias_eps,                       // 2do
         upd_liq_dias_eps_50,                    // 3ro
         upd_liq_dias_fondo_pensiones,           // 4to

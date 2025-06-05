@@ -105,8 +105,34 @@ export async function validacionesSwitch(
                 
                 /* FUNCION PARA PRRROGA SI */
                 const epsProrrogaSI_ = await epsProrrogaSI( id_liquidacion, id_historial,  proceso_1, id_user_session)
-            }
 
+                                /* SI EL RESULTADO ES TRUE, ACTUALIZAR DOWNLOAD A  1 */
+                if(epsProrrogaSI_.success){
+
+                    /* ACTUALIZAR DESCARGA DE INCAPACIDAD A 1 */
+                    const updateDownloadStatusLiq = await updateDownloadStatus(id_historial); 
+                   
+                   
+                    // Devuelves directamente el objeto que vino de epsLicencias
+                    return {
+                      success: true,
+                      message: epsProrrogaSI_.message,
+                      data: epsProrrogaSI_
+                    };
+                }
+
+                                /* SI EL RESULTADO ES FALSE, ACTUALIZAR DOWNLOAD A  1 */
+                if(!epsProrrogaSI_.success){
+                 
+                    // Devuelves directamente el objeto que vino de epsLicencias
+                    return {
+                      success: false,
+                      message: epsProrrogaSI_.message,
+                      data: epsProrrogaSI_
+                    };
+                }
+            }
+            
         break;
 
 
