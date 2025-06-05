@@ -15,7 +15,7 @@ export  function acomuladoDeuda (salario_empleado, Liq_porcentaje, grupo, id_liq
 
 
     /* VALOR DEL DIA DEL EMPLEADO  CON PORCENTAJE A LIQUIDAR POR ENTIDAD*/
-    const diaEmpleado = (salario_empleado/30) *  (parseFloat(Liq_porcentaje) / 100)
+    const diaEmpleado = Math.round((salario_empleado/30) *  (parseFloat(Liq_porcentaje) / 100))
     console.log("diaEmpleado: ", diaEmpleado)
     
 

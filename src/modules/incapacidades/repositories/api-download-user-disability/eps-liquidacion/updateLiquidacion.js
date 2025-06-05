@@ -243,3 +243,73 @@ export async function updateSettlementTableEpsFondoPensiones(
     throw error;
   }
 }
+
+
+
+
+
+
+
+/* ACTUALIZAR DATA LIQUIDACION */
+export async function updateTablaLiquidacion(
+  upd_liq_dias_eps,
+  upd_liq_dias_eps_50,
+  upd_liq_dias_fondo_pensiones,
+  upd_liq_dias_eps_fondo_pensiones,
+
+  upd_Liq_porcentaje_liquidacion_eps,
+  upd_Liq_porcentaje_liquidacion_eps_50,
+  upd_Liq_porcentaje_liquidacion_fondo_pensiones,
+  upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+
+  upd_liq_valor_eps,
+  upd_liq_valor_eps_50,
+  upd_liq_valor_fondo_pensiones,
+  upd_liq_valor_eps_fondo_pensiones,
+  id_liquidacion,
+  id_user_session
+) {
+  try {
+    const [result] = await pool.query(
+      `
+        UPDATE incapacidades_liquidacion
+        SET
+          id_user_session = ?,                     -- <–– corregido
+          dias_liquidacion_eps = ?,
+          dias_liquidacion_eps_50 = ?,
+          dias_liquidacion_fondo_pensiones = ?,
+          dias_liquidacion_eps_fondo_pensiones = ?,
+          porcentaje_liquidacion_eps = ?,
+          porcentaje_liquidacion_eps_50 = ?,
+          porcentaje_liquidacion_fondo_pensiones = ?,
+          porcentaje_liquidacion_eps_fondo_pensiones = ?,
+          liquidacion_eps = ?,
+          liquidacion_eps_50 = ?,
+          liquidacion_fondo_pensiones = ?,
+          liquidacion_eps_fondo_pensiones = ?
+        WHERE id_incapacidades_liquidacion = ?
+      `,
+      [
+        id_user_session,                         // 1er “?”
+        upd_liq_dias_eps,                       // 2do
+        upd_liq_dias_eps_50,                    // 3ro
+        upd_liq_dias_fondo_pensiones,           // 4to
+        upd_liq_dias_eps_fondo_pensiones,       // 5to
+        upd_Liq_porcentaje_liquidacion_eps,     // 6to
+        upd_Liq_porcentaje_liquidacion_eps_50,  // 7mo
+        upd_Liq_porcentaje_liquidacion_fondo_pensiones,    // 8vo
+        upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,// 9no
+        upd_liq_valor_eps,                      // 10mo
+        upd_liq_valor_eps_50,                   // 11vo
+        upd_liq_valor_fondo_pensiones,          // 12vo
+        upd_liq_valor_eps_fondo_pensiones,      // 13vo
+        id_liquidacion                           // 14vo (WHERE)
+      ]
+    );
+
+    return result.affectedRows > 0;
+  } catch (error) {
+    console.error("❌ Error al actualizar incapacidad:", error);
+    throw error;
+  }
+}

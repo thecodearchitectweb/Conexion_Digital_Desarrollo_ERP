@@ -10,6 +10,8 @@ import { acomuladoDeuda } from "../../acomulado-deuda-incapacidad/acomulado.serv
 import { calcularDistribucionDias, calcularDistribucionDiasPorProrroga } from "../../calcularDistribucionDiasGrupos.js";
 import { obtenerDiasNoRepetidosProrroga } from "../../obtenerDiasNoRepetidos.js";
 import { complementoIncapacidadEmpleador, complementoIncapacidad, complementoIncapacidadEPS_50, complementoIncapacidadFondoPensiones, complementoIncapacidadEPSFondoPensiones } from '../../../../repositories/api-download-user-disability/complemento-incapacidad/complemento_incapacidad.js'
+import { updateTablaLiquidacion } from '../../../../repositories/api-download-user-disability/eps-liquidacion/updateLiquidacion.js'
+
 
 
 
@@ -160,6 +162,8 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
         let acomuladoDeudaGrupoC = 0
         let acomuladoDeudaGrupoD = 0
 
+        console.log(" ")
+
 
         if(resultado.diasTramo_1a90 > 0 ){
 
@@ -179,7 +183,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
                 origen_incapacidad
             );
 
-            console.log("POLITICA TRAIDA PARA TRAMO 1 - 90: ", PoliticaGrupoA)
+            console.log("POLITICA TRAIDA GRUPO A: ", PoliticaGrupoA)
 
              /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
             Liq_porcentaje_liquidacion_eps_grupoA = parseFloat( PoliticaGrupoA.porcentaje_liquidacion_eps  ) || 0;
@@ -246,7 +250,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
                 origen_incapacidad
             );
 
-            console.log("POLITICA TRAIDA PARA TRAMO 91 - 180: ", PoliticaGrupoB)
+            console.log("POLITICA TRAIDA PARA GRUPO B: ", PoliticaGrupoB)
 
 
             /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
@@ -283,6 +287,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
         console.log(" ")
 
+
         /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
         let dias_grupo_181a540 = 0
         let Liq_porcentaje_liquidacion_f_pension_grupoC = 0
@@ -295,7 +300,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
             /* POLITICA PARA APLICAR A MAYOR 90 */ 
             dias_grupo_181a540 = resultado.diasTramo_181a540   
-            console.log("DIAS A LIQUIDAR  C: ", dias_grupo_181a540)
+            console.log("DIAS A LIQUIDAR GRUPO C: ", dias_grupo_181a540)
 
             /* CALCULAR DIAS PARA VERIFICAR POLITICAS CON MÁS PRECISION */
             liquidacion_dias_grupoC = resultado.sumatoriaPrevia + resultado.diasTramo_1a90 + resultado.diasTramo_91a180 + resultado.diasTramo_181a540
@@ -326,12 +331,12 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
                 Liq_porcentaje_liquidacion_f_pension_grupoC,
                 dias_grupo_181a540
             );
-            console.log("VALOR A LIQUIDAR POR PARTE DE EPS GRUPO B: ", liq_valor_F_Pension_grupoC);            
+            console.log("VALOR A LIQUIDAR POR PARTE DE EPS GRUPO C: ", liq_valor_F_Pension_grupoC);            
 
 
             /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
             acomuladoDeudaGrupoC = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_f_pension_grupoC, liquidacion_dias_grupoC, id_liquidacion)
-            console.log("ACOMULADO DEUDA GRUPO B, EPS PRORROGA: ", acomuladoDeudaGrupoC)
+            console.log("ACOMULADO DEUDA GRUPO C, EPS PRORROGA: ", acomuladoDeudaGrupoC)
 
 
             /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
@@ -339,7 +344,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
                 /* FUNCION PARA GUARDAR EN BASE DE DATOS */
                 const complemento = await complementoIncapacidadFondoPensiones(acomuladoDeudaGrupoC, id_liquidacion)
-                console.log("COMPLEMENTO INCAPACIDAD GRUPO B: ", complemento)
+                console.log("COMPLEMENTO INCAPACIDAD GRUPO C: ", complemento)
 
             } 
 
@@ -360,7 +365,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
             /* POLITICA PARA APLICAR  */ 
             dias_grupo_541 = resultado.diasTramo_541plus   // CONST que guarda los días reales a liquidar al 50%  
-            console.log("DIAS A LIQUIDAR CON EL 50.00 %: ", dias_grupo_541)
+            console.log("DIAS A LIQUIDAR GRUPO D: ", dias_grupo_541)
 
 
             /* CALCULAR DIAS PARA VERIFICAR POLITICAS CON MÁS PRECISION */
@@ -378,7 +383,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
                 origen_incapacidad
             );
 
-            console.log("POLITICA TRAIDA PARA TRAMO 541 +: ", PoliticaGrupoD)
+            console.log("POLITICA TRAIDA PARA GRUPO D: ", PoliticaGrupoD)
 
 
             /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
@@ -393,29 +398,65 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
                 Liq_porcentaje_liquidacion_eps_grupoD,
                 dias_grupo_541
             );
-            console.log("VALOR A LIQUIDAR POR PARTE DE EPS GRUPO B: ", liq_valor_eps_grupoD);   
+            console.log("VALOR A LIQUIDAR POR PARTE DE EPS GRUPO D: ", liq_valor_eps_grupoD);   
 
 
             /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
-            acomuladoDeudaGrupoD = complementoIncapacidadEPSFondoPensiones(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps_grupoD, dias_grupo_541, id_liquidacion)
-            console.log("ACOMULADO DEUDA GRUPO B, EPS PRORROGA: ", acomuladoDeudaGrupoD)
+            acomuladoDeudaGrupoD =  acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps_grupoD, dias_grupo_541, id_liquidacion)
+            console.log("ACOMULADO DEUDA GRUPO D, EPS PRORROGA: ", acomuladoDeudaGrupoD)
 
 
             /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
-            if(acomuladoDeudaGrupoB > 0){
+            if(acomuladoDeudaGrupoD > 0){
 
                 /* FUNCION PARA GUARDAR EN BASE DE DATOS */
-                const complemento = await complementoIncapacidad(acomuladoDeudaGrupoD, id_liquidacion)
-                console.log("COMPLEMENTO INCAPACIDAD GRUPO B: ", complemento)
+                const complemento = await complementoIncapacidadEPSFondoPensiones(acomuladoDeudaGrupoD, id_liquidacion)
+                console.log("COMPLEMENTO INCAPACIDAD GRUPO D: ", complemento)
 
             } 
 
 
         }
 
+        console.log(" ")
 
 
+        const upd_liq_dias_eps = liquidacion_dias_grupo_menor_90 
+        const upd_liq_dias_eps_50 =  dias_grupo_91a180
+        const upd_liq_dias_fondo_pensiones = dias_grupo_181a540;
+        const upd_liq_dias_eps_fondo_pensiones = dias_grupo_541;
 
+        const upd_Liq_porcentaje_liquidacion_eps = Liq_porcentaje_liquidacion_eps_grupoA || 50;
+        const upd_Liq_porcentaje_liquidacion_eps_50 = Liq_porcentaje_liquidacion_eps_grupoB || 50;
+        const upd_Liq_porcentaje_liquidacion_fondo_pensiones = Liq_porcentaje_liquidacion_f_pension_grupoC;
+        const upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones = Liq_porcentaje_liquidacion_eps_grupoD;
+
+        const upd_liq_valor_eps = liq_valor_eps_grupoA;
+        const upd_liq_valor_eps_50 = liq_valor_eps_grupoB;
+        const upd_liq_valor_fondo_pensiones = liq_valor_F_Pension_grupoC;
+        const upd_liq_valor_eps_fondo_pensiones = liq_valor_eps_grupoD;
+
+
+        const a = await updateTablaLiquidacion (
+
+            upd_liq_dias_eps,
+            upd_liq_dias_eps_50,
+            upd_liq_dias_fondo_pensiones,
+            upd_liq_dias_eps_fondo_pensiones,
+            upd_Liq_porcentaje_liquidacion_eps,
+            upd_Liq_porcentaje_liquidacion_eps_50,
+            upd_Liq_porcentaje_liquidacion_fondo_pensiones,
+            upd_Liq_porcentaje_liquidacion_eps_fondo_pensiones,
+            upd_liq_valor_eps,
+            upd_liq_valor_eps_50,
+            upd_liq_valor_fondo_pensiones,
+            upd_liq_valor_eps_fondo_pensiones,
+            id_liquidacion,
+            id_user_session
+            
+
+
+        )
 
     }
    
