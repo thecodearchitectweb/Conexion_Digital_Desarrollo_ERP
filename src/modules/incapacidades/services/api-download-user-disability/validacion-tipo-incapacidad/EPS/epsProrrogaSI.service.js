@@ -285,7 +285,9 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
         }        
 
 
-        console.log(" ")
+        console.log(" .")
+        console.log(" .")
+        console.log(" .")
 
         /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
         let dias_grupo_181a540 = 0
@@ -325,11 +327,14 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
             console.log("POLITICA TRAIDA GRUPO C: ", PoliticaGrupoC)
 
+            console.log("DIAS A LIQUIDAR GRUPO C: ", dias_grupo_181a540)
 
             /* TRAER PORCENTAJE A LIQUIDAR POR PARTE DE EPS */
             Liq_porcentaje_liquidacion_f_pension_grupoC = parseFloat( PoliticaGrupoC.porcentaje_liquidacion_fondo_pensiones  ) || 0;
             console.log("Liq_porcentaje_liquidacion_eps_grupoC", Liq_porcentaje_liquidacion_f_pension_grupoC);
 
+
+            console.log("DIAS A LIQUIDAR GRUPO C: ", dias_grupo_181a540)
 
             /* CALCULA EL VALOR TOTAL A LIQUIDAR POR PARTE DE EPS  */
             liq_valor_F_Pension_grupoC = entityLiquidation(
@@ -340,11 +345,13 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
             console.log("VALOR A LIQUIDAR POR PARTE DE EPS GRUPO C: ", liq_valor_F_Pension_grupoC);
 
 
+            console.log("DIAS A LIQUIDAR GRUPO C: ", dias_grupo_181a540)
 
             /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
             acomuladoDeudaGrupoC = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_f_pension_grupoC, dias_grupo_181a540, id_liquidacion)
-            console.log("ACOMULADO DEUDA GRUPO A, EPS PRORROGA: ", acomuladoDeudaGrupoC)
+            console.log("ACOMULADO DEUDA GRUPO C, EPS PRORROGA: ", acomuladoDeudaGrupoC)
 
+            console.log("DIAS A LIQUIDAR GRUPO C: ", dias_grupo_181a540)
 
             /* GUARDAMOS EN LA BASE DE DATOS SI APLICA */
             if(acomuladoDeudaGrupoC > 0){
@@ -360,7 +367,10 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
             
         }  
 
-        console.log("")
+        console.log(". ")
+        console.log(" .")
+        console.log(" .")
+        console.log(" .")
 
         let dias_grupo_541 = 0
         let Liq_porcentaje_liquidacion_eps_grupoD = 0
@@ -567,6 +577,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
 
 
+
     /* VALIDACION SIN PROROGA CONTINUA */
     if(!validacioTablaProrroga){
 
@@ -652,6 +663,8 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
 
         console.log(" ")
+        console.log(" ")
+        console.log(" ")
 
         /* VARIABLES PARA EJECUTAR EL RESULTRADO FINAL */
         let dias_grupo_91a180  = 0
@@ -702,7 +715,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
 
             /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
-            acomuladoDeudaGrupoB = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps_grupoB, liquidacion_dias_grupoB, id_liquidacion)
+            acomuladoDeudaGrupoB = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_eps_grupoB, dias_grupo_91a180, id_liquidacion)
             console.log("ACOMULADO DEUDA GRUPO B, EPS PRORROGA: ", acomuladoDeudaGrupoB)
 
 
@@ -719,6 +732,9 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
         }
 
 
+        console.log(" ")
+        console.log(" ")
+        console.log(" ")
         console.log(" ")
 
 
@@ -769,7 +785,7 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
 
             /* CALCULAR EL ACOMULATIVO SI APLICA  EPS PARA QUE EL EMPLEADOR NIVELE*/
-            acomuladoDeudaGrupoC = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_f_pension_grupoC, liquidacion_dias_grupoC, id_liquidacion)
+            acomuladoDeudaGrupoC = acomuladoDeuda(proceso_1.data.salario_empleado, Liq_porcentaje_liquidacion_f_pension_grupoC, dias_grupo_181a540, id_liquidacion)
             console.log("ACOMULADO DEUDA GRUPO C, EPS PRORROGA: ", acomuladoDeudaGrupoC)
 
 
@@ -785,6 +801,9 @@ export async function epsProrrogaSI(id_liquidacion, id_historial,  proceso_1, id
 
         }
 
+        console.log(" ")
+        console.log(" ")
+        console.log(" ")
         console.log(" ")
 
         let dias_grupo_541 = 0

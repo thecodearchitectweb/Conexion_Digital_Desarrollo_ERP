@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download Informe</title>
+
+    <link rel="stylesheet" href="/incapacidades/css/sidebar/style_sidebar_adaptacion_pantalla.css">
+
+
+
+    <%- include('./../partials/header/header.ejs') %>
+        <%-include('./../partials/listas ID/modulos/incapacidades/lista_cie_10.ejs') %>
+</head>
+
+
+
+<body class="bg-slate-200 ">
+
+
+    <!-- NAVBAR -->
+
+    <!-- NAVBAR -->
+    <header>
+        <%-include('./../partials/navbars/modulos/incapacidades/navbar_incapacidad.ejs') %>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside>
+        <!-- SIDEBAR (partial) -->
+        <div id="sidebar_principal_incapacidades" class="main-content">
+            <aside id="sidebar" class="sidebar">
+                <%- include('./../partials/sidebars/modulos/incapacidades/sidebar_principal.ejs') %>
+            </aside>
+        </div>
+
+    </aside>
+
+
+    <div class="w-full">
+
+        <div class="flex w-full ">
+
+            <div id="container_seleccionar_empleado"
+                class=" gap-6 mt-32 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 container-collapsed  bg-white rounded-xl">
+
+
+            <div class="border-b border-gray-200 mb-8">
+                <h1 class="ml-2"> Descarga Informe Incapacidades </h1>
+            </div>
+
+
+
+                <div class=" relative flex items-center justify-center">
+
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow-lg border-1 border-lime-500">
+                                <!-- Modal header -->
+                            
+                                <style>
+                                    /* Ajustar el tamaño del calendario directamente */
+                                    .datepicker-dropdown,
+                                    .datepicker,
+                                    .flowbite-datepicker,
+                                    .datepicker-container {
+                                        transform: scale(0.80);
+                                        /* Ajusta este valor para cambiar el tamaño */
+                                        transform-origin: top left;
+                                        /* Fija el origen del escalado */
+                                        width: auto !important;
+                                        /* Evita que se desborde */
+                                        max-width: 200px;
+                                        /* Ajusta el tamaño máximo si es necesario */
+                                    }
+
+                                    .datepicker-picker {
+                                        background: white;
+                                        color: #000000d1;
+                                        border: 1px solid #7ebe25;
+                                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                                        /* Sombra suave */
+                                    }
+
+                                    .datepicker-cell {
+                                        background: white;
+                                        color: #000000d1;
+                                    }
+
+                                    .datepicker-cell:hover {
+                                        background: #7ebe25;
+                                        color: white;
+                                    }
+
+                                    .datepicker-controls button {
+                                        background: #64a30d;
+                                        color: white;
+                                    }
+
+                                    .datepicker-controls button:hover {
+                                        background: #558c07;
+                                        color: white;
+                                    }
+                                </style>
+
+
+
+                                <!-- Modal body -->
+                                <div class="p-4 ">
+
+                                    <form action="">
+                                        <div class="mb-4">
+                                            <label for="message" class="block text-xs text-gray-900 p-1 ">
+                                                Selecciona un rango de fechas para descargar un archivo <span><i
+                                                        class='bx bx-file text-xl text-lime-700'></i></span>.xlsx con el
+                                                registro de
+                                                incapacidades .
+                                            </label>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-4 mt-2">
+                                            <div class="col-span-1">
+                                                <div class="relative max-w-sm">
+                                                    <div
+                                                        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                        <svg class="w-4 h-4 text-gray-500 " aria-hidden="false"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                            viewBox="0 0 20 20">
+                                                            <path
+                                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <input id="download_fecha_inicio" datepicker datepicker-autohide
+                                                        type="text" datepicker-format="dd-mm-yyyy"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full ps-10 p-2.5 "
+                                                        placeholder="Fecha Inicio">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-span-1">
+
+                                                <div class="relative max-w-sm">
+                                                    <div
+                                                        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                        <svg class="w-4 h-4 text-gray-500  aria-hidden=" true"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                            viewBox="0 0 20 20">
+                                                            <path
+                                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <input id="download_fecha_final" datepicker datepicker-autohide
+                                                        type="text" datepicker-format="dd-mm-yyyy"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full ps-10 p-2.5  "
+                                                        placeholder="Fecha Final">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="flex items-center justify-center mt-5 ">
+                                            <button id="buttonDownload" type="submit"
+                                                class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none  w-full">
+                                                Descargar documento <i class='bx bx-file text-xl text-white'></i>
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Script que maneja la sidebar y el contenedor -->
+    <script src="/incapacidades/js/sidebar/sidebar_1.js"></script>
+
+
+    <!-- Desloguearse -->
+    <script src="/global/js/login/api_logout.js"></script>
+
+
+
+
+</body>
+
+</html>
+
+
+
+<!-- 
+flex flex-col gap-6 mt-28 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 bg-white rounded-xl filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] container-expanded
+
+flex flex-col gap-6 mt-28 mr-20 p-8 w-full max-w-11/12 transition-all duration-500 bg-white rounded-xl filter shadow-[0px_4px_10px_rgba(100,116,139,0.5)] container-collapsed -->

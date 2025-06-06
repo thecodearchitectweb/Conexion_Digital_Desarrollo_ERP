@@ -15,14 +15,10 @@ import  api_select_disability_date from '../../incapacidades/routes/api-select-d
 import  api_select_disability_extension from '../../incapacidades/routes/api-select-disability-date.routes.js'
 import  api_add_new_observation from '../../incapacidades/routes/api-add-new-observation.routes.js'
 import api_download_libro_incapacidades_empleado from '../../incapacidades/routes/api-download-incapacidades-empleado.routes.js'
+import downloadInformeExcel from '../../incapacidades/routes/download_Informe_Excel.routes.js'
 
-import { sessionRequired  } from '../../global/middlewares/login/autenticacion.js'
 
 const router = Router()
-
-
-router.use(sessionRequired)
-
 
 
 export default [
@@ -40,5 +36,6 @@ export default [
     api_select_disability_date,
     api_select_disability_extension,
     api_add_new_observation,
-    api_download_libro_incapacidades_empleado
+    api_download_libro_incapacidades_empleado,
+    downloadInformeExcel
   ];

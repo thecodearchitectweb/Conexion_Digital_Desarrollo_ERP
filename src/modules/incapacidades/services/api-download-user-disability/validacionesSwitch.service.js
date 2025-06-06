@@ -192,6 +192,32 @@ export async function validacionesSwitch(
             /* FUNCION PARA PRRROGA NO */
             const arlProrrogaSI_ = await arlProrrogaSI(id_liquidacion, id_historial, proceso_1, id_user_session)
 
+            /* SI EL RESULTADO ES TRUE, ACTUALIZAR DOWNLOAD A  1 */
+            if (arlProrrogaSI_.success) {
+
+              /* ACTUALIZAR DESCARGA DE INCAPACIDAD A 1 */
+              const updateDownloadStatusLiq = await updateDownloadStatus(id_historial);
+
+
+              // Devuelves directamente el objeto que vino de epsLicencias
+              return {
+                success: true,
+                message: arlProrrogaSI_.message
+              };
+            }
+
+
+            /* SI EL RESULTADO ES FALSE, ACTUALIZAR DOWNLOAD A  1 */
+            if (!arlProrrogaSI_.success) {
+
+              // Devuelves directamente el objeto que vino de epsLicencias
+              return {
+                success: false,
+                message: arlProrrogaSI_.message
+              };
+            }
+
+
           }
 
           break;
@@ -199,6 +225,6 @@ export async function validacionesSwitch(
       }
     }
   } catch (error) {
-    console.log("ERROR EN SWITCH")
+    console.log("ERROR EN SWITCH", (error))
   }
 }
