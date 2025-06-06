@@ -40,6 +40,8 @@ export async function dataPrincipalLiquidacion(id_liquidacion, id_historial) {
 
     /* SE CARGAN LAS RUTAS DONDE SE ALOJAN LOS FILES EN UPLOAD, SE TOMAN DE LA TABLA ruta_documentos */
     const uploadFiles = await uploadFilesroutes(id_historial, id_liquidacion);
+    console.log("uploadFiles :", uploadFiles)
+
 
 
     /* ACTUALIZAR LOS DATOS EN LA TABLA LIQUIDACION CON DATA (ENCAPSULAMIENTO) */
@@ -47,10 +49,13 @@ export async function dataPrincipalLiquidacion(id_liquidacion, id_historial) {
     if (updateResult.affectedRows === 0) {
         throw new Error('No se pudo actualizar la liquidación.');
     }
+    console.log("updateResult :", updateResult)
+
 
 
     /* FILTRO PARA CARGAR LA POLITCA SUGERIDA A LA NUEVA INCAPACIDAD*/
     const parametros = transformarParametrosPolitica(data);
+    console.log("parametros :", parametros)
 
 
     /* CONSTANTES PARA VALIDAR POLITICAS  EN LOS DIFERENTES CASOS*/
@@ -71,6 +76,8 @@ export async function dataPrincipalLiquidacion(id_liquidacion, id_historial) {
         tipo_incapacidad,
         cantidad_dias_conversion
     );
+    console.log("politicaAplicada :", politicaAplicada)
+
 
 
     /* VALIDACION DE LA POLITICA */
@@ -82,6 +89,9 @@ export async function dataPrincipalLiquidacion(id_liquidacion, id_historial) {
     /* VALDIAMOS SI CUMPLE CON ALGUN APOLITICA INICIALMENTE */
     const Liq_cumplimiento = politicaAplicada.cumplimiento;
     const liq_prorroga = parametros.prorroga.toUpperCase();
+
+    console.log("Liq_cumplimiento :", Liq_cumplimiento)
+    console.log("liq_prorroga :", liq_prorroga)
 
 
     return{

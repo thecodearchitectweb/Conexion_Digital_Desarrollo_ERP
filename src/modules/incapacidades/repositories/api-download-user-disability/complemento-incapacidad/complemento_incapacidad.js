@@ -161,3 +161,35 @@ export async function complementoIncapacidadEPSFondoPensiones(deuda, id_liquidac
 
 }
 
+
+
+/* INSERT COMPLEMENTO INCAPACIDAD EPS - FONDO PENSIONES GRUPO E */
+export async function complementoIncapacidadARL(deuda, id_liquidacion){
+
+    console.log("DATOS A ACTUALIZAR EN COMPLEMENTO GRUPO ARL : ", deuda, id_liquidacion)
+
+
+    try {
+
+        const [result] = await pool.query(
+            `
+                UPDATE
+                    incapacidades_liquidacion
+                SET
+                    complementoIncapacidadARL = ?
+                WHERE
+                    id_incapacidades_liquidacion = ?
+                
+            `,
+            [deuda, id_liquidacion]
+        ) 
+
+         return result.affectedRows > 0;
+
+    } catch (error) {
+        console.error("❌ Error al insertar en la tabla 'LIQUIDACION':", error);
+        throw error;
+    }
+
+}
+

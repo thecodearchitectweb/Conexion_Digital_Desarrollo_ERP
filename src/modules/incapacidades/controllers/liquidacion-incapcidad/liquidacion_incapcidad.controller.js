@@ -20,6 +20,10 @@ export const api_download_user_disability = async (req, res) => {
         console.log("DATOS DEL PROCESO_1:  ", proceso_1)
 
         
+        console.log("")
+        console.log("DATOS RECIBIDOS DE PROCESO_1: ", proceso_1)
+        console.log("")
+
         /* REALIZAR LAS VALIDACIONES CORRESPONDIENTES  */
         const proceso_2 = await validacionesSwitch(id_liquidacion, id_historial, proceso_1, id_user_session)
 
