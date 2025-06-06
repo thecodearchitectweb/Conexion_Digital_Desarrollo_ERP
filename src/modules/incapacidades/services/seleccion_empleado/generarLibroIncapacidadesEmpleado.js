@@ -95,7 +95,7 @@ export const generarLibroIncapacidadesEmpleado = async (fecha_inicio, fecha_fina
       const value = cell.value ? cell.value.toString() : "";
       maxLength = Math.max(maxLength, value.length);
     });
-    column.width = Math.min(maxLength + 2, 30);
+    column.width = Math.min(maxLength + 2, 100);
   });
 
   return workbook;
