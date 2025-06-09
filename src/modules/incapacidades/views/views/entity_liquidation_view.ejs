@@ -50,7 +50,7 @@
 
 
 
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD EMPLEADOR N.
+        <h1 class="mt-12 ml-2 font-bold  font-serif text-sm">LIQUIDACION INCAPACIDAD EMPLEADOR N.
           <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
         </h1>
 
@@ -180,11 +180,262 @@
 
         <!-- LIQUIDACION EPS -->
         <% if (datos_incapacidad_liquidad.dias_liquidacion_eps> 0) { %>
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD EPS N.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          <h1 class="mt-12 ml-2 font-bold   text-sm">LIQUIDACION INCAPACIDAD EPS N. 3 - 90
+            <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          </h1>
+
+          <div id="container-liquidacion-EPS" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+
+
+                          <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">SALARIO:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.salario) %>
+                  </small>
+                </label>
+              </div>
+
+
+              <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">VALOR DEL DÍA:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.valor_dia) %>
+                  </small>
+                </label>
+              </div>
+
+
+              <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= datos_empleado.estado || "Sin detalles" %>
+                  </small>
+                </label>
+              </div>
+
+
+              <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS LABORADOS:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= datos_incapacidad_liquidad.dias_laborados || "Sin detalles" %>
+                  </small>
+                </label>
+              </div>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO
+                INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE
+                INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.prorroga===1 ? "Sí" : "No" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS
+                A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A
+                LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps || "Sin detalles" %> %
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                        }).format(datos_incapacidad_liquidad.liquidacion_eps) %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">COMPLEMENTO:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                        }).format(datos_incapacidad_liquidad.complementoIncapacidadEPS) %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TOTAL A CANCELAR:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                        }).format(
+                          (datos_incapacidad_liquidad.liquidacion_eps || 0 )  +  (datos_incapacidad_liquidad.complementoIncapacidadEPS || 0 ) 
+                        )
+                  %>
+                </small>
+              </label>
+
+
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD
+                DESCARGADA:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.downloaded===1 ? "Sí" : "No" %>
+                </small>
+              </label>
+
+            </div>
+
+          </div>
+        <% } %>
+
+
+        <!-- LIQUIDACION EPS -->
+        <% if (datos_incapacidad_liquidad.dias_liquidacion_eps_50> 0) { %>
+          <h1 class="mt-12 ml-2 font-bold   text-sm">LIQUIDACION INCAPACIDAD EPS N. 91 - 180
+            <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md"></div>
+          </h1>
+
+          <div id="container-liquidacion-EPS" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+
+
+                          <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">SALARIO:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.salario) %>
+                  </small>
+                </label>
+              </div>
+
+
+              <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">VALOR DEL DÍA:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.valor_dia) %>
+                  </small>
+                </label>
+              </div>
+
+
+              <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= datos_empleado.estado || "Sin detalles" %>
+                  </small>
+                </label>
+              </div>
+
+
+              <div class="col-span-1">
+                <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS LABORADOS:
+                  <small class="text-xs font-medium text-slate-700 ml-2">
+                    <%= datos_incapacidad_liquidad.dias_laborados || "Sin detalles" %>
+                  </small>
+                </label>
+              </div>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO
+                INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE
+                INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.prorroga===1 ? "Sí" : "No" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS
+                A LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.dias_liquidacion_eps_50 || "Sin detalles" %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A
+                LIQUIDAR:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps_50 || "Sin detalles" %> %
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                        }).format(datos_incapacidad_liquidad.liquidacion_eps_50) %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">COMPLEMENTO:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                        }).format(datos_incapacidad_liquidad.complementoIncapacidadEPS_50) %>
+                </small>
+              </label>
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TOTAL A CANCELAR:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                        }).format(
+                          (datos_incapacidad_liquidad.liquidacion_eps_50 || 0 )  +  (datos_incapacidad_liquidad.complementoIncapacidadEPS_50 || 0 ) 
+                        )
+                  %>
+                </small>
+              </label>
+
+
+
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD
+                DESCARGADA:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.downloaded===1 ? "Sí" : "No" %>
+                </small>
+              </label>
+
+            </div>
+
+          </div>
+        <% } %>
+
+
+        <!-- LIQUIDACION FONDO DE PENSIONES -->
+        <% if (datos_incapacidad_liquidad.dias_liquidacion_fondo_pensiones> 0) { %>
+        <h1 class="mt-12 ml-2 font-bold   text-sm">LIQUIDACION INCAPACIDAD FONDO DE PENSIONES N.  181 - 540
+          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md">
+          </div>
         </h1>
 
-        <div id="container-liquidacion-EPS" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+        <div id="container-liquidacion-F-PENSIONES" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
 
@@ -238,7 +489,8 @@
               </small>
             </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS INCAPACIDAD:
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS
+              INCAPACIDAD:
               <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles" %>
               </small>
@@ -250,48 +502,47 @@
               </small>
             </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS
-              A LIQUIDAR:
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD
+              DE DÍAS A LIQUIDAR:
               <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.dias_liquidacion_eps || "Sin detalles" %>
+                <%= datos_incapacidad_liquidad.dias_liquidacion_fondo_pensiones || "0" %>
               </small>
             </label>
 
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A
-              LIQUIDAR:
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
               <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps || "Sin detalles" %> %
+                <%= datos_incapacidad_liquidad.porcentaje_liquidacion_fondo_pensiones || "Sin detalles" %> %
               </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
               <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                      }).format(datos_incapacidad_liquidad.liquidacion_eps) %>
+                              }).format(datos_incapacidad_liquidad.liquidacion_fondo_pensiones) %>
               </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">COMPLEMENTO:
               <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                      }).format(datos_incapacidad_liquidad.complementoIncapacidadEPS) %>
+                              }).format(datos_incapacidad_liquidad.complementoIncapacidadFondoPensiones) %>
               </small>
             </label>
 
             <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TOTAL A CANCELAR:
               <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                      }).format(
-                        (datos_incapacidad_liquidad.liquidacion_eps || 0 )  +  (datos_incapacidad_liquidad.complementoIncapacidadEPS || 0 ) 
-                      )
+                    }).format(
+                      (datos_incapacidad_liquidad.liquidacion_fondo_pensiones || 0) 
+                        +
+                      (datos_incapacidad_liquidad.complementoIncapacidadFondoPensiones)
+                    )
                 %>
               </small>
             </label>
 
 
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD
-              DESCARGADA:
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
               <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= datos_incapacidad_liquidad.downloaded===1 ? "Sí" : "No" %>
               </small>
@@ -301,6 +552,125 @@
 
         </div>
         <% } %>
+
+
+
+        <!-- EPS / FONDO DE PENCIONES -->
+        <% if (datos_incapacidad_liquidad.dias_liquidacion_eps_fondo_pensiones> 0) { %>
+        <h1 class="mt-12 ml-2 font-bold  text-sm"> EPS 541 +
+          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md">
+          </div>
+        </h1>
+
+        <div id="container-liquidacion-EPS-F-PENSIONES" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
+
+                        <div class="col-span-1">
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">SALARIO:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                   <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.salario) %>
+                </small>
+              </label>
+            </div>
+
+
+            <div class="col-span-1">
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">VALOR DEL DÍA:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                   <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.valor_dia) %>
+                </small>
+              </label>
+            </div>
+
+
+            <div class="col-span-1">
+              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS LABORADOS:
+                <small class="text-xs font-medium text-slate-700 ml-2">
+                  <%= datos_incapacidad_liquidad.dias_laborados || "Sin detalles" %>
+                </small>
+              </label>
+            </div>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles" %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN
+              DE INCAPACIDAD:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles" %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS
+              INCAPACIDAD:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles" %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= datos_incapacidad_liquidad.prorroga===1 ? "Sí" : "No" %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A
+              LIQUIDAR:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= datos_incapacidad_liquidad.dias_liquidacion_eps_fondo_pensiones || "0" %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps_fondo_pensiones
+                                  || "Sin detalles" %> %
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                                  }).format(datos_incapacidad_liquidad.liquidacion_eps_fondo_pensiones) %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">COMPLEMENTO:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                                  }).format(datos_incapacidad_liquidad.complementoIncapacidadEPS_FONDO) %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TOTAL A CANCELAR:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                    }).format(
+                      (datos_incapacidad_liquidad.liquidacion_eps_fondo_pensiones || 0 )
+                        + 
+                      (datos_incapacidad_liquidad.complementoIncapacidadEPS_FONDO)
+                    ) 
+                %>
+              </small>
+            </label>
+
+
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= datos_incapacidad_liquidad.downloaded===1 ? "Sí" : "No" %>
+              </small>
+            </label>
+
+          </div>
+
+        </div>
+        <% } %>
+
 
 
         <!-- LIQUIDACION DE ARL -->
@@ -431,256 +801,15 @@
 
 
 
-        <!-- LIQUIDACION FONDO DE PENSIONES -->
-        <% if (datos_incapacidad_liquidad.dias_liquidacion_fondo_pensiones> 0) { %>
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD FONDO DE PENSIONES
-          N.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md">
-          </div>
-        </h1>
-
-        <div id="container-liquidacion-F-PENSIONES" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
-
-
-                        <div class="col-span-1">
-              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">SALARIO:
-                <small class="text-xs font-medium text-slate-700 ml-2">
-                   <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.salario) %>
-                </small>
-              </label>
-            </div>
-
-
-            <div class="col-span-1">
-              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">VALOR DEL DÍA:
-                <small class="text-xs font-medium text-slate-700 ml-2">
-                   <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.valor_dia) %>
-                </small>
-              </label>
-            </div>
-
-
-            <div class="col-span-1">
-              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">ESTADO:
-                <small class="text-xs font-medium text-slate-700 ml-2">
-                  <%= datos_empleado.estado || "Sin detalles" %>
-                </small>
-              </label>
-            </div>
-
-
-            <div class="col-span-1">
-              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS LABORADOS:
-                <small class="text-xs font-medium text-slate-700 ml-2">
-                  <%= datos_incapacidad_liquidad.dias_laborados || "Sin detalles" %>
-                </small>
-              </label>
-            </div>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO
-              INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN DE
-              INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS
-              INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.prorroga===1 ? "Sí" : "No" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD
-              DE DÍAS A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.dias_liquidacion_fondo_pensiones || "0" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.porcentaje_liquidacion_fondo_pensiones || "Sin detalles" %> %
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                              }).format(datos_incapacidad_liquidad.liquidacion_fondo_pensiones) %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">COMPLEMENTO:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                              }).format(datos_incapacidad_liquidad.complementoIncapacidadFondoPensiones) %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TOTAL A CANCELAR:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                    }).format(
-                      (datos_incapacidad_liquidad.liquidacion_fondo_pensiones || 0) 
-                        +
-                      (datos_incapacidad_liquidad.complementoIncapacidadFondoPensiones)
-                    )
-                %>
-              </small>
-            </label>
-
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.downloaded===1 ? "Sí" : "No" %>
-              </small>
-            </label>
-
-          </div>
-
-        </div>
-        <% } %>
-
-
-
-        <!-- EPS / FONDO DE PENCIONES -->
-        <% if (datos_incapacidad_liquidad.dias_liquidacion_eps_fondo_pensiones> 0) { %>
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">LIQUIDACION INCAPACIDAD FONDO DE
-          PENSIONES Y EPS N.
-          <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md">
-          </div>
-        </h1>
-
-        <div id="container-liquidacion-EPS-F-PENSIONES" class="relative shadow-md max-w-full overflow-x-auto py-10 p-2  mt-4 pl-8 bg-gray-50 border border-lime-500  rounded-xl ">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 text-start ">
-
-                        <div class="col-span-1">
-              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">SALARIO:
-                <small class="text-xs font-medium text-slate-700 ml-2">
-                   <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.salario) %>
-                </small>
-              </label>
-            </div>
-
-
-            <div class="col-span-1">
-              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">VALOR DEL DÍA:
-                <small class="text-xs font-medium text-slate-700 ml-2">
-                   <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'}).format(datos_empleado.valor_dia) %>
-                </small>
-              </label>
-            </div>
-
-
-            <div class="col-span-1">
-              <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DÍAS LABORADOS:
-                <small class="text-xs font-medium text-slate-700 ml-2">
-                  <%= datos_incapacidad_liquidad.dias_laborados || "Sin detalles" %>
-                </small>
-              </label>
-            </div>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INICIO INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.fecha_inicio_incapacidad || "Sin detalles" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">FIN
-              DE INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.fecha_final_incapacidad || "Sin detalles" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">DIAS
-              INCAPACIDAD:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.cantidad_dias || "Sin detalles" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PRORROGA:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.prorroga===1 ? "Sí" : "No" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">CANTIDAD DE DÍAS A
-              LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.dias_liquidacion_eps_fondo_pensiones || "0" %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">PORCENTAJE A LIQUIDAR:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.porcentaje_liquidacion_eps_fondo_pensiones
-                                  || "Sin detalles" %> %
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">LIQUIDACION:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                                  }).format(datos_incapacidad_liquidad.liquidacion_eps_fondo_pensiones) %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">COMPLEMENTO:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                                  }).format(datos_incapacidad_liquidad.complementoIncapacidadEPS_FONDO) %>
-              </small>
-            </label>
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TOTAL A CANCELAR:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
-                    }).format(
-                      (datos_incapacidad_liquidad.liquidacion_eps_fondo_pensiones || 0 )
-                        + 
-                      (datos_incapacidad_liquidad.complementoIncapacidadEPS_FONDO)
-                    ) 
-                %>
-              </small>
-            </label>
-
-
-
-            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">INCAPACIDAD DESCARGADA:
-              <small class="text-xs font-medium text-slate-700 ml-2">
-                <%= datos_incapacidad_liquidad.downloaded===1 ? "Sí" : "No" %>
-              </small>
-            </label>
-
-          </div>
-
-        </div>
-        <% } %>
 
 
 
 
 
-        <h1 class="mt-12 ml-2 font-semibold font-serif text-sm">OBSERVACIONES:
+
+
+
+        <h1 class="mt-12 ml-2 font-bold  text-sm">OBSERVACIONES:
           <div class=" w-full mx-auto text-center border-b border-gray-400 pb-1   mt-1 drop-shadow-md">
           </div>
         </h1>
@@ -790,6 +919,16 @@
               INCAPACIDAD:
               <small class="text-xs font-medium text-slate-700 ml-2">
                 <%= datos_incapacidad_liquidad.estado_incapacidad || "Sin detalles" %>
+              </small>
+            </label>
+
+            <label for="arl-date" class="block mb-1.5 text-xs font-bold font-serif text-slate-950">TOTAL LIQUIDACION: 
+              <small class="text-xs font-medium text-slate-700 ml-2">
+                <%= new Intl.NumberFormat('es-CO', { style: 'currency' , currency: 'COP'
+                      }).format(
+                        (datos_incapacidad_liquidad.liquidacion_empleador || 0 )  +  (datos_incapacidad_liquidad.complementoIncapacidadEmpleador || 0)  +  (datos_incapacidad_liquidad.liquidacion_eps || 0)+  (datos_incapacidad_liquidad.complementoIncapacidadEPS || 0) + (datos_incapacidad_liquidad.liquidacion_eps_50 || 0 )  +  (datos_incapacidad_liquidad.complementoIncapacidadEPS_50 || 0 ) +  (datos_incapacidad_liquidad.liquidacion_fondo_pensiones || 0)  +  (datos_incapacidad_liquidad.complementoIncapacidadFondoPensiones) + (datos_incapacidad_liquidad.liquidacion_eps_fondo_pensiones || 0 ) + (datos_incapacidad_liquidad.complementoIncapacidadEPS_FONDO) +  (datos_incapacidad_liquidad.liquidacion_arl || 0 )  + (datos_incapacidad_liquidad.complementoIncapacidadARL || 0)
+                      ) 
+                %>
               </small>
             </label>
 
