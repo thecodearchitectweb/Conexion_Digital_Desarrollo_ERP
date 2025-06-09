@@ -44,14 +44,8 @@ export async function dataDB(
                 valor_dia,
                 contacto,
                 email,
-                area,
-                empresa,
-                nit,
-                eps,
-                arl,
-                fondo_pensiones,
-                caja_compensacion
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                area
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `,
             [
                 idUserRegistro,
@@ -68,13 +62,7 @@ export async function dataDB(
                 valor_dia,
                 contacto,
                 email,
-                area,
-                empresa,
-                nit,
-                eps,
-                arl,
-                fondo_pensiones,
-                caja_compensacion
+                area
             ]
         );
 
@@ -106,7 +94,7 @@ export async function dataDB(
             fondo_pension,
             caja_compensacion,
             id_empleado
-            ) VALUES (?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?)
         `,
             [eps, arl, fondo_pensiones, caja_compensacion, nuevoEmpleadoId]
         );
@@ -114,7 +102,7 @@ export async function dataDB(
         return nuevoEmpleadoId;
 
     } catch (error) {
-        console.error('Error al insertar nuevo empleado:', error);
-        throw new Error('No se pudo registrar el nuevo empleado.');
+       console.error('Error al insertar nuevo empleado:', error);
+        throw error; // No encapsules, deja que suba tal cual
     }
 }

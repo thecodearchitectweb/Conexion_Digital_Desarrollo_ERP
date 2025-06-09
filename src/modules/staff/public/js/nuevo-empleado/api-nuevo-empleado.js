@@ -122,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 credentials: "include"
             })
 
+            console.log("Status de respuesta:", response.status);
 
             /* VALIDACION DEL SERVIDOR */
             if (!response.ok) {
@@ -129,13 +130,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error(errorData.message || 'Error al registrar empleado')
             }
 
-
             /* RESULTADO OK */
             const result = await response.json()
             console.log("✅ Ingreso exitodo:", result)
 
+            console.log("✅ Antes de mostrar alerta de éxito");
+            await Swal.fire({
+                title: '¡Registro exitoso!',
+                text: 'El empleado ha sido registrado correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            });
+
+            form_registro.reset();
+
+
 
         } catch (error) {
+              // 🚨 Error con SweetAlert
+            Swal.fire({
+                title: 'Error al registrar',
+                text: error.message || 'Ocurrió un error inesperado.',
+                icon: 'error',
+                confirmButtonText: 'Revisar'
+            })
 
         }
 

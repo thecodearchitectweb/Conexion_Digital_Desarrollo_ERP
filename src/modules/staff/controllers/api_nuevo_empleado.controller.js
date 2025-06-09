@@ -17,6 +17,7 @@ export const _registroNuevoEmpleado = async (req, res) => {
             salario,
             valor_dia,
             contacto,
+            email,
             area,
             empresa,
             nit,
@@ -29,6 +30,27 @@ export const _registroNuevoEmpleado = async (req, res) => {
 
         const idUserRegistro = req.session.user.id;
         const UserRegistro   = req.session.user.usuario;
+
+        console.log("DATOS RECIBIDOS -------------------------->: ",            
+                       nombre,
+            apellidos,
+            documento,
+            fecha_contratacion,
+            tipo_contrato,
+            cargo,
+            estado,
+            lider_directo,
+            salario,
+            valor_dia,
+            contacto,
+            email,
+            area,
+            empresa,
+            nit,
+            eps,
+            arl,
+            fondo_pensiones,
+            caja_compensacion)
 
 
 
@@ -47,6 +69,7 @@ export const _registroNuevoEmpleado = async (req, res) => {
             salario,
             valor_dia,
             contacto,
+            email,
             area,
             empresa,
             nit,
@@ -59,10 +82,20 @@ export const _registroNuevoEmpleado = async (req, res) => {
         console.log("registro empleado: ", registro)
 
 
-        return {
+        if (!registro.success) {
+            // Por ejemplo, error de negocio, manda 409 (conflicto) con mensaje
+            return res.status(409).json({
+                success: false,
+                message: registro.message || "Error en el registro"
+            });
+            }
+
+            // Si todo ok, status 200
+            return res.status(200).json({
             success: true,
-            message: "Empleado registrado correctamente.",
-        };
+            message: registro.message,
+            empleadoId: registro.empleadoId || null,
+            });
 
 
     } catch (error) {

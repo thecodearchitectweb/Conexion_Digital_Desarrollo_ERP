@@ -27,9 +27,11 @@
     </a>
     <!-- Menú -->
     <nav class="ml-auto flex items-center space-x-8">
-      <a href="#" class="text-white hover:text-gray-300 transition" aria-label="Inicio">Inicio</a>
-      <a href="#" class="text-white hover:text-gray-300 transition" aria-label="Módulos">Módulos</a>
-      <a href="#" class="text-white hover:text-gray-300 transition" aria-label="Ayuda">Ayuda</a>
+      <a href="/inicio" class="text-white hover:text-gray-300 transition" aria-label="Inicio">Inicio</a>
+      <a href="/Modulos" class="text-white hover:text-gray-300 transition" aria-label="Módulos">Módulos</a>
+      <a href="/login" class="text-white hover:text-gray-300 transition" aria-label="Ayuda">
+        <i onclick="logout()" class='bx bx-exit ml-4 text-xl cursor-pointer'></i>
+      </a>
     </nav>
   </header>
 
@@ -172,5 +174,9 @@
       </div>
     </div>
   </footer>
+
+
+   <script src="/global/js/login/api_logout.js"></script>
+
 </body>
 </html>

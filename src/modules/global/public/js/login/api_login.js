@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     /* OBTENEMOS EL FORMULARIO PARA EL INGRESO A LA SESION */
     const form_login = document.getElementById('form_login')
     const button_login = document.getElementById('button_login')
+    const errorBox = document.getElementById('login_error');
 
 
     /* ESCUCHAR EL ENVIO DEL FORM */
@@ -22,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
         /* CAPTURAMOS LOS VALORES DEL FORMULARIO */
         const usuario = document.getElementById('input_usuario').value
         const contraseña = document.getElementById('input_password').value
+        errorBox.textContent = '';
+        errorBox.classList.add('hidden');
 
 
         /* VALIDACION DE CAMPOS OBLIDATORIOS */
@@ -88,8 +91,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         } catch (error) {
             console.error("❌ Error en la petición:", error)
+            // Muestra el mensaje
+            errorBox.textContent = error.message || 'Error desconocido';
+            errorBox.classList.remove('hidden');
         } finally {
-             button_usuario.disabled = false
+             
+            button_login.disabled = false;
         }
 
 

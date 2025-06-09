@@ -15,15 +15,10 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 
 </head>
 
 <body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700">
-
-
 
 
     <header>
@@ -131,7 +126,7 @@
                 <div>
                     <div class="col-span-1">
                         <label for="apellidos" class="block mb-1 font-medium text-lime-800 text-sm">Apellidos</label>
-                        <input type="text" id="apellidos" name="nombre"
+                        <input type="text" id="apellidos" name="apellidos"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="perez perez" />
                     </div>
@@ -170,29 +165,26 @@
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="tipo_contrato" />
                         <option value="">Selecciona un contrato</option>
-                        <option value="fijo">Termino Fijo</option>
-                        <option value="indefinido">Indefinido</option>
+                        <option value="FIJO">Termino Fijo</option>
+                        <option value="INDEFINIDO">Indefinido</option>
                         </select>
                     </div>
                 </div>
 
 
 
-                <!-- SELECCIONE UN CARGO  -->
-                <div>
-                    <div class="col-span-1">
-                        <label for="cargo" class="block mb-1 font-medium text-lime-800 text-sm">Cargo</label>
-                        <select id="cargo" name="cargo"
-                            class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
-                            placeholder="Cargo" />
-                        <option value="">Selecciona un Cargo</option>
-                        <option value="administrador">Administrador</option>
-                        <option value="director">Director</option>
-                        <option value="tecnico">Tecnico</option>
-                        <option value="invitado">Invitado</option>
-                        </select>
+                    
+                    <!-- SELECCIONE UN CARGO -->
+                    <div>
+                        <div class="col-span-1">
+                            <label for="cargo" class="block mb-1 font-medium text-lime-800 text-sm">
+                                Cargo
+                            </label>
+                            <input id="cargo" name="cargo"  placeholder="Cargo"  list="lista_cargo_staff"
+                                class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase" />
+                        </div>
                     </div>
-                </div>
+
 
 
                 <!-- ESTADO -->
@@ -203,8 +195,8 @@
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="estado" />
                         <option value="">Selecciona un estado</option>
-                        <option value="ACTIVO">activo</option>
-                        <option value="INACTIVO">inactivo</option>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
                         </select>
                     </div>
                 </div>
@@ -213,15 +205,11 @@
                 <!-- SELECCIONE UN LIDER  -->
                 <div>
                     <div class="col-span-1">
-                        <label for="lider_directo" class="block mb-1 font-medium text-lime-800 text-sm">Lider
-                            Directo</label>
-                        <select id="lider_directo" name="lider_directo"
-                            class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
-                            placeholder="Lider Directo" />
-                        <option value="">Selecciona un estado</option>
-                        <option value="JOAN">JOAN</option>
-                        <option value="DIANA">DIANA</option>
-                        </select>
+                        <label for="cargo" class="block mb-1 font-medium text-lime-800 text-sm">
+                            Director
+                        </label>
+                        <input id="lider_directo" name="lider_directo"  placeholder="Director"  list="directores"
+                            class="w-full px-4 py-2 border-b-2 border-lime-600 rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase" />
                     </div>
                 </div>
 
@@ -243,7 +231,7 @@
                         <label for="valor_dia" class="block mb-1 font-medium text-lime-800 text-sm">Valor día</label>
                         <input type="number" id="valor_dia" name="valor_dia"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
-                            placeholder="$ 50.000" />
+                            placeholder="$ 50.000" readonly />
                     </div>
                 </div>
 
@@ -259,7 +247,7 @@
                 </div>
 
 
-                <!-- CONTACTO -->
+                <!-- EMAIL -->
                 <div>
                     <div class="col-span-1">
                         <label for="email" class="block mb-1 font-medium text-lime-800 text-sm">Email</label>
@@ -271,16 +259,13 @@
 
 
                 <!-- SELECCIONE UN AREA  -->
+
                 <div>
                     <div class="col-span-1">
-                        <label for="area" class="block mb-1 font-medium text-lime-800 text-sm">Departamento</label>
-                        <select id="area" name="area"
+                        <label for="area" class="block mb-1 font-medium text-lime-800 text-sm">Area</label>
+                        <input type="text" id="area" name="area" list="areas"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="Area" />
-                        <option value="">Selecciona un area</option>
-                        <option value="Ingenieria">Ingenieria</option>
-                        <option value="Talento humano">Talento Humano</option>
-                        </select>
                     </div>
                 </div>
 
@@ -308,7 +293,7 @@
                         <label for="nit" class="block mb-1 font-medium text-lime-800 text-sm">Nit Empresa</label>
                         <input type="number" id="nit" name="nit"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
-                            placeholder="900.254.225-8" />
+                            placeholder="900.254.225-8" readonly />
                     </div>
                 </div>
 
@@ -316,63 +301,48 @@
                 <!-- SELECCIONE UNA EPS  -->
                 <div>
                     <div class="col-span-1">
-                        <label for="eps" class="block mb-1 font-medium text-lime-800 text-sm">EPS</label>
-                        <select id="eps" name="eps"
+                        <label for="list_eps" class="block mb-1 font-medium text-lime-800 text-sm">EPS</label>
+                        <input type="text" id="eps" name="eps" list="list_eps"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="eps" />
-                        <option value="">Selecciona un estado</option>
-                        <option value="Compensar">Compensar</option>
-                        <option value="Sanitas">Sanitas</option>
-                        </select>
                     </div>
                 </div>
 
-
                 <!-- SELECCIONE UNA ARL  -->
+
                 <div>
                     <div class="col-span-1">
                         <label for="arl" class="block mb-1 font-medium text-lime-800 text-sm">ARL</label>
-                        <select id="arl" name="arl"
+                        <input type="text" id="arl" name="arl" list="list_arl"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="arl" />
-                        <option value="">Selecciona un estado</option>
-                        <option value="ACTIVO">activo</option>
-                        <option value="INACTIVO">inactivo</option>
-                        </select>
                     </div>
-                </div>
+                </div>                
 
 
                 <!-- SELECCIONE UN FONDO DE PENSIONES  -->
+
                 <div>
                     <div class="col-span-1">
-                        <label for="fondo_pensiones" class="block mb-1 font-medium text-lime-800 text-sm">Fondo de
-                            Pensiones</label>
-                        <select id="fondo_pensiones" name="fondo_pensiones"
+                        <label for="fondo_pensiones" class="block mb-1 font-medium text-lime-800 text-sm">FONDO DE PENSIONES</label>
+                        <input type="text" id="fondo_pensiones" name="fondo_pensiones" list="list_fondo_pensiones"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="fondo_pensiones" />
-                        <option value="">Selecciona un estado</option>
-                        <option value="ACTIVO">activo</option>
-                        <option value="INACTIVO">inactivo</option>
-                        </select>
                     </div>
-                </div>
+                </div>                 
 
 
                 <!-- SELECCIONE UNA CAJA DE COMPENSACION  -->
+
+
                 <div>
                     <div class="col-span-1">
-                        <label for="caja_compensacion" class="block mb-1 font-medium text-lime-800 text-sm">Caja de
-                            compensacion </label>
-                        <select id="caja_compensacion" name="caja_compensacion"
+                        <label for="caja_compensacion" class="block mb-1 font-medium text-lime-800 text-sm">CAJA DE COMPENSACION</label>
+                        <input type="text" id="caja_compensacion" name="caja_compensacion" list="list_caja_compensacion"
                             class="w-full px-4 py-2 border-b-2  border-lime-600  rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-600 text-sm shadow-sm uppercase"
                             placeholder="caja_compensacion" />
-                        <option value="">Selecciona un estado</option>
-                        <option value="ACTIVO">activo</option>
-                        <option value="INACTIVO">inactivo</option>
-                        </select>
                     </div>
-                </div>
+                </div>    
 
             </div>
 
@@ -387,6 +357,15 @@
         </form>
     </div>
 
+    <%- include('../partials/lista/staff/cargo.ejs') %>
+    <%- include('../partials/lista/staff/director.ejs') %>
+    <%- include('../partials/lista/staff/area.ejs') %>
+    <%- include('../partials/lista/staff/eps.ejs') %>
+    <%- include('../partials/lista/staff/arl.ejs') %>
+    <%- include('../partials/lista/staff/caja_compensacion.ejs') %>
+    <%- include('../partials/lista/staff/fondo_pensiones.ejs') %>
+
+
 
 
     <!-- ROMPER SESSION -->
@@ -394,6 +373,12 @@
 
     <!-- API PARA REGISTRAR NUEVO EMPLEADO -->
     <script src="/staff/js/nuevo-empleado/api-nuevo-empleado.js"></script>
+
+    <!-- CALCULAR VALOR DÍA -->
+    <script src="/staff/js/nuevo-empleado/calcular_valor_dia.js"></script>
+    
+    <!-- TRAER EL NIT CORRESPONDIENTE -->
+    <script src="/staff/js/nuevo-empleado/nit_empresa.js"></script>
 
 
 </body>
