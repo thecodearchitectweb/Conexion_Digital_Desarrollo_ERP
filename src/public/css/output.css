@@ -2687,6 +2687,9 @@
 .text-indigo-600 {
   color: var(--color-indigo-600);
 }
+.text-lime-100 {
+  color: var(--color-lime-100);
+}
 .text-lime-400 {
   color: var(--color-lime-400);
 }
@@ -4174,6 +4177,7 @@
     --color-amber-700: oklch(0.555 0.163 48.998);
     --color-yellow-600: oklch(0.681 0.162 75.834);
     --color-yellow-700: oklch(0.554 0.135 66.442);
+    --color-lime-100: oklch(0.967 0.067 122.328);
     --color-lime-300: oklch(0.897 0.196 126.665);
     --color-lime-400: oklch(0.841 0.238 128.85);
     --color-lime-500: oklch(0.768 0.233 130.85);
